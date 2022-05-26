@@ -1,0 +1,30 @@
+Server:
+  app_name: Admin GOG
+  port: :3000
+  db_driver: mysql
+
+# postgresql://postgres:xiaohuozhi@localhost:5432/tengfeiliang?sslmode=disable
+DataBase:
+  path: localhost
+  port: 3307
+  username: root
+  password: XiaoHuoZhi2021.
+  db_name: example
+  max_idle_conns: 5
+  max_open_conns: 100
+
+Auth:
+  token_symmetric_key: knUEpyxhNyVX7ZivGAGsRARmwJ5qGFog
+  access_token_duration: 1440m
+  refresh_token_duration: 10080m
+
+Logger:
+  level: debug
+  path: ./logs
+  max_size: 1
+  max_age: 30
+
+Redis:
+  address: 127.0.0.1:6379
+  db: 1
+  password:

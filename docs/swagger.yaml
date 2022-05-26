@@ -1,0 +1,42 @@
+definitions:
+  response.RestRes:
+    properties:
+      code:
+        example: 200
+        type: integer
+      data: {}
+      message:
+        example: status ok
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is a sample golang project
+  title: Admin GOGOGO
+  version: 0.0.1
+paths:
+  /:
+    get:
+      consumes:
+      - application/json
+      description: 展示简单信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 首页
+      tags:
+      - 首页
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
