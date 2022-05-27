@@ -1,0 +1,123 @@
+package api
+
+import (
+    "demo-gogo/api/dto"
+	db "demo-gogo/db/sqlc"
+	"demo-gogo/global/consts"
+	"demo-gogo/utils"
+	"errors"
+	"github.com/gin-gonic/gin"
+	"time"
+)
+{{$businessName := .Business}}
+func (server *Server) {{$businessName}}Create(ctx *gin.Context) {{print "{"}}
+    var req dto.{{$businessName}}CreateRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {{print "{"}}
+		ErrorValid(ctx, err)
+		return
+	{{print "}"}}
+
+	var params db.{{$businessName}}CreateParams
+	utils.StructCopy(&params, &req)
+	params.CreateTime = time.Now()
+	params.CreateBy = GetLoginUsername(ctx)
+
+	rows, err := server.store.{{$businessName}}Create(ctx, params)
+	if err != nil {{print "{"}}
+		ErrorCreate(ctx, err, consts.Biz{{$businessName}})
+		return
+	{{print "}"}}
+
+	OkData(ctx, rows)
+{{print "}"}}
+
+func (server *Server) {{$businessName}}Update(ctx *gin.Context) {{print "{"}}
+	var req dto.{{$businessName}}UpdateRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {{print "{"}}
+		ErrorValid(ctx, err)
+		return
+	{{print "}"}}
+
+	var params db.{{$businessName}}UpdateParams
+	utils.StructCopy(&params, &req)
+	params.UpdateTime = time.Now()
+	params.UpdateBy = GetLoginUsername(ctx)
+
+	rows, err := server.store.{{$businessName}}Update(ctx, params)
+	if err != nil {{print "{"}}
+		ErrorCreate(ctx, err, consts.Biz{{$businessName}})
+		return
+	{{print "}"}}
+
+	OkData(ctx, rows)
+{{print "}"}}
+
+func (server *Server) {{$businessName}}Delete(ctx *gin.Context) {{print "{"}}
+	id, err := utils.StringToInt(ctx.Param("id"))
+	if err != nil {{print "{"}}
+		ErrorValid(ctx, err)
+		return
+	{{print "}"}}
+
+	rows, err := server.store.{{$businessName}}Delete(ctx, id)
+	if err != nil {{print "{"}}
+		ErrorDelete(ctx, err, consts.Biz{{$businessName}})
+		return
+	{{print "}"}}
+
+	OkData(ctx, rows)
+{{print "}"}}
+
+func (server *Server) {{$businessName}}DeleteByIds(ctx *gin.Context) {{print "{"}}
+	var req dto.{{$businessName}}IdsRequest
+    if err := ctx.ShouldBind(&req); err != nil {{print "{"}}
+        ErrorValid(ctx, err)
+        return
+    {{print "}"}}
+
+	rows, err := server.store.{{$businessName}}DeleteByIds(ctx, req.IdList)
+	if err != nil {{print "{"}}
+		ErrorDelete(ctx, err, consts.Biz{{$businessName}})
+		return
+	{{print "}"}}
+
+	OkData(ctx, rows)
+{{print "}"}}
+
+func (server *Server) {{$businessName}}List(ctx *gin.Context) {{print "{"}}
+	rows, err := server.store.{{$businessName}}List(ctx)
+	if err != nil {{print "{"}}
+		ErrorQuery(ctx, err, consts.Biz{{$businessName}})
+		return
+	{{print "}"}}
+
+	var result []dto.{{$businessName}}Response
+	utils.StructCopy(&result, &rows)
+
+	OkData(ctx, result)
+{{print "}"}}
+
+func (server *Server) {{$businessName}}Page(ctx *gin.Context) {{print "{"}}
+	var req dto.PageKeywordsRequest
+    if err := ctx.ShouldBind(&req); err != nil {{print "{"}}
+        ErrorValid(ctx, err)
+        return
+    {{print "}"}}
+
+    offset, limit := server.PaginateParams(ctx)
+    arg := db.Page{{$businessName}}Params{{print "{"}}
+        PageOffset: offset,
+        PageSize:   limit,
+	{{print "}"}}
+
+    rows, err := server.store.{{$businessName}}Page(ctx, arg)
+    if err != nil {{print "{"}}
+        ErrorQuery(ctx, err, consts.Biz{{$businessName}})
+        return
+    {{print "}"}}
+
+	var result []dto.{{$businessName}}Response
+	utils.StructCopy(&result, &rows)
+
+	OkData(ctx, result)
+{{print "}"}}

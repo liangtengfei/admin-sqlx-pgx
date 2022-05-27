@@ -5,8 +5,8 @@ import (
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"study.com/demo-sqlx-pgx/api"
-	_ "study.com/demo-sqlx-pgx/docs"
-	"study.com/demo-sqlx-pgx/middleware"
+	"study.com/demo-sqlx-pgx/pkg/middleware"
+	_ "study.com/demo-sqlx-pgx/resources/docs"
 	"study.com/demo-sqlx-pgx/router/system"
 )
 

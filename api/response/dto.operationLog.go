@@ -1,4 +1,4 @@
-package model
+package response
 
 import (
 	"study.com/demo-sqlx-pgx/utils/datetime"

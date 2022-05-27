@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"study.com/demo-sqlx-pgx/api/request"
+	model "study.com/demo-sqlx-pgx/api/response"
 	"study.com/demo-sqlx-pgx/global"
-	"study.com/demo-sqlx-pgx/model"
 	"study.com/demo-sqlx-pgx/utils"
 )
 

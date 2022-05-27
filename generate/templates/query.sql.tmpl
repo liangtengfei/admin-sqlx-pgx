@@ -1,0 +1,56 @@
+-- name: {{.Business}}Create :execrows
+{{$length := (len .Columns) | dec -}}
+INSERT INTO {{.TableName}} (
+    {{- range $index, $element := .Columns}}
+    {{- if eq $index 0}}
+    {{- else if containsNot $element.ColumnName "update_"}}{{$element.ColumnName}}{{if ne $length $index}}, {{end}}{{end}}
+    {{- end }})
+VALUES (
+    {{- $count := 1}}
+    {{- range $index, $element := .Columns}}
+        {{- if eq $index 0}}
+        {{- else if containsNot $element.ColumnName "update_"}}
+            {{- printf "$%d" $count}}{{if ne $length $index}}, {{end}}
+            {{- $count = $count | inc}}
+        {{- end}}
+    {{- end }});
+
+-- name: {{.Business}}Update :execrows
+UPDATE {{.TableName}}
+{{- $count := 1}}
+SET {{range $index, $element := .Columns}}
+    {{- if eq $index 0}}
+    {{- else if containsNot $element.ColumnName "create_"}}
+    {{- $element.ColumnName}} = {{- printf " $%d" $count}}{{if ne $length $index}}, {{end}}
+    {{- $count = $count | inc}}
+    {{- end}}
+{{- end }}
+WHERE {{.ColumnPk}} = @id;
+
+-- name: {{.Business}}ById :one
+SELECT {{range $index, $element := .Columns}}
+{{- if containsNot $element.ColumnName "update_"}}{{$element.ColumnName}}{{if ne $length $index}}, {{end}}{{end}}
+{{- end }}
+FROM {{.TableName}}
+WHERE {{.ColumnPk}} = @id LIMIT 1;
+
+-- name: {{.Business}}DeleteById :execrows
+DELETE FROM {{.TableName}}
+WHERE {{.ColumnPk}} = @id;
+
+-- name: {{.Business}}DeleteByIds :execrows
+DELETE FROM {{.TableName}}
+WHERE id = ANY (@ids::int8[]);
+
+-- name: {{.Business}}List :many
+SELECT {{range $index, $element := .Columns}}
+{{- if containsNot $element.ColumnName "update_"}}{{$element.ColumnName}}{{if ne $length $index}}, {{end}}{{end}}
+{{- end }}
+FROM {{.TableName}};
+
+-- name: {{.Business}}Page :many
+SELECT {{range $index, $element := .Columns}}
+{{- if containsNot $element.ColumnName "update_"}}{{$element.ColumnName}}{{if ne $length $index}}, {{end}}{{end}}
+{{- end }}
+FROM {{.TableName}}
+OFFSET @Page_Offset LIMIT @Page_Size;

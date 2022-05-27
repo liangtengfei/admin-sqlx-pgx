@@ -1,0 +1,24 @@
+package request
+{{$businessName := .Business}}
+type {{$businessName}}Response struct {{print "{" -}}
+    {{range $index, $element := .Columns}}
+        {{- if eq $element.DataType "timestamp"}}
+        {{$element.ColumnName | toUpperCamel}}Str string `json:"{{$element.ColumnName | toLowerCamel}}"`
+        {{- else}}
+        {{$element.ColumnName | toUpperCamel}}
+            {{- if eq $element.DataType "varchar"}} string
+            {{- else if eq $element.DataType "int4"}} int64
+            {{- else if eq $element.DataType "int8"}} int64
+            {{- else if eq $element.DataType "text"}} string
+            {{- end}} `json:"{{$element.ColumnName | toLowerCamel}}"`
+        {{- end }}
+    {{- end }}
+{{print "}"}}
+
+{{range $index, $element := .Columns}}
+{{- if eq $element.DataType "timestamp"}}
+func (res {{print "*"}}{{$businessName}}Response) {{$element.ColumnName | toUpperCamel}}(t time.Time) {{print "{"}}
+    res.{{$element.ColumnName | toUpperCamel}}Str = datetime.ToDatetime(t)
+{{print "}"}}
+{{end }}
+{{- end }}

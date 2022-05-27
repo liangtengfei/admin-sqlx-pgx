@@ -7,8 +7,8 @@ import (
 	"sort"
 	"study.com/demo-sqlx-pgx/api/request"
 	"study.com/demo-sqlx-pgx/api/response"
+	model "study.com/demo-sqlx-pgx/api/response"
 	"study.com/demo-sqlx-pgx/global/consts"
-	"study.com/demo-sqlx-pgx/model"
 	"study.com/demo-sqlx-pgx/pkg/token"
 	"study.com/demo-sqlx-pgx/service"
 )

@@ -1,0 +1,37 @@
+package request
+{{$businessName := .Business}}
+type {{$businessName}}CreateRequest struct {{print "{" -}}
+    {{range $index, $element := .Columns}}
+        {{- if eq $index 0}}
+        {{- else if contains $element.ColumnName "update_"}}
+        {{- else if contains $element.ColumnName "create_"}}
+        {{- else}}
+        {{$element.ColumnName | toUpperCamel}}
+            {{- if eq $element.DataType "varchar"}} string
+            {{- else if eq $element.DataType "int4"}} int64
+            {{- else if eq $element.DataType "int8"}} int64
+            {{- else if eq $element.DataType "text"}} string
+            {{- end}} `json:"{{$element.ColumnName | toLowerCamel}}" binding:"required"`
+        {{- end }}
+    {{- end }}
+{{print "}"}}
+
+type {{$businessName}}UpdateRequest struct {{print "{" -}}
+    {{range $index, $element := .Columns}}
+        {{- if contains $element.ColumnName "update_"}}
+        {{- else if contains $element.ColumnName "create_"}}
+        {{- else}}
+        {{$element.ColumnName | toUpperCamel}}
+            {{- if eq $element.DataType "varchar"}} string
+            {{- else if eq $element.DataType "int4"}} int64
+            {{- else if eq $element.DataType "int8"}} int64
+            {{- else if eq $element.DataType "text"}} string
+            {{- end}} `json:"{{$element.ColumnName | toLowerCamel}}" binding:"required"`
+        {{- end }}
+    {{- end }}
+{{print "}"}}
+
+
+type {{$businessName}}IdsRequest struct {{print "{"}}
+	IdList []int64 `json:"ids" form:"ids"`
+{{print "}"}}
