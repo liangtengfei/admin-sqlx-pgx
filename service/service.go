@@ -11,16 +11,17 @@ var (
 )
 
 const (
-	BizTitleUser     = "系统用户"
-	BizTitleRole     = "系统角色"
-	BizTitleDept     = "系统部门"
-	BizTitleMenu     = "系统菜单"
-	BizTitlePost     = "系统岗位"
-	BizTitleConfig   = "系统配置"
-	BizTitleNotice   = "公告提醒"
-	BizTitleDictType = "字典类型"
-	BizTitleDictData = "字典数据"
-	BizTitleSession  = "登录会话"
+	BizTitleUser         = "系统用户"
+	BizTitleRole         = "系统角色"
+	BizTitleDept         = "系统部门"
+	BizTitleMenu         = "系统菜单"
+	BizTitlePost         = "系统岗位"
+	BizTitleConfig       = "系统配置"
+	BizTitleNotice       = "公告提醒"
+	BizTitleDictType     = "字典类型"
+	BizTitleDictData     = "字典数据"
+	BizTitleSession      = "登录会话"
+	BizTitleOperationLog = "系统日志"
 )
 
 const (

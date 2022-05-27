@@ -1,6 +1,8 @@
 package service
 
 import (
+	"database/sql"
+	"errors"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"study.com/demo-sqlx-pgx/api/request"
@@ -36,6 +38,9 @@ func ConfigPage(ctx *gin.Context, req request.PaginationRequest) (int64, []model
 }
 
 func ConfigCreate(ctx *gin.Context, req request.SysConfigCreateRequest, username string) error {
+	if configKeyExist(ctx, req.ConfigKey, 0) {
+		return errors.New("标识不能重复")
+	}
 	res, err := store.ConfigCreate(ctx, req, username)
 	if err != nil {
 		global.Log.Error(BizTitleConfig, zap.String("TAG", OperationTypeCreate), zap.Error(err))
@@ -89,6 +94,9 @@ func ConfigDetail(ctx *gin.Context, id int64) (model.SysConfigResponse, error) {
 
 	res, err := store.ConfigDetail(ctx, id)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return result, ErrNoRows
+		}
 		global.Log.Error(BizTitleConfig, zap.String("TAG", OperationTypeDelete), zap.Error(err))
 		return result, ErrQuery
 	}
@@ -104,4 +112,21 @@ func ConfigBatchCreate(ctx *gin.Context, req []request.SysConfigCreateRequest, u
 		return 0, ErrCreate
 	}
 	return res, nil
+}
+
+// 是否唯一
+func configKeyExist(ctx *gin.Context, key string, id int64) bool {
+	total, err := store.ConfigCountByKey(ctx, key)
+	if err != nil && err == sql.ErrNoRows {
+		return false
+	}
+	// 查询出现错误 同样禁止数据操作
+	if err != nil && err != sql.ErrNoRows {
+		global.Log.Error(BizTitleConfig, zap.String("TAG", OperationTypeQuery), zap.Error(err))
+		return true
+	}
+	if id > 0 {
+		return total > 1
+	}
+	return total > 0
 }

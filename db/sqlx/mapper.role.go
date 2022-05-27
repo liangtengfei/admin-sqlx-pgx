@@ -111,7 +111,8 @@ func (store *SQLStore) RoleUpdate(ctx context.Context, req request.RoleUpdateReq
 		}
 	}
 
-	return result, nil
+	err = tx.Commit()
+	return result, err
 }
 
 func (store *SQLStore) RoleDelete(ctx context.Context, id int64) (int64, error) {

@@ -3,6 +3,7 @@ package utils
 import (
 	"database/sql"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -55,6 +56,14 @@ func Int64Join(a []int64) string {
 
 func Int2String(in interface{}) string {
 	return fmt.Sprintf("%d", in)
+}
+
+func String2Int(in string) int {
+	i, err := strconv.Atoi(in)
+	if err != nil {
+		return -1
+	}
+	return i
 }
 
 // TernaryOperation 三元运算

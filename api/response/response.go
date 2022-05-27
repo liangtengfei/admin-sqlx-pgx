@@ -83,6 +83,11 @@ func ErrorMsg(ctx *gin.Context, msg string) {
 	ctx.Abort()
 }
 
+func ErrorScope(ctx *gin.Context) {
+	ctx.JSON(ERROR, response(ERROR, "无数据权限", gin.H{}))
+	ctx.Abort()
+}
+
 func ErrorCodeMsg(ctx *gin.Context, code int, msg string) {
 	ctx.JSON(code, response(code, msg, gin.H{}))
 	ctx.Abort()

@@ -6,6 +6,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"strings"
 	"study.com/demo-sqlx-pgx/global"
+	"study.com/demo-sqlx-pgx/global/consts"
 	"time"
 )
 
@@ -21,10 +22,9 @@ const (
 	TBNameDictData     = "ago_dict_data"
 	TBNameOperationLog = "ago_operation_log"
 	TBNameSession      = "ago_session"
-
-	TBNameRoleMenu = "ago_role_menu"
-	TBNameRoleDept = "ago_role_dept"
-	TBNameUserRole = "ago_user_role"
+	TBNameRoleMenu     = "ago_role_menu"
+	TBNameRoleDept     = "ago_role_dept"
+	TBNameUserRole     = "ago_user_role"
 )
 
 func SQLBuilder(format ...string) sq.StatementBuilderType {
@@ -119,4 +119,18 @@ func relateDataReset(tx *sqlx.Tx, id int64, relateIds []int64, mainField, relate
 	}
 	_, err = tx.Exec(insertSQL, insertArgs...)
 	return err
+}
+
+// DataScopeSQLBuilder 数据过滤构建
+func DataScopeSQLBuilder(sql sq.SelectBuilder, scope string, data []interface{}) sq.SelectBuilder {
+	if scope == consts.ScopeDataAll.String() {
+		return sql
+	} else if scope == consts.ScopeCustom.String() {
+		return sql.Where("id IN (SELECT dept_id FROM ago_role_dept WHERE role_id = ?)", data[0])
+	} else if scope == consts.ScopeDept.String() {
+		return sql.Where("id = ?", data[0])
+	} else if scope == consts.ScopeDeptChild.String() {
+		return sql.Where("id = ? OR ? = ANY(STRING_TO_ARRAY(ancestors, ',')::int8[])", data[0], data[0])
+	}
+	return sql.Where("create_by = ?", data[0])
 }

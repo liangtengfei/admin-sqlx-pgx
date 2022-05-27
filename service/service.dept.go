@@ -1,6 +1,7 @@
 package service
 
 import (
+	"database/sql"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"study.com/demo-sqlx-pgx/api/request"
@@ -150,8 +151,11 @@ func DeptDetail(ctx *gin.Context, id int64) (model.DeptResponse, error) {
 
 	res, err := store.DeptDetail(ctx, id)
 	if err != nil {
-		global.Log.Error("系统部门-详情", zap.Error(err))
-		return result, err
+		if err == sql.ErrNoRows {
+			return result, ErrNoRows
+		}
+		global.Log.Error(BizTitleDept, zap.String("TAG", OperationTypeDetail), zap.Error(err))
+		return result, ErrQuery
 	}
 
 	err = utils.StructCopy(&result, &res)

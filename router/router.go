@@ -34,6 +34,8 @@ func InitRouter() *gin.Engine {
 	system.DictRouter(root)
 	system.NoticeRouter(root)
 	system.SysConfigRouter(root)
+	system.OperationLogRouter(root)
+	system.SessionRouter(root)
 
 	return r
 }

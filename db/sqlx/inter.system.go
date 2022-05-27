@@ -61,6 +61,7 @@ type Querier interface {
 	ConfigDetail(ctx context.Context, id int64) (AgoConfig, error)
 	ConfigPage(ctx context.Context, req request.PaginationRequest) (int64, []AgoConfig, error)
 	ConfigList(ctx context.Context) ([]AgoConfig, error)
+	ConfigCountByKey(ctx context.Context, key string) (int64, error)
 
 	DictTypeListByIds(ctx context.Context, ids string) ([]AgoDictType, error)
 	DictTypeCreate(ctx context.Context, req request.DictTypeCreateRequest, username string) (int64, error)
@@ -81,14 +82,17 @@ type Querier interface {
 	DictDataList(ctx context.Context) ([]AgoDictData, error)
 
 	SessionListByIds(ctx context.Context, ids string) ([]AgoSession, error)
-	SessionCreate(ctx context.Context, req request.SessionCreateRequest, username string) (int64, error)
+	SessionCreate(ctx context.Context, req request.SessionCreateRequest, username string) (uuid.UUID, error)
 	SessionUpdate(ctx context.Context, req request.SessionUpdateRequest, username string) (int64, error)
 	SessionDelete(ctx context.Context, id int64) (int64, error)
 	SessionDetail(ctx context.Context, id uuid.UUID) (AgoSession, error)
 	SessionPage(ctx context.Context, req request.PaginationRequest) (int64, []AgoSession, error)
 	SessionList(ctx context.Context) ([]AgoSession, error)
 
-	QuerierBusiness
+	OperationLogCreate(ctx context.Context, req request.OperationLogCreateRequest, username string) (int64, error)
+	OperationLogPage(ctx context.Context, req request.PaginationRequest) (int64, []AgoOperationLog, error)
+
+	QuerierNotice
 }
 
 var _ Querier = (*SQLStore)(nil)

@@ -10,7 +10,7 @@ import (
 )
 
 func dictTypeCreateSQL(req request.DictTypeCreateRequest, username string) (string, []interface{}, error) {
-	return SQLBuilder().Insert(TBNameRole).
+	return SQLBuilder().Insert(TBNameDictType).
 		Columns("dict_name", "dict_type", "create_time", "create_by", "remark").
 		Values(req.DictName, req.DictType, time.Now(), username, req.Remark).
 		Suffix("RETURNING \"id\"").
@@ -30,7 +30,7 @@ func (store *SQLStore) DictTypeCreate(ctx context.Context, req request.DictTypeC
 }
 
 func dictTypeUpdateSQL(req request.DictTypeUpdateRequest, username string) (string, []interface{}, error) {
-	sql := SQLBuilder().Update(TBNameRole).
+	sql := SQLBuilder().Update(TBNameDictType).
 		Set("dict_name", req.DictName).
 		Set("dict_type", req.DictType).
 		Set("status", req.Status).

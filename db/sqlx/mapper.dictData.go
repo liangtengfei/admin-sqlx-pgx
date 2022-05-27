@@ -10,7 +10,7 @@ import (
 )
 
 func dictDataCreateSQL(req request.DictDataCreateRequest, username string) (string, []interface{}, error) {
-	return SQLBuilder().Insert(TBNameRole).
+	return SQLBuilder().Insert(TBNameDictData).
 		Columns("dict_type", "dict_label", "dict_value", "order_num", "css_class", "list_class", "create_time", "create_by", "remark").
 		Values(req.DictType, req.DictLabel, req.DictValue, req.OrderNum, req.CssClass, req.ListClass, time.Now(), username, req.Remark).
 		Suffix("RETURNING \"id\"").
@@ -30,7 +30,7 @@ func (store *SQLStore) DictDataCreate(ctx context.Context, req request.DictDataC
 }
 
 func dictDataUpdateSQL(req request.DictDataUpdateRequest, username string) (string, []interface{}, error) {
-	sql := SQLBuilder().Update(TBNameRole).
+	sql := SQLBuilder().Update(TBNameDictData).
 		Set("dict_name", req.DictLabel).
 		Set("dict_name", req.DictValue).
 		Set("dict_name", req.OrderNum).
@@ -83,7 +83,6 @@ func (store *SQLStore) DictDataDeleteFake(ctx context.Context, id int64, usernam
 
 func (store *SQLStore) DictDataDetail(ctx context.Context, id int64) (AgoDictData, error) {
 	var result AgoDictData
-
 	sql, args, err := DetailSQLBuilder(TBNameDictData, id)
 	if err != nil {
 		return result, err

@@ -10,7 +10,7 @@ import (
 )
 
 func configCreateSQL(req request.SysConfigCreateRequest, username string) (string, []interface{}, error) {
-	return SQLBuilder().Insert(TBNameRole).
+	return SQLBuilder().Insert(TBNameConfig).
 		Columns("config_name", "config_key", "config_value", "create_time", "create_by", "remark").
 		Values(req.ConfigName, req.ConfigKey, req.ConfigValue, time.Now(), username, req.Remark).
 		Suffix("RETURNING \"id\"").
@@ -30,7 +30,7 @@ func (store *SQLStore) ConfigCreate(ctx context.Context, req request.SysConfigCr
 }
 
 func configCreateSQLBatch(reqs []request.SysConfigCreateRequest, username string) (string, []interface{}, error) {
-	sql := SQLBuilder().Insert(TBNameRole).
+	sql := SQLBuilder().Insert(TBNameConfig).
 		Columns("config_name", "config_key", "config_value", "create_time", "create_by", "remark")
 	for _, req := range reqs {
 		sql = sql.Values(req.ConfigName, req.ConfigKey, req.ConfigValue, time.Now(), username, req.Remark)
@@ -54,7 +54,7 @@ func (store *SQLStore) ConfigCreateBatch(ctx context.Context, req []request.SysC
 }
 
 func configUpdateSQL(req request.SysConfigUpdateRequest, username string) (string, []interface{}, error) {
-	sql := SQLBuilder().Update(TBNameRole).
+	sql := SQLBuilder().Update(TBNameConfig).
 		Set("config_name", req.ConfigName).
 		Set("config_value", req.ConfigValue).
 		Set("status", req.Status).
@@ -198,4 +198,14 @@ func (store *SQLStore) ConfigListByIds(ctx context.Context, ids string) ([]AgoCo
 
 	err = store.db.SelectContext(ctx, &result, sql, args...)
 	return result, err
+}
+
+func (store *SQLStore) ConfigCountByKey(ctx context.Context, key string) (int64, error) {
+	sql, args, err := SQLBuilder().Select("count(*)").From(TBNameConfig).Where(sq.Eq{"ConfigKey": key}).ToSql()
+	if err != nil {
+		return 0, err
+	}
+	var total int64
+	err = store.db.GetContext(ctx, &total, sql, args...)
+	return total, err
 }

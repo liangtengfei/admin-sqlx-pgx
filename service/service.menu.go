@@ -1,6 +1,7 @@
 package service
 
 import (
+	"database/sql"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"study.com/demo-sqlx-pgx/api/request"
@@ -89,8 +90,11 @@ func MenuDetail(ctx *gin.Context, id int64) (model.MenuResponse, error) {
 
 	res, err := store.MenuDetail(ctx, id)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return result, ErrNoRows
+		}
 		global.Log.Error("系统部门-详情", zap.Error(err))
-		return result, err
+		return result, ErrQuery
 	}
 
 	err = utils.StructCopy(&result, &res)

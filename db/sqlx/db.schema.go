@@ -150,7 +150,7 @@ type AgoRole struct {
 }
 
 type AgoRoleDept struct {
-	RoleID int64 `db:"role_id"` // 角色标识
+	RoleID int64 `db:"role_id"` // 角色
 	DeptID int64 `db:"dept_id"` // 部门标识
 }
 

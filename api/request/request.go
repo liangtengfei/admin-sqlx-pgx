@@ -9,6 +9,11 @@ type PaginationRequest struct {
 	SortOrder string `json:"sortOrder" form:"sortOrder"` // 排序顺序
 }
 
+type DataScopeRequest struct {
+	Scope  string        `binding:"-"`
+	Params []interface{} `binding:"-"`
+}
+
 type ByIdRequest struct {
 	Id int64 `json:"id" form:"id" uri:"id" binding:"required"`
 }

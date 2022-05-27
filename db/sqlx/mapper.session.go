@@ -11,27 +11,28 @@ import (
 )
 
 func sessionCreateSQL(req request.SessionCreateRequest, username string) (string, []interface{}, error) {
-	return SQLBuilder().Insert(TBNameRole).
-		Columns("user_name", "real_name", "user_agent", "client_ip", "refresh_token", "is_blocked", "expires_at", "create_at", "remark").
-		Values(req.UserName, req.RealName, req.UserAgent, req.ClientIp, req.RefreshToken, req.IsBlocked, req.ExpiresAt, time.Now(), req.Remark).
+	return SQLBuilder().Insert(TBNameSession).
+		Columns("id", "user_name", "real_name", "user_agent", "client_ip", "refresh_token", "is_blocked", "expires_at", "create_at", "remark").
+		Values(req.ID, req.UserName, req.RealName, req.UserAgent, req.ClientIp, req.RefreshToken, req.IsBlocked, req.ExpiresAt, time.Now(), req.Remark).
 		Suffix("RETURNING \"id\"").
 		ToSql()
 }
 
-func (store *SQLStore) SessionCreate(ctx context.Context, req request.SessionCreateRequest, username string) (int64, error) {
+func (store *SQLStore) SessionCreate(ctx context.Context, req request.SessionCreateRequest, username string) (uuid.UUID, error) {
+	var id uuid.UUID
+
 	sql, args, err := sessionCreateSQL(req, username)
 	if err != nil {
-		return 0, err
+		return id, err
 	}
 
-	var id int64
 	err = store.db.QueryRowxContext(ctx, sql, args...).Scan(&id)
 
 	return id, err
 }
 
 func sessionUpdateSQL(req request.SessionUpdateRequest, username string) (string, []interface{}, error) {
-	sql := SQLBuilder().Update(TBNameRole).
+	sql := SQLBuilder().Update(TBNameSession).
 		Set("is_blocked", req.IsBlocked).
 		Set("remark", req.Remark)
 	//sql = sql.Set("update_by", username)
@@ -78,7 +79,7 @@ func (store *SQLStore) SessionDetail(ctx context.Context, id uuid.UUID) (AgoSess
 }
 
 func sessionPageAndKeywordSQL(req request.PaginationRequest) (querySQL, countSQL string, args []interface{}, err error) {
-	sql := baseQuerySQLBuilder(TBNameSession).Where(sq.Eq{"status": "0"}).Where(sq.Eq{"del_flag": "N"})
+	sql := baseQuerySQLBuilder(TBNameSession)
 	if req.Keyword != "" && strings.TrimSpace(req.Keyword) != "" {
 		sql = sql.Where(sq.Or{
 			sq.Like{"session_name": fmt.Sprint("%", req.Keyword, "%")},
@@ -99,7 +100,7 @@ func sessionPageAndKeywordSQL(req request.PaginationRequest) (querySQL, countSQL
 	if req.SortField != "" && req.SortOrder != "" {
 		sql = sql.OrderBy(req.SortField + " " + req.SortOrder)
 	} else {
-		sql = sql.OrderBy("create_time DESC")
+		sql = sql.OrderBy("create_at DESC")
 	}
 
 	querySQL, args, err = sql.ToSql()

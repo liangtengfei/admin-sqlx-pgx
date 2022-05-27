@@ -32,6 +32,13 @@ func UserFindByUsername(ctx *gin.Context, username string) (model.UserResponse, 
 	}
 	result.RoleKeys = roleKeys
 
+	roleList, err := RoleListByUserId(ctx, res.ID)
+	if err != nil {
+		global.Log.Error(BizTitleUser, zap.String("TAG", "查询关联角色"), zap.Error(err))
+		return result, ErrQuery
+	}
+	result.RoleList = roleList
+
 	return result, err
 }
 
@@ -55,6 +62,13 @@ func UserFindByMobile(ctx *gin.Context, username string) (model.UserResponse, er
 		return result, ErrQuery
 	}
 	result.RoleKeys = roleKeys
+
+	roleList, err := RoleListByUserId(ctx, res.ID)
+	if err != nil {
+		global.Log.Error(BizTitleUser, zap.String("TAG", "查询关联角色"), zap.Error(err))
+		return result, ErrQuery
+	}
+	result.RoleList = roleList
 
 	return result, err
 }
@@ -110,6 +124,29 @@ func UserDetail2(ctx *gin.Context, id int64) (model.UserResponse, error) {
 		return result, ErrQuery
 	}
 	result.RoleKeys = roleKeys
+
+	roleList, err := RoleListByUserId(ctx, res.ID)
+	if err != nil {
+		global.Log.Error(BizTitleUser, zap.String("TAG", "查询关联角色"), zap.Error(err))
+		return result, ErrQuery
+	}
+	result.RoleList = roleList
+
+	//填充部门
+	dept, err := DeptDetail(ctx, res.DeptID)
+	if err != nil {
+		global.Log.Error(BizTitleUser, zap.String("TAG", "查询关联部门"), zap.Error(err))
+		return result, ErrQuery
+	}
+	result.Dept = dept
+
+	// 填充岗位
+	postList, err := PostListByIds(ctx, res.Posts)
+	if err != nil {
+		global.Log.Error(BizTitleUser, zap.String("TAG", "查询关联岗位"), zap.Error(err))
+		return result, ErrQuery
+	}
+	result.PostList = postList
 
 	return result, err
 }

@@ -3,6 +3,7 @@ package api
 import (
 	"database/sql"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 	"net/http"
 	"study.com/demo-sqlx-pgx/api/request"
 	"study.com/demo-sqlx-pgx/api/response"
@@ -65,6 +66,29 @@ func Login(ctx *gin.Context) {
 		response.ErrorMsg(ctx, "登录失败，生成refresh token失败")
 		return
 	}
+
+	sessionReq := request.SessionCreateRequest{
+		ID:           refreshPayload.ID,
+		UserName:     user.UserName,
+		RealName:     user.RealName,
+		RefreshToken: refreshToken,
+		UserAgent:    ctx.Request.UserAgent(),
+		ClientIp:     ctx.ClientIP(),
+		IsBlocked:    false,
+		ExpiresAt:    refreshPayload.ExpiredAt,
+		CreateAt:     time.Now(),
+		Remark:       "",
+	}
+
+	// 插入记录
+	go func() {
+		id, err := service.SessionCreate(ctx, sessionReq, user.UserName)
+		if err != nil {
+			global.Log.Error("用户登录", zap.String("TAG", "新增会话记录"), zap.Error(err))
+			return
+		}
+		global.Log.Info("用户登录", zap.String("TAG", id.String()))
+	}()
 
 	rsp := model.LoginResponse{
 		SessionID:             accessPayload.ID,

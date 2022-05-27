@@ -10,7 +10,7 @@ import (
 )
 
 func postCreateSQL(req request.PostCreateRequest, username string) (string, []interface{}, error) {
-	return SQLBuilder().Insert(TBNameRole).
+	return SQLBuilder().Insert(TBNamePost).
 		Columns("post_name", "order_num", "create_time", "create_by", "remark").
 		Values(req.PostName, req.OrderNum, time.Now(), username, req.Remark).
 		Suffix("RETURNING \"id\"").
@@ -30,7 +30,7 @@ func (store *SQLStore) PostCreate(ctx context.Context, req request.PostCreateReq
 }
 
 func postUpdateSQL(req request.PostUpdateRequest, username string) (string, []interface{}, error) {
-	sql := SQLBuilder().Update(TBNameRole).
+	sql := SQLBuilder().Update(TBNamePost).
 		Set("post_name", req.PostName).
 		Set("order_num", req.OrderNum).
 		Set("status", req.Status).

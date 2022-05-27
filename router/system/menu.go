@@ -8,12 +8,21 @@ import (
 )
 
 func MenuRouter(r *gin.RouterGroup) {
-	group := r.Group("menu").Use(middleware.AuthMiddleware(global.TokenMaker)).
+	// 需要数据过滤的路由
+	scopeGroup := r.Group("menu").
+		Use(middleware.AuthMiddleware(global.TokenMaker)).
+		Use(middleware.AccessControl(global.Enforcer)).
+		Use(middleware.DataScope())
+	{
+		scopeGroup.POST("p", api.MenuPage)
+	}
+
+	group := r.Group("menu").
+		Use(middleware.AuthMiddleware(global.TokenMaker)).
 		Use(middleware.AccessControl(global.Enforcer))
 	{
 		group.GET("tree", api.MenuListTree)
 		group.GET("list", api.MenuListAll)
-		group.POST("p", api.MenuPage)
 		group.POST("", api.MenuCreate)
 		group.PUT("", api.MenuUpdate)
 		group.DELETE(":id", api.MenuDelete)

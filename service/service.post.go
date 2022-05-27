@@ -1,6 +1,7 @@
 package service
 
 import (
+	"database/sql"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"study.com/demo-sqlx-pgx/api/request"
@@ -89,10 +90,28 @@ func PostDetail(ctx *gin.Context, id int64) (model.PostResponse, error) {
 
 	res, err := store.PostDetail(ctx, id)
 	if err != nil {
-		global.Log.Error("系统部门-详情", zap.Error(err))
-		return result, err
+		if err == sql.ErrNoRows {
+			return result, ErrNoRows
+		}
+		global.Log.Error(BizTitlePost, zap.String("TAG", OperationTypeDetail), zap.Error(err))
+		return result, ErrQuery
 	}
 
+	err = utils.StructCopy(&result, &res)
+	return result, err
+}
+
+func PostListByIds(ctx *gin.Context, ids string) ([]model.PostResponse, error) {
+	var result []model.PostResponse
+
+	res, err := store.PostListByIds(ctx, ids)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return result, ErrNoRows
+		}
+		global.Log.Error(BizTitlePost, zap.String("TAG", OperationTypeQuery), zap.Error(err))
+		return result, ErrQuery
+	}
 	err = utils.StructCopy(&result, &res)
 	return result, err
 }

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"database/sql"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"study.com/demo-sqlx-pgx/api/request"
@@ -89,6 +90,9 @@ func DictDataDetail(ctx *gin.Context, id int64) (model.DictDataResponse, error) 
 
 	res, err := store.DictDataDetail(ctx, id)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return result, ErrNoRows
+		}
 		global.Log.Error(BizTitleDictData, zap.String("TAG", OperationTypeDelete), zap.Error(err))
 		return result, ErrQuery
 	}

@@ -6,6 +6,7 @@ import (
 )
 
 type SessionCreateRequest struct {
+	ID           uuid.UUID `db:"id"`            // 唯一标识
 	UserName     string    `db:"user_name"`     // 用户名
 	RealName     string    `db:"real_name"`     // 真实姓名
 	RefreshToken string    `db:"refresh_token"` // 刷新秘钥

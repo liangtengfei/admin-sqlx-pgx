@@ -10,7 +10,7 @@ import (
 )
 
 func noticeCreateSQL(req request.NoticeCreateRequest, username string) (string, []interface{}, error) {
-	return SQLBuilder().Insert(TBNameRole).
+	return SQLBuilder().Insert(TBNameNotice).
 		Columns("notice_title", "notice_type", "notice_content", "create_time", "create_by", "remark").
 		Values(req.NoticeTitle, req.NoticeType, req.NoticeContent, time.Now(), username, req.Remark).
 		Suffix("RETURNING \"id\"").
@@ -30,7 +30,7 @@ func (store *SQLStore) NoticeCreate(ctx context.Context, req request.NoticeCreat
 }
 
 func noticeUpdateSQL(req request.NoticeUpdateRequest, username string) (string, []interface{}, error) {
-	sql := SQLBuilder().Update(TBNameRole).
+	sql := SQLBuilder().Update(TBNameNotice).
 		Set("notice_title", req.NoticeTitle).
 		Set("notice_type", req.NoticeType).
 		Set("notice_content", req.NoticeContent).

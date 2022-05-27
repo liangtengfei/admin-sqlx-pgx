@@ -23,43 +23,40 @@ import (
 	"time"
 )
 
-func RunServer() {
+func attachConfig() config.Config {
 	cfg, err := config.NewConfig("./resources")
 	if err != nil {
 		log.Fatal("配置信息加载错误", err)
 	}
-	global.Config = cfg
+	return cfg
+}
 
-	//运行模式 默认：dev
-	mode := "DEBUG"
-	if *config.ServerMode == "prod" {
-		mode = "PROD"
-	}
-
-	tokenMaker, err := token.NewJWTMaker(cfg.Auth.TokenSymmetricKey)
+func attachTokenMaker(symmetricKey string) token.Maker {
+	tokenMaker, err := token.NewJWTMaker(symmetricKey)
 	if err != nil {
 		log.Fatal("加载JWT授权失败", err)
 	}
-	global.TokenMaker = tokenMaker
+	return tokenMaker
+}
 
-	//加载权限控制策略
-	enforcer := LoadCasbin(cfg)
-	global.Enforcer = enforcer
-
-	//配置日志
+func attachLogger(config config.LoggerConfig, mode string) *zap.Logger {
 	core := zapcore.NewCore(
 		zaplog.GetEncoder(),
-		zaplog.GetLumberWriter(cfg.Logger.Path, cfg.Logger.MaxSize, cfg.Logger.MaxAge, mode),
-		zaplog.GetLevel(cfg.Logger.Level),
+		zaplog.GetLumberWriter(config.Path, config.MaxSize, config.MaxAge, mode),
+		zaplog.GetLevel(config.Level),
 	)
 	logger := zap.New(core, zap.AddCaller(), zap.AddCallerSkip(1))
-	defer logger.Sync()
-	global.Log = logger
+	return logger
+}
 
-	//数据库连接
+func attachDbConn(cfg config.Config) *sqlx.DB {
 	conn, err := sql.Open(cfg.Server.DBDriver, cfg.DB.ConnDsn(cfg.Server.DBDriver))
 	if err != nil {
-		log.Fatal("数据库信息加载错: ", err)
+		log.Fatal("数据库信息加载错误: ", err)
+	}
+	err = conn.Ping()
+	if err != nil {
+		log.Fatal("数据库连接错误，请确认数据库服务是否开启: ", err)
 	}
 	// 最大打开的连接数，<= 0 不限制
 	conn.SetMaxOpenConns(cfg.DB.MaxOpenConns)
@@ -69,7 +66,35 @@ func RunServer() {
 	conn.SetConnMaxLifetime(1 * time.Minute)
 	conn.SetConnMaxIdleTime(2 * time.Minute)
 
-	sqlxDB := sqlx.NewDb(conn, cfg.Server.DBDriver)
+	return sqlx.NewDb(conn, cfg.Server.DBDriver)
+}
+
+func RunServer() {
+	//运行模式 默认：dev
+	mode := "DEBUG"
+	if *config.ServerMode == "prod" {
+		mode = "PROD"
+	}
+
+	// 加载配置信息
+	cfg := attachConfig()
+	global.Config = cfg
+
+	// 加载Token生成
+	tokenMaker := attachTokenMaker(cfg.Auth.TokenSymmetricKey)
+	global.TokenMaker = tokenMaker
+
+	// 加载权限控制策略
+	enforcer := LoadCasbin(cfg)
+	global.Enforcer = enforcer
+
+	// 配置日志
+	logger := attachLogger(cfg.Logger, mode)
+	defer logger.Sync()
+	global.Log = logger
+
+	//数据库连接
+	sqlxDB := attachDbConn(cfg)
 	service.InitService(sqlxDB)
 
 	//加载gin引擎
@@ -80,20 +105,23 @@ func RunServer() {
 	}
 
 	// 注入验证翻译
-	err = valid.RegisterTranslate()
+	err := valid.RegisterTranslate()
 	if err != nil {
 		log.Fatal("注入验证翻译错误", err)
 	}
 
 	log.Println(fmt.Sprintf("服务启动成功：http://%s", "127.0.0.1"+cfg.Server.Port))
-	//return server.router.Run(server.config.Server.Port)
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("listen: %s\n", err)
 		}
 	}()
 
-	//优雅关闭
+	// 优雅关闭
+	gracefullyShutdown(srv)
+}
+
+func gracefullyShutdown(srv *http.Server) {
 	// Create context that listens for the interrupt signal from the OS.
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
@@ -108,7 +136,7 @@ func RunServer() {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	err = srv.Shutdown(ctx)
+	err := srv.Shutdown(ctx)
 	if err != nil {
 		log.Fatal("关闭苏服务错误", err)
 	}

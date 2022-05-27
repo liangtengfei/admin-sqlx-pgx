@@ -111,6 +111,9 @@ func RoleDetail(ctx *gin.Context, id int64) (model.RoleResponse, error) {
 
 	res, err := store.RoleDetail(ctx, id)
 	if err != nil {
+		if err == sql.ErrNoRows {
+			return result, ErrNoRows
+		}
 		global.Log.Error(BizTitleRole, zap.String("TAG", OperationTypeDetail), zap.Error(err))
 		return result, ErrQuery
 	}

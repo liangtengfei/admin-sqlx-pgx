@@ -1,6 +1,7 @@
 package service
 
 import (
+	"database/sql"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -36,17 +37,15 @@ func SessionPage(ctx *gin.Context, req request.PaginationRequest) (int64, []mode
 	return total, result, err
 }
 
-func SessionCreate(ctx *gin.Context, req request.SessionCreateRequest, username string) error {
-	res, err := store.SessionCreate(ctx, req, username)
+func SessionCreate(ctx *gin.Context, req request.SessionCreateRequest, username string) (uuid.UUID, error) {
+	var id uuid.UUID
+	id, err := store.SessionCreate(ctx, req, username)
 	if err != nil {
 		global.Log.Error(BizTitleSession, zap.String("TAG", OperationTypeCreate), zap.Error(err))
-		return ErrCreate
-	}
-	if res <= 0 {
-		return ErrCreate
+		return id, ErrCreate
 	}
 
-	return nil
+	return id, nil
 }
 
 func SessionUpdate(ctx *gin.Context, req request.SessionUpdateRequest, username string) error {
@@ -78,7 +77,10 @@ func SessionDetail(ctx *gin.Context, id uuid.UUID) (model.SessionResponse, error
 
 	res, err := store.SessionDetail(ctx, id)
 	if err != nil {
-		global.Log.Error(BizTitleSession, zap.String("TAG", OperationTypeDelete), zap.Error(err))
+		if err == sql.ErrNoRows {
+			return result, ErrNoRows
+		}
+		global.Log.Error(BizTitleSession, zap.String("TAG", OperationTypeDetail), zap.Error(err))
 		return result, ErrQuery
 	}
 

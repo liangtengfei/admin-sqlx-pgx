@@ -5,8 +5,8 @@ import (
 	"study.com/demo-sqlx-pgx/api/request"
 )
 
-// QuerierBusiness 业务接口 使用通知公告举例
-type QuerierBusiness interface {
+// QuerierNotice 业务接口 使用通知公告举例
+type QuerierNotice interface {
 	NoticeCreate(ctx context.Context, req request.NoticeCreateRequest, username string) (int64, error)
 	NoticeUpdate(ctx context.Context, req request.NoticeUpdateRequest, username string) (int64, error)
 	NoticeDelete(ctx context.Context, id int64) (int64, error)

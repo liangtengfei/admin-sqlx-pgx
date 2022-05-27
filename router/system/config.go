@@ -12,7 +12,6 @@ func SysConfigRouter(r *gin.RouterGroup) {
 		Use(middleware.AccessControl(global.Enforcer))
 	{
 		group.GET("list", api.SysConfigListAll)
-		group.GET("tree", api.SysConfigListTree)
 		group.POST("p", api.SysConfigPage)
 		group.POST("", api.SysConfigCreate)
 		group.POST("batch", api.SysConfigBatchInsert)
