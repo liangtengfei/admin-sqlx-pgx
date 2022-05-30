@@ -45,6 +45,7 @@ COMMENT ON COLUMN "public"."ago_user"."update_time" IS '更新时间';
 COMMENT ON COLUMN "public"."ago_user"."create_by" IS '创建人员';
 COMMENT ON COLUMN "public"."ago_user"."update_by" IS '更新人员';
 COMMENT ON COLUMN "public"."ago_user"."remark" IS '备注';
+COMMENT ON TABLE "public"."ago_user" IS '系统用户表';
 
 -- 唯一索引
 CREATE UNIQUE INDEX IF NOT EXISTS ago_user_username_unique ON "public"."ago_user"(user_name);
@@ -95,6 +96,7 @@ COMMENT ON COLUMN "public"."ago_dept"."update_time" IS '更新时间';
 COMMENT ON COLUMN "public"."ago_dept"."create_by" IS '创建人员';
 COMMENT ON COLUMN "public"."ago_dept"."update_by" IS '更新人员';
 COMMENT ON COLUMN "public"."ago_dept"."remark" IS '备注';
+COMMENT ON TABLE "public"."ago_dept" IS '系统部门表';
 
 INSERT INTO "public"."ago_dept" ("id", "parent_id", "dept_name", "ancestors", "order_num", "status", "del_flag",
                                  "create_time", "update_time", "create_by", "update_by", "remark", "dept_code")
@@ -143,6 +145,7 @@ COMMENT ON COLUMN "public"."ago_role"."update_time" IS '更新时间';
 COMMENT ON COLUMN "public"."ago_role"."create_by" IS '创建人员';
 COMMENT ON COLUMN "public"."ago_role"."update_by" IS '更新人员';
 COMMENT ON COLUMN "public"."ago_role"."remark" IS '备注';
+COMMENT ON TABLE "public"."ago_role" IS '系统角色表';
 
 INSERT INTO "public"."ago_role" ("id", "role_name", "role_key", "order_num", "data_scope", "status", "del_flag",
                                  "create_time", "update_time", "create_by", "update_by", "remark")
@@ -184,6 +187,7 @@ COMMENT ON COLUMN "public"."ago_post"."update_time" IS '更新时间';
 COMMENT ON COLUMN "public"."ago_post"."create_by" IS '创建人员';
 COMMENT ON COLUMN "public"."ago_post"."update_by" IS '更新人员';
 COMMENT ON COLUMN "public"."ago_post"."remark" IS '备注';
+COMMENT ON TABLE "public"."ago_post" IS '系统岗位表';
 
 
 -- ----------------------------
@@ -229,13 +233,14 @@ COMMENT ON COLUMN "public"."ago_menu"."is_frame" IS '是否为外链（0是 1否
 COMMENT ON COLUMN "public"."ago_menu"."is_visible" IS '菜单状态（0显示 1隐藏）';
 COMMENT ON COLUMN "public"."ago_menu"."icon" IS '菜单图标';
 COMMENT ON COLUMN "public"."ago_menu"."req_method" IS '请求方法';
-COMMENT ON COLUMN "public"."ago_post"."status" IS '状态（默认0）';
-COMMENT ON COLUMN "public"."ago_post"."del_flag" IS '删除标记';
-COMMENT ON COLUMN "public"."ago_post"."create_time" IS '创建时间';
-COMMENT ON COLUMN "public"."ago_post"."update_time" IS '更新时间';
-COMMENT ON COLUMN "public"."ago_post"."create_by" IS '创建人员';
-COMMENT ON COLUMN "public"."ago_post"."update_by" IS '更新人员';
-COMMENT ON COLUMN "public"."ago_post"."remark" IS '备注';
+COMMENT ON COLUMN "public"."ago_menu"."status" IS '状态（默认0）';
+COMMENT ON COLUMN "public"."ago_menu"."del_flag" IS '删除标记';
+COMMENT ON COLUMN "public"."ago_menu"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."ago_menu"."update_time" IS '更新时间';
+COMMENT ON COLUMN "public"."ago_menu"."create_by" IS '创建人员';
+COMMENT ON COLUMN "public"."ago_menu"."update_by" IS '更新人员';
+COMMENT ON COLUMN "public"."ago_menu"."remark" IS '备注';
+COMMENT ON TABLE "public"."ago_menu" IS '菜单权限表';
 
 INSERT INTO "public"."ago_menu" ("id", "menu_name", "menu_key", "parent_id", "path", "menu_type", "is_frame",
                                  "is_visible", "icon", "req_method", status, del_flag, create_time, update_time,
@@ -272,3 +277,4 @@ COMMENT ON COLUMN "public"."ago_session"."is_blocked" IS '是否阻止';
 COMMENT ON COLUMN "public"."ago_session"."expires_at" IS '过期时间';
 COMMENT ON COLUMN "public"."ago_session"."create_at" IS '创建时间';
 COMMENT ON COLUMN "public"."ago_session"."remark" IS '备注';
+COMMENT ON TABLE "public"."ago_session" IS '登录会话记录';

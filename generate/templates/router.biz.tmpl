@@ -1,0 +1,27 @@
+package business
+
+import (
+	"github.com/gin-gonic/gin"
+	"study.com/demo-sqlx-pgx/api"
+	"study.com/demo-sqlx-pgx/global"
+	"study.com/demo-sqlx-pgx/pkg/middleware"
+)
+
+{{- $businessName := .Business}}
+{{- $businessNameNote := .BusinessNote}}
+{{- $businessNamePath := .BusinessPath}}
+{{$tableName := .TableName}}
+// {{$businessName}}Router 路由配置
+func {{$businessName}}Router(r *gin.RouterGroup) {
+	group := r.Group("{{$businessNamePath}}").
+	    Use(middleware.AuthMiddleware(global.TokenMaker)).
+		Use(middleware.AccessControl(global.Enforcer))
+	{
+		group.GET("list", api.{{$businessName}}ListAll)
+		group.POST("p", api.{{$businessName}}Page)
+		group.POST("", api.{{$businessName}}Create)
+		group.PUT("", api.{{$businessName}}Update)
+		group.DELETE(":id", api.{{$businessName}}Delete)
+		group.GET(":id", api.{{$businessName}}Detail)
+	}
+}

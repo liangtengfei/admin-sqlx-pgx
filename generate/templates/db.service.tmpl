@@ -1,0 +1,116 @@
+package service
+
+import (
+	"database/sql"
+	"errors"
+	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
+	"study.com/demo-sqlx-pgx/api/request"
+	model "study.com/demo-sqlx-pgx/api/response"
+	"study.com/demo-sqlx-pgx/global"
+	"study.com/demo-sqlx-pgx/utils"
+)
+{{$businessName := .Business}}
+{{$businessNameNote := .BusinessNote}}
+{{$businessNamePath := .BusinessPath}}
+{{- if eq .ListAll true }}
+func {{$businessName}}List(ctx *gin.Context) ([]model.{{$businessName}}Response, error) {{print "{"}}
+	var result []model.{{$businessName}}Response
+
+	res, err := store.{{$businessName}}List(ctx)
+	if err != nil {
+		global.Log.Error("{{$businessName}}", zap.String("TAG", OperationTypeList), zap.Error(err))
+		return result, ErrQuery
+	}
+
+	err = utils.StructCopy(&result, &res)
+	return result, err
+{{print "}"}}
+{{- end }}
+
+func {{$businessName}}Page(ctx *gin.Context, req request.PaginationRequest) (int64, []model.{{$businessName}}Response, error) {
+	var result []model.{{$businessName}}Response
+
+	total, res, err := store.{{$businessName}}Page(ctx, req)
+	if err != nil {
+		global.Log.Error("{{$businessName}}", zap.String("TAG", OperationTypePage), zap.Error(err))
+		return 0, result, ErrQuery
+	}
+
+	err = utils.StructCopy(&result, &res)
+	return total, result, err
+}
+
+func {{$businessName}}Create(ctx *gin.Context, req request.{{$businessName}}CreateRequest, username string) error {
+	res, err := store.{{$businessName}}Create(ctx, req, username)
+	if err != nil {
+		global.Log.Error("{{$businessName}}", zap.String("TAG", OperationTypeCreate), zap.Error(err))
+		return ErrCreate
+	}
+	if res <= 0 {
+		return ErrCreate
+	}
+
+	return nil
+}
+
+func {{$businessName}}Update(ctx *gin.Context, req request.{{$businessName}}UpdateRequest, username string) error {
+	res, err := store.{{$businessName}}Update(ctx, req, username)
+	if err != nil {
+		global.Log.Error("{{$businessName}}", zap.String("TAG", OperationTypeUpdate), zap.Error(err))
+		return ErrUpdate
+	}
+	if res <= 0 {
+		return ErrUpdate
+	}
+	return nil
+}
+
+func {{$businessName}}DeleteFake(ctx *gin.Context, id int64, username string) error {
+	res, err := store.{{$businessName}}DeleteFake(ctx, id, username)
+	if err != nil {
+		global.Log.Error("{{$businessName}}", zap.String("TAG", OperationTypeDelete), zap.Error(err))
+		return ErrDelete
+	}
+	if res <= 0 {
+		return ErrDelete
+	}
+	return nil
+}
+
+func {{$businessName}}Delete(ctx *gin.Context, id int64) error {
+	res, err := store.{{$businessName}}Delete(ctx, id)
+	if err != nil {
+		global.Log.Error("{{$businessName}}", zap.String("TAG", OperationTypeDelete), zap.Error(err))
+		return ErrDelete
+	}
+	if res <= 0 {
+		return ErrDelete
+	}
+	return nil
+}
+
+func {{$businessName}}Detail(ctx *gin.Context, id int64) (model.{{$businessName}}Response, error) {
+	var result model.{{$businessName}}Response
+
+	res, err := store.{{$businessName}}Detail(ctx, id)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return result, ErrNoRows
+		}
+		global.Log.Error("{{$businessName}}", zap.String("TAG", OperationTypeDelete), zap.Error(err))
+		return result, ErrQuery
+	}
+
+	err = utils.StructCopy(&result, &res)
+	return result, err
+}
+
+func {{$businessName}}BatchCreate(ctx *gin.Context, req []request.{{$businessName}}CreateRequest, username string) (int64, error) {
+	res, err := store.{{$businessName}}CreateBatch(ctx, req, username)
+	if err != nil {
+		global.Log.Error("{{$businessName}}", zap.String("TAG", OperationTypeCreate), zap.Error(err))
+		return 0, ErrCreate
+	}
+	return res, nil
+}

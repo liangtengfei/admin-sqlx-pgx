@@ -1,4 +1,9 @@
-package request
+package response
+
+import (
+	"study.com/demo-sqlx-pgx/utils/datetime"
+	"time"
+)
 {{$businessName := .Business}}
 type {{$businessName}}Response struct {{print "{" -}}
     {{range $index, $element := .Columns}}

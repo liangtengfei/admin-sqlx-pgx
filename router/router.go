@@ -7,6 +7,7 @@ import (
 	"study.com/demo-sqlx-pgx/api"
 	"study.com/demo-sqlx-pgx/pkg/middleware"
 	_ "study.com/demo-sqlx-pgx/resources/docs"
+	"study.com/demo-sqlx-pgx/router/business"
 	"study.com/demo-sqlx-pgx/router/system"
 )
 
@@ -37,5 +38,6 @@ func InitRouter() *gin.Engine {
 	system.OperationLogRouter(root)
 	system.SessionRouter(root)
 
+	business.InitBusinessRouter(root)
 	return r
 }

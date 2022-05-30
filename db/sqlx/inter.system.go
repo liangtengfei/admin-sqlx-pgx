@@ -92,7 +92,7 @@ type Querier interface {
 	OperationLogCreate(ctx context.Context, req request.OperationLogCreateRequest, username string) (int64, error)
 	OperationLogPage(ctx context.Context, req request.PaginationRequest) (int64, []AgoOperationLog, error)
 
-	QuerierNotice
+	QuerierBusiness
 }
 
 var _ Querier = (*SQLStore)(nil)

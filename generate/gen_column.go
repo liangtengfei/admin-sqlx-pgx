@@ -46,11 +46,11 @@ columns.ordinal_position,
 			where description.objoid = (select attribute.attrelid
 										from pg_attribute attribute
 										where attribute.attrelid =
-											  (select oid from pg_class class where class.relname = 'tb_users') and attname =columns.COLUMN_NAME )
+											  (select oid from pg_class class where class.relname = '@TableName') and attname =columns.COLUMN_NAME )
 			  and description.objsubid = (select attribute.attnum
 										  from pg_attribute attribute
 										  where attribute.attrelid =
-												(select oid from pg_class class where class.relname = 'tb_users') and attname =columns.COLUMN_NAME )) as column_comment
+												(select oid from pg_class class where class.relname = '@TableName') and attname =columns.COLUMN_NAME )) as column_comment
 		FROM INFORMATION_SCHEMA.COLUMNS columns
 		WHERE table_catalog = '@TableCatalog'
 		  and table_schema = '@TableSchema'

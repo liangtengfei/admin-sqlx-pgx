@@ -33,6 +33,7 @@ COMMENT ON COLUMN "public"."ago_config"."update_time" IS '更新时间';
 COMMENT ON COLUMN "public"."ago_config"."create_by" IS '创建人员';
 COMMENT ON COLUMN "public"."ago_config"."update_by" IS '更新人员';
 COMMENT ON COLUMN "public"."ago_config"."remark" IS '备注';
+COMMENT ON TABLE "public"."ago_config" IS '系统配置表';
 
 -- ----------------------------
 -- 8、通知公告表
@@ -68,6 +69,7 @@ COMMENT ON COLUMN "public"."ago_notice"."update_time" IS '更新时间';
 COMMENT ON COLUMN "public"."ago_notice"."create_by" IS '创建人员';
 COMMENT ON COLUMN "public"."ago_notice"."update_by" IS '更新人员';
 COMMENT ON COLUMN "public"."ago_notice"."remark" IS '备注';
+COMMENT ON TABLE "public"."ago_notice" IS '通知公告表';
 
 -- ----------------------------
 -- 9、字典类型表
@@ -102,6 +104,7 @@ COMMENT ON COLUMN "public"."ago_dict_type"."update_time" IS '更新时间';
 COMMENT ON COLUMN "public"."ago_dict_type"."create_by" IS '创建人员';
 COMMENT ON COLUMN "public"."ago_dict_type"."update_by" IS '更新人员';
 COMMENT ON COLUMN "public"."ago_dict_type"."remark" IS '备注';
+COMMENT ON TABLE "public"."ago_dict_type" IS '字典类型表';
 
 -- ----------------------------
 -- 10、字典数据表
@@ -144,6 +147,7 @@ COMMENT ON COLUMN "public"."ago_dict_data"."update_time" IS '更新时间';
 COMMENT ON COLUMN "public"."ago_dict_data"."create_by" IS '创建人员';
 COMMENT ON COLUMN "public"."ago_dict_data"."update_by" IS '更新人员';
 COMMENT ON COLUMN "public"."ago_dict_data"."remark" IS '备注';
+COMMENT ON TABLE "public"."ago_dict_data" IS '字典数据表';
 
 -- ----------------------------
 -- 11、操作日志表
@@ -193,6 +197,7 @@ COMMENT ON COLUMN "public"."ago_operation_log"."status" IS '状态（0正常 1�
 COMMENT ON COLUMN "public"."ago_operation_log"."create_by" IS '操作人员';
 COMMENT ON COLUMN "public"."ago_operation_log"."create_time" IS '创建时间';
 COMMENT ON COLUMN "public"."ago_operation_log"."remark" IS '备注';
+COMMENT ON TABLE "public"."ago_operation_log" IS '操作日志表';
 
 -- ----------------------------
 -- 12、用户角色关联表
@@ -204,6 +209,7 @@ CREATE TABLE "public"."ago_user_role"
     "role_id" int8 NOT NULL,
     PRIMARY KEY ("user_id", "role_id")
 );
+COMMENT ON TABLE "public"."ago_user_role" IS '用户角色关联表';
 -- ----------------------------
 -- 13、角色部门关联表
 -- ----------------------------
@@ -214,6 +220,7 @@ CREATE TABLE "public"."ago_role_dept"
     "dept_id" int8 NOT NULL,
     PRIMARY KEY ("role_id", "dept_id")
 );
+COMMENT ON TABLE "public"."ago_role_dept" IS '角色部门关联表';
 -- ----------------------------
 -- 14、角色菜单关联表
 -- ----------------------------
@@ -224,3 +231,4 @@ CREATE TABLE "public"."ago_role_menu"
     "menu_id" int8 NOT NULL,
     PRIMARY KEY ("role_id", "menu_id")
 );
+COMMENT ON TABLE "public"."ago_role_menu" IS '角色菜单关联表';

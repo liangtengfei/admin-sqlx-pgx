@@ -1,0 +1,17 @@
+package db
+
+import (
+	"time"
+)
+// {{.TableName | toUpperCamel}} {{.TableComment}}
+type {{.TableName | toUpperCamel}} struct {
+{{- range $index, $element := .Columns}}
+    {{$element.ColumnName | toUpperCamel}}
+    {{- if eq $element.DataType "varchar"}} string
+    {{- else if eq $element.DataType "timestamp"}} time.Time
+    {{- else if eq $element.DataType "int4"}} int64
+    {{- else if eq $element.DataType "int8"}} int64
+    {{- else if eq $element.DataType "text"}} string
+    {{- end}} `json:"{{$element.ColumnName | toLowerCamel}}" db:"{{$element.ColumnName}}"` // {{- if $element.ColumnComment.Valid }}{{$element.ColumnComment.String}}{{- end }}
+{{- end }}
+}
