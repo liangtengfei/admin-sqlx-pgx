@@ -7,6 +7,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"strings"
 	"study.com/demo-sqlx-pgx/api/request"
+	"study.com/demo-sqlx-pgx/db/sqlx/internal"
 	"study.com/demo-sqlx-pgx/utils"
 	"time"
 )
@@ -130,8 +131,8 @@ func userFindByUsernameSQL(username string) (string, []interface{}, error) {
 	return baseQuerySQLBuilder(TBNameUser).Where(sq.Eq{"user_name": username}).Limit(1).ToSql()
 }
 
-func (store *SQLStore) UserFindByUsername(username string) (AgoUser, error) {
-	var result AgoUser
+func (store *SQLStore) UserFindByUsername(username string) (internal.AgoUser, error) {
+	var result internal.AgoUser
 
 	sql, args, err := userFindByUsernameSQL(username)
 	if err != nil {
@@ -146,8 +147,8 @@ func userFindByMobileSQL(mobile string) (string, []interface{}, error) {
 	return baseQuerySQLBuilder(TBNameUser).Where(sq.Eq{"mobile": mobile}).Limit(1).ToSql()
 }
 
-func (store *SQLStore) UserFindByMobile(mobile string) (AgoUser, error) {
-	var result AgoUser
+func (store *SQLStore) UserFindByMobile(mobile string) (internal.AgoUser, error) {
+	var result internal.AgoUser
 
 	sql, args, err := userFindByMobileSQL(mobile)
 	if err != nil {
@@ -175,8 +176,8 @@ func userFindByIdSQL(id int64) (string, []interface{}, error) {
 	return baseQuerySQLBuilder(TBNameUser).Where(sq.Eq{"id": id}).Limit(1).ToSql()
 }
 
-func (store *SQLStore) UserFindById(id int64) (AgoUser, error) {
-	var result AgoUser
+func (store *SQLStore) UserFindById(id int64) (internal.AgoUser, error) {
+	var result internal.AgoUser
 	sql, args, err := userFindByIdSQL(id)
 	if err != nil {
 		return result, err
@@ -211,11 +212,11 @@ func userPageAndKeywordSQL(req request.PaginationRequest) (querySQL, countSQL st
 	return querySQL, countSQL, args, err
 }
 
-func (store *SQLStore) UserPageAndKeyword(ctx context.Context, req request.PaginationRequest) (int64, []AgoUser, error) {
-	var result []AgoUser
+func (store *SQLStore) UserPageAndKeyword(ctx context.Context, req request.PaginationRequest) (int64, []internal.AgoUser, error) {
+	var result []internal.AgoUser
 	var total int64
 
-	fail := func(err error) (int64, []AgoUser, error) {
+	fail := func(err error) (int64, []internal.AgoUser, error) {
 		return 0, nil, err
 	}
 
@@ -237,8 +238,8 @@ func (store *SQLStore) UserPageAndKeyword(ctx context.Context, req request.Pagin
 	return total, result, nil
 }
 
-func (store *SQLStore) UserDetail(req request.ByIdRequest) (AgoUser, error) {
-	var result AgoUser
+func (store *SQLStore) UserDetail(req request.ByIdRequest) (internal.AgoUser, error) {
+	var result internal.AgoUser
 
 	sql, args, err := DetailSQLBuilder(TBNameUser, req.Id)
 	if err != nil {

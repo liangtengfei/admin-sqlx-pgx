@@ -23,6 +23,19 @@ func MenuListByRoleId(ctx *gin.Context, id int64) ([]model.MenuResponse, error) 
 	return result, err
 }
 
+func MenuListByRoleIds(ctx *gin.Context, id []int64) ([]model.MenuResponse, error) {
+	var result []model.MenuResponse
+
+	rows, err := store.MenuListByRoleIds(ctx, id)
+	if err != nil {
+		global.Log.Error(BizTitleMenu, zap.String("TAG", OperationTypeQuery), zap.Error(err))
+		return result, ErrQuery
+	}
+
+	err = utils.StructCopy(&result, &rows)
+	return result, err
+}
+
 func MenuPage(ctx *gin.Context, req request.PaginationRequest) (int64, []model.MenuResponse, error) {
 	var result []model.MenuResponse
 

@@ -8,10 +8,12 @@ import (
 	"study.com/demo-sqlx-pgx/api/request"
 	"time"
 )
-{{$businessName := .Business}}
-{{$businessNameNote := .BusinessNote}}
-{{$businessNamePath := .BusinessPath}}
-{{$tableName := .TableName}}
+{{- $businessName := .Biz.Business}}
+{{- $businessComment := .Biz.BusinessComment}}
+{{- $businessPath := .Biz.Business | toLowerCamel}}
+{{- $tableName := .Biz.TableName}}
+{{- $tableComment := .Biz.TableComment}}
+{{$tableSchema := .Biz.TableName | toUpperCamel}}
 func {{$businessName | toLowerCamel}}CreateSQL(req request.{{$businessName}}CreateRequest, username string) (string, []interface{}, error) {{print "{"}}
 	return SQLBuilder().Insert("{{$tableName}}").
 		Columns(
@@ -164,8 +166,8 @@ func (store *SQLStore) {{$businessName}}DeleteFake(ctx context.Context, id int64
 	return result, err
 }
 
-func (store *SQLStore) {{$businessName}}Detail(ctx context.Context, id int64) ({{.TableName | toUpperCamel}}, error) {
-	var result {{.TableName | toUpperCamel}}
+func (store *SQLStore) {{$businessName}}Detail(ctx context.Context, id int64) (internal.{{$tableSchema}}, error) {
+	var result internal.{{$tableSchema}}
 
 	sql, args, err := DetailSQLBuilder("{{$tableName}}", id)
 	if err != nil {
@@ -207,11 +209,11 @@ func {{$businessName | toLowerCamel}}PageAndKeywordSQL(req request.PaginationReq
 	return querySQL, countSQL, args, err
 }
 
-func (store *SQLStore) {{$businessName}}Page(ctx context.Context, req request.PaginationRequest) (int64, []{{.TableName | toUpperCamel}}, error) {
-	var result []{{.TableName | toUpperCamel}}
+func (store *SQLStore) {{$businessName}}Page(ctx context.Context, req request.PaginationRequest) (int64, []internal.{{$tableSchema}}, error) {
+	var result []internal.{{$tableSchema}}
 	var total int64
 
-	fail := func(err error) (int64, []{{.TableName | toUpperCamel}}, error) {
+	fail := func(err error) (int64, []internal.{{$tableSchema}}, error) {
 		return 0, nil, err
 	}
 
@@ -233,9 +235,8 @@ func (store *SQLStore) {{$businessName}}Page(ctx context.Context, req request.Pa
 	return total, result, nil
 }
 
-{{- if eq .ListAll true }}
-func (store *SQLStore) {{$businessName}}List(ctx context.Context) ([]{{.TableName | toUpperCamel}}, error) {
-	var result []{{.TableName | toUpperCamel}}
+func (store *SQLStore) {{$businessName}}List(ctx context.Context) ([]internal.{{$tableSchema}}, error) {
+	var result []internal.{{$tableSchema}}
 
 	sql, args, err := SQLBuilder().Select("*").From("{{$tableName}}").Where(sq.And{
 		sq.Eq{"status": "0"},
@@ -249,10 +250,9 @@ func (store *SQLStore) {{$businessName}}List(ctx context.Context) ([]{{.TableNam
 
 	return result, err
 }
-{{- end }}
 
-func (store *SQLStore) {{$businessName}}ListByIds(ctx context.Context, ids string) ([]{{.TableName | toUpperCamel}}, error) {
-	var result []{{.TableName | toUpperCamel}}
+func (store *SQLStore) {{$businessName}}ListByIds(ctx context.Context, ids string) ([]internal.{{$tableSchema}}, error) {
+	var result []internal.{{$tableSchema}}
 
 	sql, args, err := SQLBuilder().Select("*").From("{{$tableName}}").
 		Where("id = ANY(STRING_TO_ARRAY(?, ',')::int8[])", ids).

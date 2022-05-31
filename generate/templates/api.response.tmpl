@@ -4,7 +4,12 @@ import (
 	"study.com/demo-sqlx-pgx/utils/datetime"
 	"time"
 )
-{{$businessName := .Business}}
+{{- $businessName := .Biz.Business}}
+{{- $businessComment := .Biz.BusinessComment}}
+{{- $businessPath := .Biz.Business | toLowerCamel}}
+{{- $tableName := .Biz.TableName}}
+{{- $tableComment := .Biz.TableComment}}
+{{$tableSchema := .Biz.TableName | toUpperCamel}}
 type {{$businessName}}Response struct {{print "{" -}}
     {{range $index, $element := .Columns}}
         {{- if eq $element.DataType "timestamp"}}

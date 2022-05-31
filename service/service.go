@@ -22,6 +22,7 @@ const (
 	BizTitleDictData     = "字典数据"
 	BizTitleSession      = "登录会话"
 	BizTitleOperationLog = "系统日志"
+	BizTitleCasbin       = "权限策略"
 )
 
 const (

@@ -6,6 +6,7 @@ import (
 	sq "github.com/Masterminds/squirrel"
 	"strings"
 	"study.com/demo-sqlx-pgx/api/request"
+	"study.com/demo-sqlx-pgx/db/sqlx/internal"
 	"study.com/demo-sqlx-pgx/global/consts"
 	"time"
 )
@@ -81,8 +82,8 @@ func (store *SQLStore) DeptDeleteFake(ctx context.Context, id int64, username st
 	return result, err
 }
 
-func (store *SQLStore) DeptDetail(ctx context.Context, id int64) (AgoDept, error) {
-	var result AgoDept
+func (store *SQLStore) DeptDetail(ctx context.Context, id int64) (internal.AgoDept, error) {
+	var result internal.AgoDept
 
 	sql, args, err := DetailSQLBuilder(TBNameDept, id)
 	if err != nil {
@@ -127,11 +128,11 @@ func deptPageAndKeywordSQL(ctx context.Context, req request.PaginationRequest) (
 	return querySQL, countSQL, args, err
 }
 
-func (store *SQLStore) DeptPage(ctx context.Context, req request.PaginationRequest) (int64, []AgoDept, error) {
-	var result []AgoDept
+func (store *SQLStore) DeptPage(ctx context.Context, req request.PaginationRequest) (int64, []internal.AgoDept, error) {
+	var result []internal.AgoDept
 	var total int64
 
-	fail := func(err error) (int64, []AgoDept, error) {
+	fail := func(err error) (int64, []internal.AgoDept, error) {
 		return 0, nil, err
 	}
 
@@ -153,8 +154,8 @@ func (store *SQLStore) DeptPage(ctx context.Context, req request.PaginationReque
 	return total, result, nil
 }
 
-func (store *SQLStore) DeptList(ctx context.Context) ([]AgoDept, error) {
-	var result []AgoDept
+func (store *SQLStore) DeptList(ctx context.Context) ([]internal.AgoDept, error) {
+	var result []internal.AgoDept
 	sql := SQLBuilder().Select("*").From(TBNameDept).Where(sq.And{
 		sq.Eq{"status": "0"},
 		sq.Eq{"del_flag": "N"},
@@ -173,8 +174,8 @@ func (store *SQLStore) DeptList(ctx context.Context) ([]AgoDept, error) {
 	return result, err
 }
 
-func (store *SQLStore) DeptListByRoleId(ctx context.Context, id int64) ([]AgoDept, error) {
-	var result []AgoDept
+func (store *SQLStore) DeptListByRoleId(ctx context.Context, id int64) ([]internal.AgoDept, error) {
+	var result []internal.AgoDept
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameDept).
 		Where("id IN (SELECT dept_id FROM ago_role_dept WHERE role_id = ?)", id).

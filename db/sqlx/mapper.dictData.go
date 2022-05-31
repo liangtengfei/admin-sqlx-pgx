@@ -6,6 +6,7 @@ import (
 	sq "github.com/Masterminds/squirrel"
 	"strings"
 	"study.com/demo-sqlx-pgx/api/request"
+	"study.com/demo-sqlx-pgx/db/sqlx/internal"
 	"time"
 )
 
@@ -81,8 +82,8 @@ func (store *SQLStore) DictDataDeleteFake(ctx context.Context, id int64, usernam
 	return result, err
 }
 
-func (store *SQLStore) DictDataDetail(ctx context.Context, id int64) (AgoDictData, error) {
-	var result AgoDictData
+func (store *SQLStore) DictDataDetail(ctx context.Context, id int64) (internal.AgoDictData, error) {
+	var result internal.AgoDictData
 	sql, args, err := DetailSQLBuilder(TBNameDictData, id)
 	if err != nil {
 		return result, err
@@ -122,11 +123,11 @@ func dictDataPageAndKeywordSQL(req request.PaginationRequest) (querySQL, countSQ
 	return querySQL, countSQL, args, err
 }
 
-func (store *SQLStore) DictDataPage(ctx context.Context, req request.PaginationRequest) (int64, []AgoDictData, error) {
-	var result []AgoDictData
+func (store *SQLStore) DictDataPage(ctx context.Context, req request.PaginationRequest) (int64, []internal.AgoDictData, error) {
+	var result []internal.AgoDictData
 	var total int64
 
-	fail := func(err error) (int64, []AgoDictData, error) {
+	fail := func(err error) (int64, []internal.AgoDictData, error) {
 		return 0, nil, err
 	}
 
@@ -148,8 +149,8 @@ func (store *SQLStore) DictDataPage(ctx context.Context, req request.PaginationR
 	return total, result, nil
 }
 
-func (store *SQLStore) DictDataList(ctx context.Context) ([]AgoDictData, error) {
-	var result []AgoDictData
+func (store *SQLStore) DictDataList(ctx context.Context) ([]internal.AgoDictData, error) {
+	var result []internal.AgoDictData
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameDictData).Where(sq.And{
 		sq.Eq{"status": "0"},
@@ -164,8 +165,8 @@ func (store *SQLStore) DictDataList(ctx context.Context) ([]AgoDictData, error) 
 	return result, err
 }
 
-func (store *SQLStore) DictDataListByIds(ctx context.Context, ids string) ([]AgoDictData, error) {
-	var result []AgoDictData
+func (store *SQLStore) DictDataListByIds(ctx context.Context, ids string) ([]internal.AgoDictData, error) {
+	var result []internal.AgoDictData
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameDictData).
 		Where("id = ANY(STRING_TO_ARRAY(?, ',')::int8[])", ids).

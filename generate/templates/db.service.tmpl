@@ -10,10 +10,12 @@ import (
 	"study.com/demo-sqlx-pgx/global"
 	"study.com/demo-sqlx-pgx/utils"
 )
-{{$businessName := .Business}}
-{{$businessNameNote := .BusinessNote}}
-{{$businessNamePath := .BusinessPath}}
-{{- if eq .ListAll true }}
+{{- $businessName := .Biz.Business}}
+{{- $businessComment := .Biz.BusinessComment}}
+{{- $businessPath := .Biz.Business | toLowerCamel}}
+{{- $tableName := .Biz.TableName}}
+{{- $tableComment := .Biz.TableComment}}
+{{$tableSchema := .Biz.TableName | toUpperCamel}}
 func {{$businessName}}List(ctx *gin.Context) ([]model.{{$businessName}}Response, error) {{print "{"}}
 	var result []model.{{$businessName}}Response
 
@@ -26,7 +28,6 @@ func {{$businessName}}List(ctx *gin.Context) ([]model.{{$businessName}}Response,
 	err = utils.StructCopy(&result, &res)
 	return result, err
 {{print "}"}}
-{{- end }}
 
 func {{$businessName}}Page(ctx *gin.Context, req request.PaginationRequest) (int64, []model.{{$businessName}}Response, error) {
 	var result []model.{{$businessName}}Response

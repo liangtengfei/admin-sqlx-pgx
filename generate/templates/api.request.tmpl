@@ -1,10 +1,17 @@
 package request
-{{$businessName := .Business}}
+{{- $businessName := .Biz.Business}}
+{{- $businessComment := .Biz.BusinessComment}}
+{{- $businessPath := .Biz.Business | toLowerCamel}}
+{{- $tableName := .Biz.TableName}}
+{{- $tableComment := .Biz.TableComment}}
+{{$tableSchema := .Biz.TableName | toUpperCamel}}
 type {{$businessName}}CreateRequest struct {{print "{" -}}
     {{range $index, $element := .Columns}}
         {{- if eq $index 0}}
         {{- else if contains $element.ColumnName "update_"}}
         {{- else if contains $element.ColumnName "create_"}}
+        {{- else if contains $element.ColumnName "status"}}
+        {{- else if contains $element.ColumnName "del_flag"}}
         {{- else}}
         {{$element.ColumnName | toUpperCamel}}
             {{- if eq $element.DataType "varchar"}} string
@@ -20,6 +27,8 @@ type {{$businessName}}UpdateRequest struct {{print "{" -}}
     {{range $index, $element := .Columns}}
         {{- if contains $element.ColumnName "update_"}}
         {{- else if contains $element.ColumnName "create_"}}
+        {{- else if contains $element.ColumnName "status"}}
+        {{- else if contains $element.ColumnName "del_flag"}}
         {{- else}}
         {{$element.ColumnName | toUpperCamel}}
             {{- if eq $element.DataType "varchar"}} string

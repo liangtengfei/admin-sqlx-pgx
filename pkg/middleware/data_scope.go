@@ -19,7 +19,14 @@ func DataScope() gin.HandlerFunc {
 		})
 	}
 	return func(ctx *gin.Context) {
-		payload := ctx.MustGet(consts.AuthorizationPayloadKey).(*token.Payload)
+		var payload *token.Payload
+		ctxGet, ok := ctx.Get(consts.AuthorizationPayloadKey)
+		if ok {
+			payload = ctxGet.(*token.Payload)
+		} else {
+			fail(ctx, http.StatusUnauthorized, "未查询到登录信息!")
+			return
+		}
 
 		user, err := service.UserFindByUsername(ctx, payload.Username)
 		if err != nil {
@@ -27,8 +34,15 @@ func DataScope() gin.HandlerFunc {
 			return
 		}
 
+		var req request.DataScopeRequest
+
 		// 超级管理员无需过滤
 		if user.IsAdmin() {
+			req = request.DataScopeRequest{
+				Scope:  consts.ScopeDataAll.String(),
+				Params: nil,
+			}
+			ctx.Set(consts.ScopeDataKey, req)
 			ctx.Next()
 			return
 		}
@@ -58,7 +72,7 @@ func DataScope() gin.HandlerFunc {
 			scopeData = append(scopeData, user.UserName)
 		}
 
-		req := request.DataScopeRequest{
+		req = request.DataScopeRequest{
 			Scope:  role.DataScope,
 			Params: scopeData,
 		}

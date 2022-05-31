@@ -6,6 +6,7 @@ import (
 	sq "github.com/Masterminds/squirrel"
 	"strings"
 	"study.com/demo-sqlx-pgx/api/request"
+	"study.com/demo-sqlx-pgx/db/sqlx/internal"
 	"time"
 )
 
@@ -79,8 +80,8 @@ func (store *SQLStore) NoticeDeleteFake(ctx context.Context, id int64, username 
 	return result, err
 }
 
-func (store *SQLStore) NoticeDetail(ctx context.Context, id int64) (AgoNotice, error) {
-	var result AgoNotice
+func (store *SQLStore) NoticeDetail(ctx context.Context, id int64) (internal.AgoNotice, error) {
+	var result internal.AgoNotice
 
 	sql, args, err := DetailSQLBuilder(TBNameNotice, id)
 	if err != nil {
@@ -121,11 +122,11 @@ func noticePageAndKeywordSQL(req request.PaginationRequest) (querySQL, countSQL 
 	return querySQL, countSQL, args, err
 }
 
-func (store *SQLStore) NoticePage(ctx context.Context, req request.PaginationRequest) (int64, []AgoNotice, error) {
-	var result []AgoNotice
+func (store *SQLStore) NoticePage(ctx context.Context, req request.PaginationRequest) (int64, []internal.AgoNotice, error) {
+	var result []internal.AgoNotice
 	var total int64
 
-	fail := func(err error) (int64, []AgoNotice, error) {
+	fail := func(err error) (int64, []internal.AgoNotice, error) {
 		return 0, nil, err
 	}
 
@@ -147,8 +148,8 @@ func (store *SQLStore) NoticePage(ctx context.Context, req request.PaginationReq
 	return total, result, nil
 }
 
-func (store *SQLStore) NoticeList(ctx context.Context) ([]AgoNotice, error) {
-	var result []AgoNotice
+func (store *SQLStore) NoticeList(ctx context.Context) ([]internal.AgoNotice, error) {
+	var result []internal.AgoNotice
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameNotice).Where(sq.And{
 		sq.Eq{"status": "0"},
@@ -163,8 +164,8 @@ func (store *SQLStore) NoticeList(ctx context.Context) ([]AgoNotice, error) {
 	return result, err
 }
 
-func (store *SQLStore) NoticeListByIds(ctx context.Context, ids string) ([]AgoNotice, error) {
-	var result []AgoNotice
+func (store *SQLStore) NoticeListByIds(ctx context.Context, ids string) ([]internal.AgoNotice, error) {
+	var result []internal.AgoNotice
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameNotice).
 		Where("id = ANY(STRING_TO_ARRAY(?, ',')::int8[])", ids).

@@ -7,7 +7,6 @@ import (
 	"study.com/demo-sqlx-pgx/api"
 	"study.com/demo-sqlx-pgx/pkg/middleware"
 	_ "study.com/demo-sqlx-pgx/resources/docs"
-	"study.com/demo-sqlx-pgx/router/business"
 	"study.com/demo-sqlx-pgx/router/system"
 )
 
@@ -28,6 +27,7 @@ func InitRouter() *gin.Engine {
 	root.GET("/captcha", api.GenerateCaptcha)
 
 	system.UserRouter(root)
+	system.UserOnlineRouter(root)
 	system.DeptRouter(root)
 	system.RoleRouter(root)
 	system.MenuRouter(root)
@@ -38,6 +38,8 @@ func InitRouter() *gin.Engine {
 	system.OperationLogRouter(root)
 	system.SessionRouter(root)
 
-	business.InitBusinessRouter(root)
+	// 其他业务路由
+	entryRouter(root)
+
 	return r
 }

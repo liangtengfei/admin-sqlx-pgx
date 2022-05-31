@@ -7,29 +7,10 @@ import (
 	"study.com/demo-sqlx-pgx/service"
 )
 
-// ArticleListAll godoc
-// @Summary      通知公告列表查询
-// @Description  获取所有通知公告信息
-// @Tags         通知公告
-// @Accept       json
-// @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.ArticleResponse}
-// @Failure      500       {object}  response.RestRes
-// @Router       /article/list [get]
-func ArticleListAll(ctx *gin.Context) {
-	res, err := service.ArticleList(ctx)
-	if err != nil {
-		response.ErrorMsg(ctx, err.Error())
-		return
-	}
-
-	response.SuccessData(ctx, res)
-}
-
 // ArticlePage godoc
-// @Summary      通知公告分页查询
-// @Description  分页获取所有通知公告信息
-// @Tags         通知公告
+// @Summary      文章文稿分页查询
+// @Description  分页获取所有文章文稿信息
+// @Tags         文章文稿
 // @Accept       json
 // @Produce      json
 // @Success      200       {object}  response.RestRes{data=model.ArticleResponse}
@@ -52,12 +33,12 @@ func ArticlePage(ctx *gin.Context) {
 }
 
 // ArticleCreate godoc
-// @Summary      通知公告新增
-// @Description  通知公告新增信息
-// @Tags         通知公告
+// @Summary      文章文稿新增
+// @Description  文章文稿新增信息
+// @Tags         文章文稿
 // @Accept       json
 // @Produce      json
-// @Param        req  body     request.ArticleCreateRequest  true  "新增通知公告信息"
+// @Param        req  body     request.ArticleCreateRequest  true  "新增文章文稿信息"
 // @Success      200       {object}  response.RestRes
 // @Failure      500       {object}  response.RestRes
 // @Router       /article [post]
@@ -76,12 +57,12 @@ func ArticleCreate(ctx *gin.Context) {
 }
 
 // ArticleUpdate godoc
-// @Summary      通知公告更新
-// @Description  通知公告更新信息
-// @Tags         通知公告
+// @Summary      文章文稿更新
+// @Description  文章文稿更新信息
+// @Tags         文章文稿
 // @Accept       json
 // @Produce      json
-// @Param        req  body     request.ArticleUpdateRequest  true  "更新通知公告信息"
+// @Param        req  body     request.ArticleUpdateRequest  true  "更新文章文稿信息"
 // @Success      200       {object}  response.RestRes
 // @Failure      500       {object}  response.RestRes
 // @Router       /article [put]
@@ -100,9 +81,9 @@ func ArticleUpdate(ctx *gin.Context) {
 }
 
 // ArticleDelete godoc
-// @Summary      通知公告伪删除
-// @Description  通知公告信息伪删除
-// @Tags         通知公告
+// @Summary      文章文稿伪删除
+// @Description  文章文稿信息伪删除
+// @Tags         文章文稿
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "标识"
@@ -126,9 +107,9 @@ func ArticleDelete(ctx *gin.Context) {
 }
 
 // ArticleDetail godoc
-// @Summary      通知公告详情
-// @Description  通知公告详情信息
-// @Tags         通知公告
+// @Summary      文章文稿详情
+// @Description  文章文稿详情信息
+// @Tags         文章文稿
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "标识"

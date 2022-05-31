@@ -6,6 +6,7 @@ import (
 	sq "github.com/Masterminds/squirrel"
 	"strings"
 	"study.com/demo-sqlx-pgx/api/request"
+	"study.com/demo-sqlx-pgx/db/sqlx/internal"
 	"time"
 )
 
@@ -64,11 +65,11 @@ func operationLogPageAndKeywordSQL(req request.PaginationRequest) (querySQL, cou
 	return querySQL, countSQL, args, err
 }
 
-func (store *SQLStore) OperationLogPage(ctx context.Context, req request.PaginationRequest) (int64, []AgoOperationLog, error) {
-	var result []AgoOperationLog
+func (store *SQLStore) OperationLogPage(ctx context.Context, req request.PaginationRequest) (int64, []internal.AgoOperationLog, error) {
+	var result []internal.AgoOperationLog
 	var total int64
 
-	fail := func(err error) (int64, []AgoOperationLog, error) {
+	fail := func(err error) (int64, []internal.AgoOperationLog, error) {
 		return 0, nil, err
 	}
 

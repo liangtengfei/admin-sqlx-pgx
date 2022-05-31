@@ -5,6 +5,7 @@ import (
 	sq "github.com/Masterminds/squirrel"
 	"strings"
 	"study.com/demo-sqlx-pgx/api/request"
+	"study.com/demo-sqlx-pgx/db/sqlx/internal"
 	"time"
 )
 
@@ -133,8 +134,8 @@ func (store *SQLStore) ArticleDeleteFake(ctx context.Context, id int64, username
 	return result, err
 }
 
-func (store *SQLStore) ArticleDetail(ctx context.Context, id int64) (CmsArticle, error) {
-	var result CmsArticle
+func (store *SQLStore) ArticleDetail(ctx context.Context, id int64) (internal.CmsArticle, error) {
+	var result internal.CmsArticle
 
 	sql, args, err := DetailSQLBuilder("cms_article", id)
 	if err != nil {
@@ -176,11 +177,11 @@ func articlePageAndKeywordSQL(req request.PaginationRequest) (querySQL, countSQL
 	return querySQL, countSQL, args, err
 }
 
-func (store *SQLStore) ArticlePage(ctx context.Context, req request.PaginationRequest) (int64, []CmsArticle, error) {
-	var result []CmsArticle
+func (store *SQLStore) ArticlePage(ctx context.Context, req request.PaginationRequest) (int64, []internal.CmsArticle, error) {
+	var result []internal.CmsArticle
 	var total int64
 
-	fail := func(err error) (int64, []CmsArticle, error) {
+	fail := func(err error) (int64, []internal.CmsArticle, error) {
 		return 0, nil, err
 	}
 
@@ -201,8 +202,9 @@ func (store *SQLStore) ArticlePage(ctx context.Context, req request.PaginationRe
 
 	return total, result, nil
 }
-func (store *SQLStore) ArticleList(ctx context.Context) ([]CmsArticle, error) {
-	var result []CmsArticle
+
+func (store *SQLStore) ArticleList(ctx context.Context) ([]internal.CmsArticle, error) {
+	var result []internal.CmsArticle
 
 	sql, args, err := SQLBuilder().Select("*").From("cms_article").Where(sq.And{
 		sq.Eq{"status": "0"},
@@ -217,8 +219,8 @@ func (store *SQLStore) ArticleList(ctx context.Context) ([]CmsArticle, error) {
 	return result, err
 }
 
-func (store *SQLStore) ArticleListByIds(ctx context.Context, ids string) ([]CmsArticle, error) {
-	var result []CmsArticle
+func (store *SQLStore) ArticleListByIds(ctx context.Context, ids string) ([]internal.CmsArticle, error) {
+	var result []internal.CmsArticle
 
 	sql, args, err := SQLBuilder().Select("*").From("cms_article").
 		Where("id = ANY(STRING_TO_ARRAY(?, ',')::int8[])", ids).

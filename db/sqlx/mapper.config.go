@@ -6,6 +6,7 @@ import (
 	sq "github.com/Masterminds/squirrel"
 	"strings"
 	"study.com/demo-sqlx-pgx/api/request"
+	"study.com/demo-sqlx-pgx/db/sqlx/internal"
 	"time"
 )
 
@@ -102,8 +103,8 @@ func (store *SQLStore) ConfigDeleteFake(ctx context.Context, id int64, username 
 	return result, err
 }
 
-func (store *SQLStore) ConfigDetail(ctx context.Context, id int64) (AgoConfig, error) {
-	var result AgoConfig
+func (store *SQLStore) ConfigDetail(ctx context.Context, id int64) (internal.AgoConfig, error) {
+	var result internal.AgoConfig
 
 	sql, args, err := DetailSQLBuilder(TBNameConfig, id)
 	if err != nil {
@@ -144,11 +145,11 @@ func configPageAndKeywordSQL(req request.PaginationRequest) (querySQL, countSQL 
 	return querySQL, countSQL, args, err
 }
 
-func (store *SQLStore) ConfigPage(ctx context.Context, req request.PaginationRequest) (int64, []AgoConfig, error) {
-	var result []AgoConfig
+func (store *SQLStore) ConfigPage(ctx context.Context, req request.PaginationRequest) (int64, []internal.AgoConfig, error) {
+	var result []internal.AgoConfig
 	var total int64
 
-	fail := func(err error) (int64, []AgoConfig, error) {
+	fail := func(err error) (int64, []internal.AgoConfig, error) {
 		return 0, nil, err
 	}
 
@@ -170,8 +171,8 @@ func (store *SQLStore) ConfigPage(ctx context.Context, req request.PaginationReq
 	return total, result, nil
 }
 
-func (store *SQLStore) ConfigList(ctx context.Context) ([]AgoConfig, error) {
-	var result []AgoConfig
+func (store *SQLStore) ConfigList(ctx context.Context) ([]internal.AgoConfig, error) {
+	var result []internal.AgoConfig
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameConfig).Where(sq.And{
 		sq.Eq{"status": "0"},
@@ -186,8 +187,8 @@ func (store *SQLStore) ConfigList(ctx context.Context) ([]AgoConfig, error) {
 	return result, err
 }
 
-func (store *SQLStore) ConfigListByIds(ctx context.Context, ids string) ([]AgoConfig, error) {
-	var result []AgoConfig
+func (store *SQLStore) ConfigListByIds(ctx context.Context, ids string) ([]internal.AgoConfig, error) {
+	var result []internal.AgoConfig
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameConfig).
 		Where("id = ANY(STRING_TO_ARRAY(?, ',')::int8[])", ids).

@@ -42,6 +42,22 @@ func UserFindByUsername(ctx *gin.Context, username string) (model.UserResponse, 
 	return result, err
 }
 
+func UserOnlyByUsername(ctx *gin.Context, username string) (model.UserResponse, error) {
+	res, err := store.UserFindByUsername(username)
+	if err != nil {
+		global.Log.Error(BizTitleUser, zap.String("TAG", "根据用户名查找"), zap.Error(err))
+		return model.UserResponse{}, ErrQuery
+	}
+
+	var result model.UserResponse
+	err = utils.StructCopy(&result, &res)
+	if err != nil {
+		return result, err
+	}
+
+	return result, err
+}
+
 func UserFindByMobile(ctx *gin.Context, username string) (model.UserResponse, error) {
 	res, err := store.UserFindByMobile(username)
 	if err != nil {

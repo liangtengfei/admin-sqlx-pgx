@@ -1,13 +1,15 @@
-package db
+package internal
 
 import (
 	"context"
     "study.com/demo-sqlx-pgx/api/request"
 )
-{{- $businessName := .Business}}
-{{- $businessNameNote := .BusinessNote}}
-{{- $businessNamePath := .BusinessPath}}
-{{$tableName := .TableName}}
+{{- $businessName := .Biz.Business}}
+{{- $businessComment := .Biz.BusinessComment}}
+{{- $businessPath := .Biz.Business | toLowerCamel}}
+{{- $tableName := .Biz.TableName}}
+{{- $tableComment := .Biz.TableComment}}
+{{$tableSchema := .Biz.TableName | toUpperCamel}}
 // Querier{{$businessName}} 业务接口
 type Querier{{$businessName}} interface {
     {{$businessName}}Create(ctx context.Context, req request.{{$businessName}}CreateRequest, username string) (int64, error)
@@ -15,8 +17,8 @@ type Querier{{$businessName}} interface {
     {{$businessName}}Update(ctx context.Context, req request.{{$businessName}}UpdateRequest, username string) (int64, error)
     {{$businessName}}Delete(ctx context.Context, id int64) (int64, error)
     {{$businessName}}DeleteFake(ctx context.Context, id int64, username string) (int64, error)
-    {{$businessName}}Detail(ctx context.Context, id int64) ({{.TableName | toUpperCamel}}, error)
-    {{$businessName}}Page(ctx context.Context, req request.PaginationRequest) (int64, []{{.TableName | toUpperCamel}}, error)
-    {{$businessName}}List(ctx context.Context) ([]{{.TableName | toUpperCamel}}, error)
-    {{$businessName}}ListByIds(ctx context.Context, ids string) ([]{{.TableName | toUpperCamel}}, error)
+    {{$businessName}}Detail(ctx context.Context, id int64) ({{$tableSchema}}, error)
+    {{$businessName}}Page(ctx context.Context, req request.PaginationRequest) (int64, []{{$tableSchema}}, error)
+    {{$businessName}}List(ctx context.Context) ([]{{$tableSchema}}, error)
+    {{$businessName}}ListByIds(ctx context.Context, ids string) ([]{{$tableSchema}}, error)
 }

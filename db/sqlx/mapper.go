@@ -134,3 +134,12 @@ func DataScopeSQLBuilder(sql sq.SelectBuilder, scope string, data []interface{})
 	}
 	return sql.Where("create_by = ?", data[0])
 }
+
+func AttachQuestions(length int) string {
+	var s []string
+	for i := 0; i < length; i++ {
+		s = append(s, "?")
+	}
+
+	return strings.Join(s, ",")
+}

@@ -6,6 +6,7 @@ import (
 	sq "github.com/Masterminds/squirrel"
 	"strings"
 	"study.com/demo-sqlx-pgx/api/request"
+	"study.com/demo-sqlx-pgx/db/sqlx/internal"
 	"time"
 )
 
@@ -78,8 +79,8 @@ func (store *SQLStore) PostDeleteFake(ctx context.Context, id int64, username st
 	return result, err
 }
 
-func (store *SQLStore) PostDetail(ctx context.Context, id int64) (AgoPost, error) {
-	var result AgoPost
+func (store *SQLStore) PostDetail(ctx context.Context, id int64) (internal.AgoPost, error) {
+	var result internal.AgoPost
 
 	sql, args, err := DetailSQLBuilder(TBNamePost, id)
 	if err != nil {
@@ -120,11 +121,11 @@ func postPageAndKeywordSQL(req request.PaginationRequest) (querySQL, countSQL st
 	return querySQL, countSQL, args, err
 }
 
-func (store *SQLStore) PostPage(ctx context.Context, req request.PaginationRequest) (int64, []AgoPost, error) {
-	var result []AgoPost
+func (store *SQLStore) PostPage(ctx context.Context, req request.PaginationRequest) (int64, []internal.AgoPost, error) {
+	var result []internal.AgoPost
 	var total int64
 
-	fail := func(err error) (int64, []AgoPost, error) {
+	fail := func(err error) (int64, []internal.AgoPost, error) {
 		return 0, nil, err
 	}
 
@@ -146,8 +147,8 @@ func (store *SQLStore) PostPage(ctx context.Context, req request.PaginationReque
 	return total, result, nil
 }
 
-func (store *SQLStore) PostList(ctx context.Context) ([]AgoPost, error) {
-	var result []AgoPost
+func (store *SQLStore) PostList(ctx context.Context) ([]internal.AgoPost, error) {
+	var result []internal.AgoPost
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNamePost).Where(sq.And{
 		sq.Eq{"status": "0"},
@@ -162,8 +163,8 @@ func (store *SQLStore) PostList(ctx context.Context) ([]AgoPost, error) {
 	return result, err
 }
 
-func (store *SQLStore) PostListByIds(ctx context.Context, ids string) ([]AgoPost, error) {
-	var result []AgoPost
+func (store *SQLStore) PostListByIds(ctx context.Context, ids string) ([]internal.AgoPost, error) {
+	var result []internal.AgoPost
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNamePost).
 		Where("id = ANY(STRING_TO_ARRAY(?, ',')::int8[])", ids).

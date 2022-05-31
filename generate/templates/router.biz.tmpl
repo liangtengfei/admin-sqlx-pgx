@@ -6,18 +6,18 @@ import (
 	"study.com/demo-sqlx-pgx/global"
 	"study.com/demo-sqlx-pgx/pkg/middleware"
 )
-
-{{- $businessName := .Business}}
-{{- $businessNameNote := .BusinessNote}}
-{{- $businessNamePath := .BusinessPath}}
-{{$tableName := .TableName}}
+{{- $businessName := .Biz.Business}}
+{{- $businessComment := .Biz.BusinessComment}}
+{{- $businessPath := .Biz.Business | toLowerCamel}}
+{{- $tableName := .Biz.TableName}}
+{{- $tableComment := .Biz.TableComment}}
+{{$tableSchema := .Biz.TableName | toUpperCamel}}
 // {{$businessName}}Router 路由配置
 func {{$businessName}}Router(r *gin.RouterGroup) {
-	group := r.Group("{{$businessNamePath}}").
+	group := r.Group("{{$businessPath}}").
 	    Use(middleware.AuthMiddleware(global.TokenMaker)).
 		Use(middleware.AccessControl(global.Enforcer))
 	{
-		group.GET("list", api.{{$businessName}}ListAll)
 		group.POST("p", api.{{$businessName}}Page)
 		group.POST("", api.{{$businessName}}Create)
 		group.PUT("", api.{{$businessName}}Update)

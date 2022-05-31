@@ -10,10 +10,9 @@ import (
 // ArticleRouter 路由配置
 func ArticleRouter(r *gin.RouterGroup) {
 	group := r.Group("article").
-	    Use(middleware.AuthMiddleware(global.TokenMaker)).
+		Use(middleware.AuthMiddleware(global.TokenMaker)).
 		Use(middleware.AccessControl(global.Enforcer))
 	{
-		group.GET("list", api.ArticleListAll)
 		group.POST("p", api.ArticlePage)
 		group.POST("", api.ArticleCreate)
 		group.PUT("", api.ArticleUpdate)

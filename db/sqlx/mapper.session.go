@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 	"strings"
 	"study.com/demo-sqlx-pgx/api/request"
+	"study.com/demo-sqlx-pgx/db/sqlx/internal"
 	"time"
 )
 
@@ -66,8 +67,8 @@ func (store *SQLStore) SessionDelete(ctx context.Context, id int64) (int64, erro
 	return result, err
 }
 
-func (store *SQLStore) SessionDetail(ctx context.Context, id uuid.UUID) (AgoSession, error) {
-	var result AgoSession
+func (store *SQLStore) SessionDetail(ctx context.Context, id uuid.UUID) (internal.AgoSession, error) {
+	var result internal.AgoSession
 
 	sql, args, err := DetailUUIDSQLBuilder(TBNameSession, id)
 	if err != nil {
@@ -108,11 +109,11 @@ func sessionPageAndKeywordSQL(req request.PaginationRequest) (querySQL, countSQL
 	return querySQL, countSQL, args, err
 }
 
-func (store *SQLStore) SessionPage(ctx context.Context, req request.PaginationRequest) (int64, []AgoSession, error) {
-	var result []AgoSession
+func (store *SQLStore) SessionPage(ctx context.Context, req request.PaginationRequest) (int64, []internal.AgoSession, error) {
+	var result []internal.AgoSession
 	var total int64
 
-	fail := func(err error) (int64, []AgoSession, error) {
+	fail := func(err error) (int64, []internal.AgoSession, error) {
 		return 0, nil, err
 	}
 
@@ -134,8 +135,8 @@ func (store *SQLStore) SessionPage(ctx context.Context, req request.PaginationRe
 	return total, result, nil
 }
 
-func (store *SQLStore) SessionList(ctx context.Context) ([]AgoSession, error) {
-	var result []AgoSession
+func (store *SQLStore) SessionList(ctx context.Context) ([]internal.AgoSession, error) {
+	var result []internal.AgoSession
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameSession).Where(sq.And{
 		sq.Eq{"status": "0"},
@@ -150,8 +151,8 @@ func (store *SQLStore) SessionList(ctx context.Context) ([]AgoSession, error) {
 	return result, err
 }
 
-func (store *SQLStore) SessionListByIds(ctx context.Context, ids string) ([]AgoSession, error) {
-	var result []AgoSession
+func (store *SQLStore) SessionListByIds(ctx context.Context, ids string) ([]internal.AgoSession, error) {
+	var result []internal.AgoSession
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameSession).
 		Where("id = ANY(STRING_TO_ARRAY(?, ',')::int8[])", ids).

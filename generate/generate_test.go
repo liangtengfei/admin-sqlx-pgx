@@ -1,10 +1,13 @@
 package generate
 
 import (
+	"bufio"
 	"fmt"
 	"github.com/stretchr/testify/require"
+	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -162,7 +165,79 @@ func TestParseTemplateFiles_CtrlServiceMapper(t *testing.T) {
 	require.NoError(t, err)
 }
 
-// 2022年05月30日 TODO：在inter.business.go和business.go 中加入生成的 mapper接口和路由信息
+// 2022年05月30日 在inter.business.go和business.go 中加入生成的 mapper接口和路由信息
 func TestParseTemplateFiles_InterRouter(t *testing.T) {
+	interFilePath := filepath.Join("../db/sqlx/internal", "entry.go")
+	interFile, err := os.Open(interFilePath)
+	defer interFile.Close()
+	require.NoError(t, err)
 
+	querierStr := fmt.Sprintf("\tQuerier%s2", Business)
+	err = insertStringToFileEnd(interFilePath, querierStr, 2)
+	require.NoError(t, err)
+
+	routerFilePath := filepath.Join("../router", "entry.go")
+	routerFile, err := os.Open(routerFilePath)
+	defer routerFile.Close()
+	require.NoError(t, err)
+
+}
+
+func file2Lines(filePath string) ([]string, error) {
+	f, err := os.Open(filePath)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	var lines []string
+	scanner := bufio.NewScanner(f)
+	if err := scanner.Err(); err != nil {
+		return nil, err
+	}
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
+	}
+
+	return lines, nil
+}
+
+func insertStringToFile(path, content string, index int) error {
+	lines, err := file2Lines(path)
+	if err != nil {
+		return err
+	}
+
+	var builder strings.Builder
+	for i, line := range lines {
+		if i == index {
+			builder.WriteString(content)
+		}
+		builder.WriteString(line)
+		builder.WriteString("\n")
+	}
+
+	return ioutil.WriteFile(path, []byte(builder.String()), 0666)
+}
+
+// 插入末尾第几行 offset 跳过几行
+func insertStringToFileEnd(path, content string, offset int) error {
+	lines, err := file2Lines(path)
+	if err != nil {
+		return err
+	}
+
+	index := len(lines) - offset
+
+	var builder strings.Builder
+	for i, line := range lines {
+		if i == index {
+			builder.WriteString(content)
+			builder.WriteString("\n")
+		}
+		builder.WriteString(line)
+		builder.WriteString("\n")
+	}
+
+	return ioutil.WriteFile(path, []byte(builder.String()), 0666)
 }

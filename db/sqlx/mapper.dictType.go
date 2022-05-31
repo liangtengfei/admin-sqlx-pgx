@@ -6,6 +6,7 @@ import (
 	sq "github.com/Masterminds/squirrel"
 	"strings"
 	"study.com/demo-sqlx-pgx/api/request"
+	"study.com/demo-sqlx-pgx/db/sqlx/internal"
 	"time"
 )
 
@@ -78,8 +79,8 @@ func (store *SQLStore) DictTypeDeleteFake(ctx context.Context, id int64, usernam
 	return result, err
 }
 
-func (store *SQLStore) DictTypeDetail(ctx context.Context, id int64) (AgoDictType, error) {
-	var result AgoDictType
+func (store *SQLStore) DictTypeDetail(ctx context.Context, id int64) (internal.AgoDictType, error) {
+	var result internal.AgoDictType
 
 	sql, args, err := DetailSQLBuilder(TBNameDictType, id)
 	if err != nil {
@@ -120,11 +121,11 @@ func dictTypePageAndKeywordSQL(req request.PaginationRequest) (querySQL, countSQ
 	return querySQL, countSQL, args, err
 }
 
-func (store *SQLStore) DictTypePage(ctx context.Context, req request.PaginationRequest) (int64, []AgoDictType, error) {
-	var result []AgoDictType
+func (store *SQLStore) DictTypePage(ctx context.Context, req request.PaginationRequest) (int64, []internal.AgoDictType, error) {
+	var result []internal.AgoDictType
 	var total int64
 
-	fail := func(err error) (int64, []AgoDictType, error) {
+	fail := func(err error) (int64, []internal.AgoDictType, error) {
 		return 0, nil, err
 	}
 
@@ -146,8 +147,8 @@ func (store *SQLStore) DictTypePage(ctx context.Context, req request.PaginationR
 	return total, result, nil
 }
 
-func (store *SQLStore) DictTypeList(ctx context.Context) ([]AgoDictType, error) {
-	var result []AgoDictType
+func (store *SQLStore) DictTypeList(ctx context.Context) ([]internal.AgoDictType, error) {
+	var result []internal.AgoDictType
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameDictType).Where(sq.And{
 		sq.Eq{"status": "0"},
@@ -162,8 +163,8 @@ func (store *SQLStore) DictTypeList(ctx context.Context) ([]AgoDictType, error) 
 	return result, err
 }
 
-func (store *SQLStore) DictTypeListByIds(ctx context.Context, ids string) ([]AgoDictType, error) {
-	var result []AgoDictType
+func (store *SQLStore) DictTypeListByIds(ctx context.Context, ids string) ([]internal.AgoDictType, error) {
+	var result []internal.AgoDictType
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameDictType).
 		Where("id = ANY(STRING_TO_ARRAY(?, ',')::int8[])", ids).

@@ -14,14 +14,14 @@ var TemplatesMap map[string]*template.Template
 
 func LoadAllTemplateFiles() (temps map[string]string, err error) {
 	//generate/templates
-	files, err := ioutil.ReadDir("../generate/templates")
+	files, err := ioutil.ReadDir("generate/templates")
 	if err != nil {
 		return
 	}
 	temps = make(map[string]string, 0)
 	for _, fi := range files {
 		if strings.HasSuffix(fi.Name(), ".tmpl") {
-			temps[fi.Name()] = filepath.Join("../generate/templates", fi.Name())
+			temps[fi.Name()] = filepath.Join("generate/templates", fi.Name())
 		}
 	}
 	return

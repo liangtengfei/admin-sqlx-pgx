@@ -4,8 +4,10 @@ import (
 	"context"
 	"fmt"
 	sq "github.com/Masterminds/squirrel"
+	"github.com/jmoiron/sqlx"
 	"strings"
 	"study.com/demo-sqlx-pgx/api/request"
+	"study.com/demo-sqlx-pgx/db/sqlx/internal"
 	"study.com/demo-sqlx-pgx/global/consts"
 	"time"
 )
@@ -86,8 +88,8 @@ func (store *SQLStore) MenuDeleteFake(ctx context.Context, id int64, username st
 	return result, err
 }
 
-func (store *SQLStore) MenuDetail(ctx context.Context, id int64) (AgoMenu, error) {
-	var result AgoMenu
+func (store *SQLStore) MenuDetail(ctx context.Context, id int64) (internal.AgoMenu, error) {
+	var result internal.AgoMenu
 
 	sql, args, err := DetailSQLBuilder(TBNameMenu, id)
 	if err != nil {
@@ -132,11 +134,11 @@ func menuPageAndKeywordSQL(ctx context.Context, req request.PaginationRequest) (
 	return querySQL, countSQL, args, err
 }
 
-func (store *SQLStore) MenuPage(ctx context.Context, req request.PaginationRequest) (int64, []AgoMenu, error) {
-	var result []AgoMenu
+func (store *SQLStore) MenuPage(ctx context.Context, req request.PaginationRequest) (int64, []internal.AgoMenu, error) {
+	var result []internal.AgoMenu
 	var total int64
 
-	fail := func(err error) (int64, []AgoMenu, error) {
+	fail := func(err error) (int64, []internal.AgoMenu, error) {
 		return 0, nil, err
 	}
 
@@ -158,8 +160,8 @@ func (store *SQLStore) MenuPage(ctx context.Context, req request.PaginationReque
 	return total, result, nil
 }
 
-func (store *SQLStore) MenuList(ctx context.Context) ([]AgoMenu, error) {
-	var result []AgoMenu
+func (store *SQLStore) MenuList(ctx context.Context) ([]internal.AgoMenu, error) {
+	var result []internal.AgoMenu
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameMenu).Where(sq.And{
 		sq.Eq{"status": "0"},
@@ -174,11 +176,40 @@ func (store *SQLStore) MenuList(ctx context.Context) ([]AgoMenu, error) {
 	return result, err
 }
 
-func (store *SQLStore) MenuListByRoleId(ctx context.Context, id int64) ([]AgoMenu, error) {
-	var result []AgoMenu
+func (store *SQLStore) MenuListByRoleId(ctx context.Context, id int64) ([]internal.AgoMenu, error) {
+	var result []internal.AgoMenu
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameMenu).
 		Where("id IN (SELECT menu_id FROM ago_role_menu WHERE role_id = ?)", id).
+		ToSql()
+	if err != nil {
+		return result, err
+	}
+
+	err = store.db.SelectContext(ctx, &result, sql, args...)
+	return result, err
+}
+
+func (store *SQLStore) MenuListByRoleIds(ctx context.Context, id []int64) ([]internal.AgoMenu, error) {
+	var result []internal.AgoMenu
+
+	baseSQL := fmt.Sprintf("SELECT * FROM %s WHERE id IN (SELECT menu_id FROM ago_role_menu WHERE role_id IN (?));", TBNameMenu)
+	query, args, err := sqlx.In(baseSQL, id)
+	if err != nil {
+		return result, err
+	}
+	//use db.Rebind to get a query suitable for your backend.
+	query = store.db.Rebind(query)
+
+	err = store.db.SelectContext(ctx, &result, query, args...)
+	return result, err
+}
+
+func (store *SQLStore) MenuListByIds(ctx context.Context, ids []int64) ([]internal.AgoMenu, error) {
+	var result []internal.AgoMenu
+
+	sql, args, err := SQLBuilder().Select("*").From(TBNameMenu).
+		Where(sq.Eq{"id": ids}).
 		ToSql()
 	if err != nil {
 		return result, err

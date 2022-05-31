@@ -1,10 +1,16 @@
-package db
+package internal
 
 import (
 	"time"
 )
-// {{.TableName | toUpperCamel}} {{.TableComment}}
-type {{.TableName | toUpperCamel}} struct {
+{{- $businessName := .Biz.Business}}
+{{- $businessComment := .Biz.BusinessComment}}
+{{- $businessPath := .Biz.Business | toLowerCamel}}
+{{- $tableName := .Biz.TableName}}
+{{- $tableComment := .Biz.TableComment}}
+{{$tableSchema := .Biz.TableName | toUpperCamel}}
+// {{$tableSchema}} {{$tableComment}}
+type {{$tableSchema}} struct {
 {{- range $index, $element := .Columns}}
     {{$element.ColumnName | toUpperCamel}}
     {{- if eq $element.DataType "varchar"}} string

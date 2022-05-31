@@ -7,6 +7,7 @@ import (
 	"github.com/jmoiron/sqlx"
 	"strings"
 	"study.com/demo-sqlx-pgx/api/request"
+	"study.com/demo-sqlx-pgx/db/sqlx/internal"
 	"time"
 )
 
@@ -139,8 +140,8 @@ func (store *SQLStore) RoleDeleteFake(ctx context.Context, id int64, username st
 	return result, err
 }
 
-func (store *SQLStore) RoleDetail(ctx context.Context, id int64) (AgoRole, error) {
-	var result AgoRole
+func (store *SQLStore) RoleDetail(ctx context.Context, id int64) (internal.AgoRole, error) {
+	var result internal.AgoRole
 
 	sql, args, err := DetailSQLBuilder(TBNameRole, id)
 	if err != nil {
@@ -151,8 +152,8 @@ func (store *SQLStore) RoleDetail(ctx context.Context, id int64) (AgoRole, error
 	return result, err
 }
 
-func (store *SQLStore) RoleListByUserId(id int64) ([]AgoRole, error) {
-	var result []AgoRole
+func (store *SQLStore) RoleListByUserId(id int64) ([]internal.AgoRole, error) {
+	var result []internal.AgoRole
 
 	sql, args, err := SQLBuilder().Select("*").From(TBNameRole).
 		Where("id IN (SELECT role_id FROM ago_user_role WHERE user_id = ?)", id).
@@ -204,11 +205,11 @@ func rolePageAndKeywordSQL(req request.PaginationRequest) (querySQL, countSQL st
 	return querySQL, countSQL, args, err
 }
 
-func (store *SQLStore) RolePage(ctx context.Context, req request.PaginationRequest) (int64, []AgoRole, error) {
-	var result []AgoRole
+func (store *SQLStore) RolePage(ctx context.Context, req request.PaginationRequest) (int64, []internal.AgoRole, error) {
+	var result []internal.AgoRole
 	var total int64
 
-	fail := func(err error) (int64, []AgoRole, error) {
+	fail := func(err error) (int64, []internal.AgoRole, error) {
 		return 0, nil, err
 	}
 

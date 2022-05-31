@@ -79,6 +79,28 @@ func RoleCreate(ctx *gin.Context, req request.RoleCreateRequest, username string
 		return ErrCreate
 	}
 
+	//菜单权限
+	if len(req.MenuIds) > 0 {
+		menus, err := store.MenuListByIds(ctx, req.MenuIds)
+		if err != nil {
+			global.Log.Error(BizTitleRole, zap.String("TAG", OperationTypeQuery), zap.Error(err))
+			return ErrQuery
+		}
+		// 如果是按钮的话 则插入casbin 权限策略
+		for _, menu := range menus {
+			if menu.MenuType != "A" {
+				continue
+			}
+			if exists := global.Enforcer.HasPolicy(req.RoleKey, menu.Path, menu.ReqMethod); !exists {
+				ok, err := global.Enforcer.AddPolicy(req.RoleKey, menu.Path, menu.ReqMethod)
+				if err != nil && !ok {
+					global.Log.Error(BizTitleCasbin, zap.String("TAG", "权限策略新增"), zap.Error(err))
+					return ErrUpdate
+				}
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -91,6 +113,28 @@ func RoleUpdate(ctx *gin.Context, req request.RoleUpdateRequest, username string
 	if err != nil {
 		global.Log.Error(BizTitleRole, zap.String("TAG", OperationTypeUpdate), zap.Error(err))
 		return ErrUpdate
+	}
+
+	//菜单权限
+	if len(req.MenuIds) > 0 {
+		menus, err := store.MenuListByIds(ctx, req.MenuIds)
+		if err != nil {
+			global.Log.Error(BizTitleRole, zap.String("TAG", OperationTypeQuery), zap.Error(err))
+			return ErrQuery
+		}
+		// 如果是按钮的话 则插入casbin 权限策略
+		for _, menu := range menus {
+			if menu.MenuType != "A" {
+				continue
+			}
+			if exists := global.Enforcer.HasPolicy(req.RoleKey, menu.Path, menu.ReqMethod); !exists {
+				ok, err := global.Enforcer.AddPolicy(req.RoleKey, menu.Path, menu.ReqMethod)
+				if err != nil && !ok {
+					global.Log.Error(BizTitleCasbin, zap.String("TAG", "权限策略新增"), zap.Error(err))
+					return ErrUpdate
+				}
+			}
+		}
 	}
 
 	return nil

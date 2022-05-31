@@ -7,39 +7,21 @@ import (
 	"study.com/demo-sqlx-pgx/api/response"
 	"study.com/demo-sqlx-pgx/service"
 )
-{{$businessName := .Business}}
-{{$businessNameNote := .BusinessNote}}
-{{$businessNamePath := .BusinessPath}}
-{{- if eq .ListAll true }}
-// {{$businessName}}ListAll godoc
-// @Summary      {{$businessNameNote}}列表查询
-// @Description  获取所有{{$businessNameNote}}信息
-// @Tags         {{$businessNameNote}}
-// @Accept       json
-// @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.{{$businessName}}Response}
-// @Failure      500       {object}  response.RestRes
-// @Router       /{{$businessName | toLowerCamel}}/list [get]
-func {{$businessName}}ListAll(ctx *gin.Context) {{print "{"}}
-	res, err := service.{{$businessName}}List(ctx)
-	if err != nil {
-		response.ErrorMsg(ctx, err.Error())
-		return
-	}
-
-	response.SuccessData(ctx, res)
-{{print "}"}}
-{{- end }}
-
+{{- $businessName := .Biz.Business}}
+{{- $businessComment := .Biz.BusinessComment}}
+{{- $businessPath := .Biz.Business | toLowerCamel}}
+{{- $tableName := .Biz.TableName}}
+{{- $tableComment := .Biz.TableComment}}
+{{$tableSchema := .Biz.TableName | toUpperCamel}}
 // {{$businessName}}Page godoc
-// @Summary      {{$businessNameNote}}分页查询
-// @Description  分页获取所有{{$businessNameNote}}信息
-// @Tags         {{$businessNameNote}}
+// @Summary      {{$businessComment}}分页查询
+// @Description  分页获取所有{{$businessComment}}信息
+// @Tags         {{$businessComment}}
 // @Accept       json
 // @Produce      json
 // @Success      200       {object}  response.RestRes{data=model.{{$businessName}}Response}
 // @Failure      500       {object}  response.RestRes
-// @Router       /{{$businessName | toLowerCamel}}/p [post]
+// @Router       /{{$businessPath}}/p [post]
 func {{$businessName}}Page(ctx *gin.Context) {
 	var req request.PaginationRequest
 	if err := ctx.BindQuery(&req); err != nil {
@@ -57,15 +39,15 @@ func {{$businessName}}Page(ctx *gin.Context) {
 }
 
 // {{$businessName}}Create godoc
-// @Summary      {{$businessNameNote}}新增
-// @Description  {{$businessNameNote}}新增信息
-// @Tags         {{$businessNameNote}}
+// @Summary      {{$businessComment}}新增
+// @Description  {{$businessComment}}新增信息
+// @Tags         {{$businessComment}}
 // @Accept       json
 // @Produce      json
-// @Param        req  body     request.{{$businessName}}CreateRequest  true  "新增{{$businessNameNote}}信息"
+// @Param        req  body     request.{{$businessName}}CreateRequest  true  "新增{{$businessComment}}信息"
 // @Success      200       {object}  response.RestRes
 // @Failure      500       {object}  response.RestRes
-// @Router       /{{$businessName | toLowerCamel}} [post]
+// @Router       /{{$businessPath}} [post]
 func {{$businessName}}Create(ctx *gin.Context) {
 	var req request.{{$businessName}}CreateRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -81,15 +63,15 @@ func {{$businessName}}Create(ctx *gin.Context) {
 }
 
 // {{$businessName}}Update godoc
-// @Summary      {{$businessNameNote}}更新
-// @Description  {{$businessNameNote}}更新信息
-// @Tags         {{$businessNameNote}}
+// @Summary      {{$businessComment}}更新
+// @Description  {{$businessComment}}更新信息
+// @Tags         {{$businessComment}}
 // @Accept       json
 // @Produce      json
-// @Param        req  body     request.{{$businessName}}UpdateRequest  true  "更新{{$businessNameNote}}信息"
+// @Param        req  body     request.{{$businessName}}UpdateRequest  true  "更新{{$businessComment}}信息"
 // @Success      200       {object}  response.RestRes
 // @Failure      500       {object}  response.RestRes
-// @Router       /{{$businessName | toLowerCamel}} [put]
+// @Router       /{{$businessPath}} [put]
 func {{$businessName}}Update(ctx *gin.Context) {
 	var req request.{{$businessName}}UpdateRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
@@ -105,15 +87,15 @@ func {{$businessName}}Update(ctx *gin.Context) {
 }
 
 // {{$businessName}}Delete godoc
-// @Summary      {{$businessNameNote}}伪删除
-// @Description  {{$businessNameNote}}信息伪删除
-// @Tags         {{$businessNameNote}}
+// @Summary      {{$businessComment}}伪删除
+// @Description  {{$businessComment}}信息伪删除
+// @Tags         {{$businessComment}}
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "标识"
 // @Success      200       {object}  response.RestRes
 // @Failure      500       {object}  response.RestRes
-// @Router       /{{$businessName | toLowerCamel}}/:id [delete]
+// @Router       /{{$businessPath}}/:id [delete]
 func {{$businessName}}Delete(ctx *gin.Context) {
 	var req request.ByIdRequest
 	if err := ctx.ShouldBindUri(&req); err != nil {
@@ -131,15 +113,15 @@ func {{$businessName}}Delete(ctx *gin.Context) {
 }
 
 // {{$businessName}}Detail godoc
-// @Summary      {{$businessNameNote}}详情
-// @Description  {{$businessNameNote}}详情信息
-// @Tags         {{$businessNameNote}}
+// @Summary      {{$businessComment}}详情
+// @Description  {{$businessComment}}详情信息
+// @Tags         {{$businessComment}}
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "标识"
 // @Success      200       {object}  response.RestRes{data=model.{{$businessName}}Response}
 // @Failure      500       {object}  response.RestRes
-// @Router       /{{$businessName | toLowerCamel}}/:id [get]
+// @Router       /{{$businessPath}}/:id [get]
 func {{$businessName}}Detail(ctx *gin.Context) {
 	var req request.ByIdRequest
 	if err := ctx.ShouldBindUri(&req); err != nil {
