@@ -13,7 +13,7 @@ import (
 // @Tags         系统操作日志
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.OperationLogResponse}
+// @Success      200       {object}  response.RestRes{data=response.OperationLogResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /post/p [post]
 func OperationLogPage(ctx *gin.Context) {

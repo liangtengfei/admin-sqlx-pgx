@@ -13,7 +13,7 @@ import (
 // @Tags         系统用户
 // @Accept       json
 // @Produce      json
-// @Success      200  {object}  response.RestRes{data=model.UserResponse}
+// @Success      200  {object}  response.RestRes{data=response.UserResponse}
 // @Failure      500  {object}  response.RestRes
 // @Router       /user/p [get]
 func UserPage(ctx *gin.Context) {

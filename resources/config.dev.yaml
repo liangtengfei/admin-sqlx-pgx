@@ -2,6 +2,7 @@ Server:
   app_name: Admin GOGO
   port: :5000
   db_driver: pgx
+  upload_path: temps/upload
 
 # postgresql://postgres:xiaohuozhi@localhost:5432/tengfeiliang?sslmode=disable
 DataBase:

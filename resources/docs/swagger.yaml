@@ -1,4 +1,979 @@
 definitions:
+  request.ArticleCreateRequest:
+    properties:
+      articleContent:
+        type: string
+      articleTag:
+        type: string
+      articleTitle:
+        type: string
+      remark:
+        type: string
+      summary:
+        type: string
+    required:
+    - articleContent
+    - articleTag
+    - articleTitle
+    - summary
+    type: object
+  request.ArticleUpdateRequest:
+    properties:
+      articleContent:
+        type: string
+      articleTag:
+        type: string
+      articleTitle:
+        type: string
+      id:
+        type: integer
+      remark:
+        type: string
+      status:
+        type: string
+      summary:
+        type: string
+    required:
+    - articleContent
+    - articleTag
+    - articleTitle
+    - id
+    - status
+    - summary
+    type: object
+  request.DeptCreateRequest:
+    properties:
+      ancestors:
+        description: 祖籍
+        type: string
+      deptCode:
+        description: 部门编码
+        type: string
+      deptName:
+        description: 部门名称
+        type: string
+      email:
+        description: 邮箱
+        type: string
+      leader:
+        description: 负责人
+        type: string
+      orderNum:
+        description: 显示顺序
+        minimum: 0
+        type: integer
+      parentID:
+        description: 父部门id
+        minimum: 0
+        type: integer
+      phone:
+        description: 联系电话
+        type: string
+      remark:
+        description: 备注
+        type: string
+    required:
+    - deptCode
+    - deptName
+    type: object
+  request.DeptUpdateRequest:
+    properties:
+      ancestors:
+        description: 祖籍
+        type: string
+      deptCode:
+        description: 部门编码
+        type: string
+      deptName:
+        description: 部门名称
+        type: string
+      email:
+        description: 邮箱
+        type: string
+      id:
+        description: 部门id
+        type: integer
+      leader:
+        description: 负责人
+        type: string
+      orderNum:
+        description: 显示顺序
+        minimum: 0
+        type: integer
+      parentID:
+        description: 父部门id
+        minimum: 0
+        type: integer
+      phone:
+        description: 联系电话
+        type: string
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+    required:
+    - deptCode
+    - deptName
+    - id
+    - status
+    type: object
+  request.DictDataCreateRequest:
+    properties:
+      cssClass:
+        description: 样式属性（其他样式扩展）
+        type: string
+      dictLabel:
+        description: 字典标签
+        type: string
+      dictType:
+        description: 字典类型编码
+        type: string
+      dictValue:
+        description: 字典键值
+        type: string
+      listClass:
+        description: 表格回显样式
+        type: string
+      orderNum:
+        description: 字典排序
+        minimum: 0
+        type: integer
+      remark:
+        description: 备注
+        type: string
+    required:
+    - dictLabel
+    - dictType
+    - dictValue
+    type: object
+  request.DictDataUpdateRequest:
+    properties:
+      cssClass:
+        description: 样式属性（其他样式扩展）
+        type: string
+      dictLabel:
+        description: 字典标签
+        type: string
+      dictValue:
+        description: 字典键值
+        type: string
+      id:
+        description: 字典编码
+        type: integer
+      listClass:
+        description: 表格回显样式
+        type: string
+      orderNum:
+        description: 字典排序
+        minimum: 0
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+    required:
+    - dictLabel
+    - dictValue
+    - id
+    type: object
+  request.DictTypeCreateRequest:
+    properties:
+      dictName:
+        description: 字典类型名称
+        type: string
+      dictType:
+        description: 字典类型编码
+        type: string
+      remark:
+        description: 备注
+        type: string
+    required:
+    - dictName
+    - dictType
+    type: object
+  request.DictTypeUpdateRequest:
+    properties:
+      dictName:
+        description: 字典类型名称
+        type: string
+      dictType:
+        description: 字典类型编码
+        type: string
+      id:
+        description: 字典主键
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+    required:
+    - dictName
+    - dictType
+    - id
+    type: object
+  request.MenuCreateRequest:
+    properties:
+      component:
+        description: 组件路径
+        type: string
+      icon:
+        description: 菜单图标
+        type: string
+      isCache:
+        description: 是否缓存（0缓存 1不缓存）
+        type: string
+      isFrame:
+        description: 是否为外链（0是 1否）
+        type: string
+      menuKey:
+        description: 菜单标识
+        type: string
+      menuName:
+        description: 菜单名称
+        type: string
+      menuType:
+        description: 菜单类型（D目录 M菜单 A按钮）
+        enum:
+        - D
+        - M
+        - A
+        type: string
+      orderNum:
+        description: 显示顺序
+        minimum: 0
+        type: integer
+      parentID:
+        description: 父菜单ID
+        minimum: 0
+        type: integer
+      path:
+        description: 路由地址
+        type: string
+      remark:
+        description: 备注
+        type: string
+      requestMethod:
+        description: 请求方法
+        enum:
+        - GET
+        - POST
+        - DELETE
+        - PUT
+        type: string
+      visible:
+        description: 菜单状态（0显示 1隐藏）
+        type: string
+    required:
+    - menuKey
+    - menuName
+    - path
+    - requestMethod
+    type: object
+  request.MenuUpdateRequest:
+    properties:
+      component:
+        description: 组件路径
+        type: string
+      icon:
+        description: 菜单图标
+        type: string
+      id:
+        description: 菜单ID
+        type: integer
+      isCache:
+        description: 是否缓存（0缓存 1不缓存）
+        type: string
+      isFrame:
+        description: 是否为外链（0是 1否）
+        type: string
+      menuKey:
+        description: 菜单标识
+        type: string
+      menuName:
+        description: 菜单名称
+        type: string
+      menuType:
+        description: 菜单类型（D目录 M菜单 A按钮）
+        enum:
+        - D
+        - M
+        - A
+        type: string
+      orderNum:
+        description: 显示顺序
+        minimum: 0
+        type: integer
+      parentID:
+        description: 父菜单ID
+        minimum: 0
+        type: integer
+      path:
+        description: 路由地址
+        type: string
+      remark:
+        description: 备注
+        type: string
+      requestMethod:
+        description: 请求方法
+        enum:
+        - GET
+        - POST
+        - DELETE
+        - PUT
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+      visible:
+        description: 菜单状态（0显示 1隐藏）
+        type: string
+    required:
+    - id
+    - menuKey
+    - menuName
+    - path
+    - requestMethod
+    type: object
+  request.NoticeCreateRequest:
+    properties:
+      noticeContent:
+        description: 公告内容
+        type: string
+      noticeTitle:
+        description: 公告标题
+        type: string
+      noticeType:
+        description: 公告类型（1通知）
+        type: string
+      remark:
+        description: 备注
+        type: string
+    required:
+    - noticeContent
+    - noticeTitle
+    - noticeType
+    type: object
+  request.NoticeUpdateRequest:
+    properties:
+      id:
+        description: 公告ID
+        type: integer
+      noticeContent:
+        description: 公告内容
+        type: string
+      noticeTitle:
+        description: 公告标题
+        type: string
+      noticeType:
+        description: 公告类型（1通知）
+        type: string
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+    required:
+    - id
+    - noticeContent
+    - noticeTitle
+    - noticeType
+    type: object
+  request.PostCreateRequest:
+    properties:
+      orderNum:
+        description: 显示顺序
+        minimum: 0
+        type: integer
+      postName:
+        description: 岗位名称
+        type: string
+      remark:
+        description: 备注
+        type: string
+    required:
+    - postName
+    type: object
+  request.PostUpdateRequest:
+    properties:
+      id:
+        description: 岗位ID
+        type: integer
+      orderNum:
+        description: 显示顺序
+        minimum: 0
+        type: integer
+      postName:
+        description: 岗位名称
+        type: string
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+    required:
+    - id
+    - postName
+    type: object
+  request.RoleCreateRequest:
+    properties:
+      dataScope:
+        description: 数据范围
+        type: string
+      deptIds:
+        description: 部门编号数组
+        items:
+          type: integer
+        type: array
+      menuIds:
+        description: 菜单编号数据
+        items:
+          type: integer
+        type: array
+      orderNum:
+        description: 显示顺序
+        minimum: 0
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      roleKey:
+        description: 角色权限字符串
+        type: string
+      roleName:
+        description: 角色名称
+        type: string
+    required:
+    - dataScope
+    - roleKey
+    - roleName
+    type: object
+  request.RoleUpdateRequest:
+    properties:
+      dataScope:
+        description: 数据范围
+        type: string
+      deptIds:
+        description: 部门编号数组
+        items:
+          type: integer
+        type: array
+      id:
+        description: 角色ID
+        type: integer
+      menuIds:
+        description: 菜单编号数据
+        items:
+          type: integer
+        type: array
+      orderNum:
+        description: 显示顺序
+        minimum: 0
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      roleKey:
+        description: 角色权限字符串
+        type: string
+      roleName:
+        description: 角色名称
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+    required:
+    - dataScope
+    - id
+    - roleKey
+    - roleName
+    type: object
+  request.SysConfigCreateRequest:
+    properties:
+      configKey:
+        description: 参数键名
+        type: string
+      configName:
+        description: 参数名称
+        type: string
+      configValue:
+        description: 参数键值
+        type: string
+      remark:
+        description: 备注
+        type: string
+    required:
+    - configKey
+    - configName
+    - configValue
+    type: object
+  request.SysConfigUpdateRequest:
+    properties:
+      configName:
+        description: 参数名称
+        type: string
+      configValue:
+        description: 参数键值
+        type: string
+      id:
+        description: 参数主键
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+    required:
+    - configName
+    - configValue
+    - id
+    type: object
+  request.UserUpdateRequest:
+    properties:
+      PostIds:
+        description: 岗位编号数组
+        example:
+        - 1
+        - 2
+        - 3
+        items:
+          type: integer
+        type: array
+      avatar:
+        description: 头像地址
+        type: string
+      deptID:
+        description: 部门ID
+        type: integer
+      email:
+        description: 用户邮箱
+        type: string
+      id:
+        description: 用户ID
+        type: integer
+      mobile:
+        description: 手机号码
+        type: string
+      realName:
+        description: 用户昵称
+        type: string
+      remark:
+        description: 备注
+        type: string
+      roleIds:
+        description: 角色编号数组
+        example:
+        - 1
+        - 2
+        - 3
+        items:
+          type: integer
+        type: array
+      sex:
+        description: 用户性别（0男 1女 2未知）
+        enum:
+        - "0"
+        - ' 1'
+        - ' 2'
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+    required:
+    - avatar
+    - deptID
+    - email
+    - id
+    - mobile
+    - realName
+    - remark
+    - sex
+    type: object
+  response.ArticleResponse:
+    properties:
+      articleContent:
+        type: string
+      articleTag:
+        type: string
+      articleTitle:
+        type: string
+      createBy:
+        type: string
+      createTime:
+        type: string
+      delFlag:
+        type: string
+      id:
+        type: integer
+      remark:
+        type: string
+      status:
+        type: string
+      summary:
+        type: string
+      updateBy:
+        type: string
+      updateTime:
+        type: string
+    type: object
+  response.DeptResponse:
+    properties:
+      ancestors:
+        description: 祖级列表
+        type: string
+      children:
+        description: 字部门列表
+        items:
+          $ref: '#/definitions/response.DeptResponse'
+        type: array
+      childrenSize:
+        description: 子部门数量
+        type: integer
+      createBy:
+        description: 创建者
+        type: string
+      createTime:
+        description: 创建时间
+        type: string
+      delFlag:
+        description: 删除标志（0代表存在 2代表删除）
+        type: string
+      deptCode:
+        description: 部门编码
+        type: string
+      deptName:
+        description: 部门名称
+        type: string
+      id:
+        description: 部门id
+        type: integer
+      orderNum:
+        description: 显示顺序
+        type: integer
+      parentID:
+        description: 父部门id
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+      updateBy:
+        description: 更新者
+        type: string
+      updateTime:
+        description: 更新时间
+        type: string
+    type: object
+  response.DictDataResponse:
+    properties:
+      createBy:
+        description: 创建者
+        type: string
+      createTime:
+        description: 创建时间
+        type: string
+      cssClass:
+        description: 样式属性（其他样式扩展）
+        type: string
+      delFlag:
+        description: 删除标志（0代表存在 2代表删除）
+        type: string
+      dictLabel:
+        description: 字典标签
+        type: string
+      dictType:
+        description: 字典类型编码
+        type: string
+      dictValue:
+        description: 字典键值
+        type: string
+      id:
+        description: 字典编码
+        type: integer
+      listClass:
+        description: 表格回显样式
+        type: string
+      orderNum:
+        description: 字典排序
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+      updateBy:
+        description: 更新者
+        type: string
+      updateTime:
+        description: 更新时间
+        type: string
+    type: object
+  response.DictTypeResponse:
+    properties:
+      createBy:
+        description: 创建者
+        type: string
+      createTime:
+        description: 创建时间
+        type: string
+      dataList:
+        description: 字典数据列表
+        items:
+          $ref: '#/definitions/response.DictDataResponse'
+        type: array
+      delFlag:
+        description: 删除标志（0代表存在 2代表删除）
+        type: string
+      dictName:
+        description: 字典类型名称
+        type: string
+      dictType:
+        description: 字典类型编码
+        type: string
+      id:
+        description: 字典主键
+        type: integer
+      remark:
+        description: 备注,
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+      updateBy:
+        description: 更新者
+        type: string
+      updateTime:
+        description: 更新时间
+        type: string
+    type: object
+  response.FileResponse:
+    properties:
+      createBy:
+        type: string
+      createTime:
+        type: string
+      fileName:
+        type: string
+      filePath:
+        type: string
+      fileSize:
+        type: integer
+      fileUrl:
+        type: string
+      id:
+        type: string
+      mimeType:
+        type: string
+      remark:
+        type: string
+      userId:
+        type: integer
+    type: object
+  response.MenuResponse:
+    properties:
+      children:
+        description: 子菜单
+        items:
+          $ref: '#/definitions/response.MenuResponse'
+        type: array
+      component:
+        description: 组件路径
+        type: string
+      createBy:
+        description: 创建者
+        type: string
+      createTime:
+        description: 创建时间
+        type: string
+      delFlag:
+        description: 删除标志（0代表存在 2代表删除）
+        type: string
+      icon:
+        description: 菜单图标
+        type: string
+      id:
+        description: 菜单ID
+        type: integer
+      isCache:
+        description: 是否缓存（0缓存 1不缓存）
+        type: integer
+      isFrame:
+        description: 是否为外链（0是 1否）
+        type: integer
+      menuKey:
+        description: 菜单标识
+        type: string
+      menuName:
+        description: 菜单名称
+        type: string
+      menuType:
+        description: 菜单类型（D目录 M菜单 A按钮）
+        type: string
+      orderNum:
+        description: 显示顺序
+        type: integer
+      parentID:
+        description: 父菜单ID
+        type: integer
+      path:
+        description: 路由地址
+        type: string
+      remark:
+        description: 备注
+        type: string
+      requestMethod:
+        description: 请求方法
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+      updateBy:
+        description: 更新者
+        type: string
+      updateTime:
+        description: 更新时间
+        type: string
+      visible:
+        description: 菜单状态（0显示 1隐藏）
+        type: string
+    type: object
+  response.NoticeResponse:
+    properties:
+      createBy:
+        description: 创建者
+        type: string
+      createTime:
+        description: 创建时间
+        type: string
+      delFlag:
+        description: 删除标志（0代表存在 2代表删除）
+        type: string
+      id:
+        description: 公告ID
+        type: integer
+      noticeContent:
+        description: 公告内容
+        type: string
+      noticeTitle:
+        description: 公告标题
+        type: string
+      noticeType:
+        description: 公告类型（1通知）
+        type: string
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+      updateBy:
+        description: 更新者
+        type: string
+      updateTime:
+        description: 更新时间
+        type: string
+    type: object
+  response.OperationLogResponse:
+    properties:
+      businessTitle:
+        description: 业务内容
+        type: string
+      businessType:
+        description: 业务类型
+        type: string
+      clientIp:
+        description: 主机地址
+        type: string
+      clientLocation:
+        description: 操作地点
+        type: string
+      clientParam:
+        description: 请求参数
+        type: string
+      clientType:
+        description: 操作类别（0其它 1后台用户 2手机端用户）
+        type: integer
+      createBy:
+        description: 创建人员
+        type: string
+      createTime:
+        description: 创建时间
+        type: string
+      deptName:
+        description: 部门名称
+        type: string
+      errorMsg:
+        description: 错误消息
+        type: string
+      id:
+        description: 日志主键
+        type: integer
+      method:
+        description: 方法名称
+        type: string
+      operationResult:
+        description: 返回参数
+        type: string
+      operationType:
+        description: 操作类型（0其它 1新增 2修改 3删除）
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      requestMethod:
+        description: 请求方式
+        type: string
+      requestUrl:
+        description: 请求URL
+        type: string
+      status:
+        description: 状态（0正常 1异常）
+        type: string
+    type: object
+  response.PostResponse:
+    properties:
+      createBy:
+        description: 创建者
+        type: string
+      createTime:
+        description: 创建时间
+        type: string
+      delFlag:
+        description: 删除标志（0代表存在 2代表删除）
+        type: string
+      id:
+        description: 岗位ID
+        type: integer
+      orderNum:
+        description: 显示顺序
+        type: integer
+      postName:
+        description: 岗位名称
+        type: string
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+      updateBy:
+        description: 更新者
+        type: string
+      updateTime:
+        description: 更新时间
+        type: string
+    type: object
   response.RestRes:
     properties:
       code:
@@ -7,6 +982,201 @@ definitions:
       data: {}
       message:
         example: status ok
+        type: string
+    type: object
+  response.RoleResponse:
+    properties:
+      createBy:
+        description: 创建者
+        type: string
+      createTime:
+        description: 创建时间
+        type: string
+      dataScope:
+        description: 数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）
+        type: string
+      delFlag:
+        description: 删除标志（0代表存在 2代表删除）
+        type: string
+      deptList:
+        description: 部门列表
+        items:
+          $ref: '#/definitions/response.DeptResponse'
+        type: array
+      id:
+        description: 角色ID
+        type: integer
+      menuList:
+        description: 菜单列表
+        items:
+          $ref: '#/definitions/response.MenuResponse'
+        type: array
+      orderNum:
+        description: 显示顺序
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      roleKey:
+        description: 角色权限字符串
+        type: string
+      roleName:
+        description: 角色名称
+        type: string
+      status:
+        description: 帐号状态（0正常 1停用）
+        type: string
+      updateBy:
+        description: 更新者
+        type: string
+      updateTime:
+        description: 更新时间
+        type: string
+    type: object
+  response.SessionResponse:
+    properties:
+      clientIp:
+        description: 请求地址
+        type: string
+      createAt:
+        description: 创建时间
+        type: string
+      expiresAt:
+        description: 是否阻止
+        type: string
+      id:
+        description: 唯一标识
+        type: string
+      isBlocked:
+        description: 是否阻止
+        type: boolean
+      realName:
+        description: 真实姓名
+        type: string
+      refreshToken:
+        description: 刷新秘钥
+        type: string
+      remark:
+        description: 备注
+        type: string
+      userAgent:
+        description: 请求信息
+        type: string
+      userName:
+        description: 用户名
+        type: string
+    type: object
+  response.SysConfigResponse:
+    properties:
+      configKey:
+        description: 参数键名
+        type: string
+      configName:
+        description: 参数名称
+        type: string
+      configValue:
+        description: 参数键值
+        type: string
+      createBy:
+        description: 创建者
+        type: string
+      createTime:
+        description: 创建时间
+        type: string
+      delFlag:
+        description: 删除标志（0代表存在 2代表删除）
+        type: string
+      id:
+        description: 参数主键
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      status:
+        description: 状态（0正常 1停用）
+        type: string
+      updateBy:
+        description: 更新者
+        type: string
+      updateTime:
+        description: 更新时间
+        type: string
+    type: object
+  response.UserResponse:
+    properties:
+      avatar:
+        description: 头像地址
+        type: string
+      createBy:
+        description: 创建者
+        type: string
+      createTime:
+        description: 创建时间
+        type: string
+      delFlag:
+        description: 删除标志（0代表存在 2代表删除）
+        type: string
+      dept:
+        $ref: '#/definitions/response.DeptResponse'
+        description: 部门信息
+      deptID:
+        description: 部门ID
+        type: integer
+      deptName:
+        description: 部门名称
+        type: string
+      email:
+        description: 用户邮箱
+        type: string
+      id:
+        description: 用户ID
+        type: integer
+      menuList:
+        description: 菜单信息
+        items:
+          $ref: '#/definitions/response.MenuResponse'
+        type: array
+      mobile:
+        description: 手机号码
+        type: string
+      postList:
+        description: 岗位信息
+        items:
+          $ref: '#/definitions/response.PostResponse'
+        type: array
+      posts:
+        description: 岗位编号数组
+        type: string
+      realName:
+        description: 用户昵称
+        type: string
+      remark:
+        description: 备注
+        type: string
+      roleList:
+        description: 角色信息
+        items:
+          $ref: '#/definitions/response.RoleResponse'
+        type: array
+      roles:
+        description: 角色信息
+        items:
+          type: string
+        type: array
+      sex:
+        description: 用户性别（0男 1女 2未知）
+        type: string
+      status:
+        description: 帐号状态（0正常 1停用）
+        type: string
+      updateBy:
+        description: 更新者
+        type: string
+      updateTime:
+        description: 更新时间
+        type: string
+      userName:
+        description: 用户账号
         type: string
     type: object
 info:
@@ -34,6 +1204,1492 @@ paths:
       summary: 首页
       tags:
       - 首页
+  /article:
+    post:
+      consumes:
+      - application/json
+      description: 文章文稿新增信息
+      parameters:
+      - description: 新增文章文稿信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.ArticleCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 文章文稿新增
+      tags:
+      - 文章文稿
+    put:
+      consumes:
+      - application/json
+      description: 文章文稿更新信息
+      parameters:
+      - description: 更新文章文稿信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.ArticleUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 文章文稿更新
+      tags:
+      - 文章文稿
+  /article/:id:
+    delete:
+      consumes:
+      - application/json
+      description: 文章文稿信息伪删除
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 文章文稿伪删除
+      tags:
+      - 文章文稿
+    get:
+      consumes:
+      - application/json
+      description: 文章文稿详情信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.ArticleResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 文章文稿详情
+      tags:
+      - 文章文稿
+  /article/p:
+    post:
+      consumes:
+      - application/json
+      description: 分页获取所有文章文稿信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.ArticleResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 文章文稿分页查询
+      tags:
+      - 文章文稿
+  /config:
+    post:
+      consumes:
+      - application/json
+      description: 新增参数配置信息
+      parameters:
+      - description: 新增参数配置信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.SysConfigCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 参数配置新增
+      tags:
+      - 系统参数配置
+    put:
+      consumes:
+      - application/json
+      description: 更新参数配置信息
+      parameters:
+      - description: 更新参数配置信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.SysConfigUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 参数配置更新
+      tags:
+      - 系统参数配置
+  /config/:id:
+    delete:
+      consumes:
+      - application/json
+      description: 伪删除参数配置信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 参数配置伪删除
+      tags:
+      - 系统参数配置
+    get:
+      consumes:
+      - application/json
+      description: 详情参数配置信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.SysConfigResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 参数配置详情
+      tags:
+      - 系统参数配置
+  /config/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有参数配置信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.SysConfigResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 参数配置列表查询
+      tags:
+      - 系统参数配置
+  /config/p:
+    post:
+      consumes:
+      - application/json
+      description: 获取所有参数配置信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.SysConfigResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 参数配置列表查询
+      tags:
+      - 系统参数配置
+  /dept:
+    post:
+      consumes:
+      - application/json
+      description: 新增部门信息
+      parameters:
+      - description: 新增部门信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.DeptCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 部门新增
+      tags:
+      - 系统部门
+    put:
+      consumes:
+      - application/json
+      description: 更新部门信息
+      parameters:
+      - description: 更新部门信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.DeptUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 部门更新
+      tags:
+      - 系统部门
+  /dept/:id:
+    delete:
+      consumes:
+      - application/json
+      description: 伪删除部门信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 部门伪删除
+      tags:
+      - 系统部门
+    get:
+      consumes:
+      - application/json
+      description: 详情部门信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.DeptResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 部门详情
+      tags:
+      - 系统部门
+  /dept/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有部门信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.DeptResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 部门列表查询
+      tags:
+      - 系统部门
+  /dept/p:
+    post:
+      consumes:
+      - application/json
+      description: 获取所有部门信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.DeptResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 部门列表查询
+      tags:
+      - 系统部门
+  /dept/tree:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有部门信息(树形）
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.DeptResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 部门列表查询(树形）
+      tags:
+      - 系统部门
+  /dictData:
+    post:
+      consumes:
+      - application/json
+      description: 新增字典数据信息
+      parameters:
+      - description: 新增字典数据信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.DictDataCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 字典数据新增
+      tags:
+      - 系统字典数据
+    put:
+      consumes:
+      - application/json
+      description: 更新字典数据信息
+      parameters:
+      - description: 更新字典数据信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.DictDataUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 字典数据更新
+      tags:
+      - 系统字典数据
+  /dictData/:id:
+    delete:
+      consumes:
+      - application/json
+      description: 伪删除字典数据信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 字典数据伪删除
+      tags:
+      - 系统字典数据
+    get:
+      consumes:
+      - application/json
+      description: 详情字典数据信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.DictDataResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 字典数据详情
+      tags:
+      - 系统字典数据
+  /dictData/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有字典数据信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.DictDataResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 字典数据列表查询
+      tags:
+      - 系统字典数据
+  /dictData/p:
+    post:
+      consumes:
+      - application/json
+      description: 获取所有字典数据信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.DictDataResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 字典数据列表查询
+      tags:
+      - 系统字典数据
+  /dictType:
+    post:
+      consumes:
+      - application/json
+      description: 新增字典类型信息
+      parameters:
+      - description: 新增字典类型信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.DictTypeCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 字典类型新增
+      tags:
+      - 系统字典类型
+    put:
+      consumes:
+      - application/json
+      description: 更新字典类型信息
+      parameters:
+      - description: 更新字典类型信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.DictTypeUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 字典类型更新
+      tags:
+      - 系统字典类型
+  /dictType/:id:
+    delete:
+      consumes:
+      - application/json
+      description: 伪删除字典类型信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 字典类型伪删除
+      tags:
+      - 系统字典类型
+    get:
+      consumes:
+      - application/json
+      description: 详情字典类型信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.DictTypeResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 字典类型详情
+      tags:
+      - 系统字典类型
+  /dictType/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有字典类型信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.DictTypeResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 字典类型列表查询
+      tags:
+      - 系统字典类型
+  /dictType/p:
+    post:
+      consumes:
+      - application/json
+      description: 获取所有字典类型信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.DictTypeResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 字典类型列表查询
+      tags:
+      - 系统字典类型
+  /file/:id:
+    delete:
+      consumes:
+      - application/json
+      description: 文件上传信息删除
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 文件上传删除
+      tags:
+      - 文件上传
+    get:
+      consumes:
+      - application/json
+      description: 文件上传详情信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.FileResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 文件上传详情
+      tags:
+      - 文件上传
+  /file/p:
+    post:
+      consumes:
+      - application/json
+      description: 分页获取所有文件上传信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.FileResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 文件上传分页查询
+      tags:
+      - 文件上传
+  /file/upload/common:
+    post:
+      consumes:
+      - application/json
+      description: 文件上传信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.FileResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 文件上传
+      tags:
+      - 文件上传
+  /menu:
+    post:
+      consumes:
+      - application/json
+      description: 新增岗位信息
+      parameters:
+      - description: 新增岗位信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.MenuCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 岗位新增
+      tags:
+      - 系统菜单
+    put:
+      consumes:
+      - application/json
+      description: 更新岗位信息
+      parameters:
+      - description: 更新岗位信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.MenuUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 岗位更新
+      tags:
+      - 系统菜单
+  /menu/:id:
+    delete:
+      consumes:
+      - application/json
+      description: 伪删除岗位信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 岗位伪删除
+      tags:
+      - 系统菜单
+    get:
+      consumes:
+      - application/json
+      description: 详情岗位信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.MenuResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 岗位详情
+      tags:
+      - 系统菜单
+  /menu/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有岗位信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.MenuResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 岗位列表查询
+      tags:
+      - 系统菜单
+  /menu/p:
+    post:
+      consumes:
+      - application/json
+      description: 获取所有岗位信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.MenuResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 岗位列表查询
+      tags:
+      - 系统菜单
+  /menu/tree:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有菜单信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.MenuResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 菜单列表树
+      tags:
+      - 系统菜单
+  /post:
+    post:
+      consumes:
+      - application/json
+      description: 新增岗位信息
+      parameters:
+      - description: 新增岗位信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.PostCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 岗位新增
+      tags:
+      - 系统岗位
+    put:
+      consumes:
+      - application/json
+      description: 更新岗位信息
+      parameters:
+      - description: 更新岗位信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.PostUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 岗位更新
+      tags:
+      - 系统岗位
+  /post/:id:
+    delete:
+      consumes:
+      - application/json
+      description: 伪删除岗位信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 岗位伪删除
+      tags:
+      - 系统岗位
+    get:
+      consumes:
+      - application/json
+      description: 详情岗位信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.PostResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 岗位详情
+      tags:
+      - 系统岗位
+  /post/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有岗位信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.PostResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 岗位列表查询
+      tags:
+      - 系统岗位
+  /post/p:
+    post:
+      consumes:
+      - application/json
+      description: 获取所有操作日志信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.SessionResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 操作日志列表查询
+      tags:
+      - 系统操作日志
+  /role:
+    post:
+      consumes:
+      - application/json
+      description: 新增角色信息
+      parameters:
+      - description: 新增角色信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.RoleCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 角色新增
+      tags:
+      - 系统角色
+    put:
+      consumes:
+      - application/json
+      description: 更新角色信息
+      parameters:
+      - description: 更新角色信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.RoleUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 角色更新
+      tags:
+      - 系统角色
+  /role/:id:
+    delete:
+      consumes:
+      - application/json
+      description: 伪删除角色信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 角色伪删除
+      tags:
+      - 系统角色
+    get:
+      consumes:
+      - application/json
+      description: 详情角色信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.RoleResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 角色详情
+      tags:
+      - 系统角色
+  /role/list:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有角色信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.RoleResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 角色列表查询
+      tags:
+      - 系统角色
+  /role/p:
+    post:
+      consumes:
+      - application/json
+      description: 获取所有角色信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.RoleResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 角色列表查询
+      tags:
+      - 系统角色
+  /user:
+    post:
+      consumes:
+      - application/json
+      description: 新增用户信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 创建用户
+      tags:
+      - 系统用户
+    put:
+      consumes:
+      - application/json
+      description: 更新用户信息
+      parameters:
+      - description: 更新用户信息
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 更新用户
+      tags:
+      - 系统用户
+  /user/:id:
+    delete:
+      consumes:
+      - application/json
+      description: 删除用户信息
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 删除用户
+      tags:
+      - 系统用户
+    get:
+      consumes:
+      - application/json
+      description: 用户信息详情（关联部门、角色、岗位）
+      parameters:
+      - description: 标识
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 用户详情（关联部门、角色、岗位）
+      tags:
+      - 系统用户
+  /user/online/userInfo:
+    get:
+      consumes:
+      - application/json
+      description: 登录用户菜单信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.RestRes'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 用户菜单
+      tags:
+      - 登录用户
+  /user/p:
+    get:
+      consumes:
+      - application/json
+      description: 分页获取所有用户信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.RestRes'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.UserResponse'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.RestRes'
+      summary: 用户分页查询
+      tags:
+      - 系统用户
 securityDefinitions:
   ApiKeyAuth:
     in: header

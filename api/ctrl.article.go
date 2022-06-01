@@ -13,7 +13,7 @@ import (
 // @Tags         文章文稿
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.ArticleResponse}
+// @Success      200       {object}  response.RestRes{data=response.ArticleResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /article/p [post]
 func ArticlePage(ctx *gin.Context) {
@@ -113,7 +113,7 @@ func ArticleDelete(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "标识"
-// @Success      200       {object}  response.RestRes{data=model.ArticleResponse}
+// @Success      200       {object}  response.RestRes{data=response.ArticleResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /article/:id [get]
 func ArticleDetail(ctx *gin.Context) {

@@ -13,7 +13,7 @@ import (
 // @Tags         系统通知公告
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.NoticeResponse}
+// @Success      200       {object}  response.RestRes{data=response.NoticeResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /post/p [post]
 func NoticePage(ctx *gin.Context) {
@@ -113,7 +113,7 @@ func NoticeDelete(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "标识"
-// @Success      200       {object}  response.RestRes{data=model.NoticeResponse}
+// @Success      200       {object}  response.RestRes{data=response.NoticeResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /post/:id [get]
 func NoticeDetail(ctx *gin.Context) {

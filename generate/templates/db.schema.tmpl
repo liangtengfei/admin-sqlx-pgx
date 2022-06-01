@@ -18,6 +18,7 @@ type {{$tableSchema}} struct {
     {{- else if eq $element.DataType "int4"}} int64
     {{- else if eq $element.DataType "int8"}} int64
     {{- else if eq $element.DataType "text"}} string
+    {{- else if eq $element.DataType "uuid"}} uuid.UUID
     {{- end}} `json:"{{$element.ColumnName | toLowerCamel}}" db:"{{$element.ColumnName}}"` // {{- if $element.ColumnComment.Valid }}{{$element.ColumnComment.String}}{{- end }}
 {{- end }}
 }

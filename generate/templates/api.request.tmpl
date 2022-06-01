@@ -1,4 +1,7 @@
 package request
+
+import "github.com/google/uuid"
+
 {{- $businessName := .Biz.Business}}
 {{- $businessComment := .Biz.BusinessComment}}
 {{- $businessPath := .Biz.Business | toLowerCamel}}
@@ -18,6 +21,7 @@ type {{$businessName}}CreateRequest struct {{print "{" -}}
             {{- else if eq $element.DataType "int4"}} int64
             {{- else if eq $element.DataType "int8"}} int64
             {{- else if eq $element.DataType "text"}} string
+            {{- else if eq $element.DataType "uuid"}} uuid.UUID
             {{- end}} `json:"{{$element.ColumnName | toLowerCamel}}" binding:"required"`
         {{- end }}
     {{- end }}
@@ -35,6 +39,7 @@ type {{$businessName}}UpdateRequest struct {{print "{" -}}
             {{- else if eq $element.DataType "int4"}} int64
             {{- else if eq $element.DataType "int8"}} int64
             {{- else if eq $element.DataType "text"}} string
+            {{- else if eq $element.DataType "uuid"}} uuid.UUID
             {{- end}} `json:"{{$element.ColumnName | toLowerCamel}}" binding:"required"`
         {{- end }}
     {{- end }}

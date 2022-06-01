@@ -13,7 +13,7 @@ import (
 // @Tags         系统部门
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.DeptResponse}
+// @Success      200       {object}  response.RestRes{data=response.DeptResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /dept/list [get]
 func DeptListAll(ctx *gin.Context) {
@@ -32,7 +32,7 @@ func DeptListAll(ctx *gin.Context) {
 // @Tags         系统部门
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.DeptResponse}
+// @Success      200       {object}  response.RestRes{data=response.DeptResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /dept/tree [get]
 func DeptListTree(ctx *gin.Context) {
@@ -51,7 +51,7 @@ func DeptListTree(ctx *gin.Context) {
 // @Tags         系统部门
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.DeptResponse}
+// @Success      200       {object}  response.RestRes{data=response.DeptResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /dept/p [post]
 func DeptPage(ctx *gin.Context) {
@@ -151,7 +151,7 @@ func DeptDelete(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "标识"
-// @Success      200       {object}  response.RestRes{data=model.DeptResponse}
+// @Success      200       {object}  response.RestRes{data=response.DeptResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /dept/:id [get]
 func DeptDetail(ctx *gin.Context) {

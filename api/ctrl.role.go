@@ -13,7 +13,7 @@ import (
 // @Tags         系统角色
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.RoleResponse}
+// @Success      200       {object}  response.RestRes{data=response.RoleResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /role/list [get]
 func RoleListAll(ctx *gin.Context) {
@@ -32,7 +32,7 @@ func RoleListAll(ctx *gin.Context) {
 // @Tags         系统角色
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.RoleResponse}
+// @Success      200       {object}  response.RestRes{data=response.RoleResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /role/p [post]
 func RolePage(ctx *gin.Context) {
@@ -132,7 +132,7 @@ func RoleDelete(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "标识"
-// @Success      200       {object}  response.RestRes{data=model.RoleResponse}
+// @Success      200       {object}  response.RestRes{data=response.RoleResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /role/:id [get]
 func RoleDetail(ctx *gin.Context) {

@@ -34,10 +34,10 @@ func (g GenBusiness) GetBusinessSchema() string {
 
 func main() {
 	business := GenBusiness{
-		Business:        "Article",
-		BusinessComment: "文章文稿",
-		TableName:       "cms_article",
-		TableComment:    "文章信息表",
+		Business:        "File",
+		BusinessComment: "文件上传",
+		TableName:       "ago_file",
+		TableComment:    "上传文件信息表",
 	}
 	var err error
 	err = generate.ParseTemplateFiles()
@@ -76,7 +76,7 @@ func main() {
 	failAndRemoveFile(mapperFilePath, err)
 
 	querierFileFormat := fmt.Sprintf("querier.%s.go", business.GetBusinessPath())
-	querierFilePath := filepath.Join("db/sqlx/internal", querierFileFormat)
+	querierFilePath := filepath.Join("db/sqlx", querierFileFormat)
 	querierTemplateFile := "db.inter.tmpl"
 	err = fileCreate(querierFilePath, querierTemplateFile, business)
 	failAndRemoveFile(querierFilePath, err)
@@ -94,7 +94,7 @@ func main() {
 	failAndRemoveFile(routerFilePath, err)
 
 	// 需要插入生成的路由和接口
-	interEntryFilePath := filepath.Join("db/sqlx/internal", "entry.go")
+	interEntryFilePath := filepath.Join("db/sqlx", "entry.go")
 	interEntryContent := fmt.Sprintf("\tQuerier%s", business.Business)
 	err = fileInsert(interEntryFilePath, interEntryContent)
 	if err != nil {

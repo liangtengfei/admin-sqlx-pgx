@@ -13,7 +13,7 @@ import (
 // @Tags         系统菜单
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.MenuResponse}
+// @Success      200       {object}  response.RestRes{data=response.MenuResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /menu/tree [get]
 func MenuListTree(ctx *gin.Context) {
@@ -31,7 +31,7 @@ func MenuListTree(ctx *gin.Context) {
 // @Tags         系统菜单
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.MenuResponse}
+// @Success      200       {object}  response.RestRes{data=response.MenuResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /menu/list [get]
 func MenuListAll(ctx *gin.Context) {
@@ -50,7 +50,7 @@ func MenuListAll(ctx *gin.Context) {
 // @Tags         系统菜单
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.MenuResponse}
+// @Success      200       {object}  response.RestRes{data=response.MenuResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /menu/p [post]
 func MenuPage(ctx *gin.Context) {
@@ -150,7 +150,7 @@ func MenuDelete(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "标识"
-// @Success      200       {object}  response.RestRes{data=model.MenuResponse}
+// @Success      200       {object}  response.RestRes{data=response.MenuResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /menu/:id [get]
 func MenuDetail(ctx *gin.Context) {

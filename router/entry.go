@@ -7,4 +7,5 @@ import (
 
 func entryRouter(root *gin.RouterGroup) {
 	business.ArticleRouter(root)
+	business.FileRouter(root)
 }

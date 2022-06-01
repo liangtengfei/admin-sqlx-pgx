@@ -13,6 +13,7 @@ require (
 	github.com/go-playground/validator/v10 v10.11.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/google/uuid v1.3.0
+	github.com/h2non/filetype v1.1.3
 	github.com/jackc/pgconn v1.9.1-0.20210724152538-d89c8390a530
 	github.com/jackc/pgx/v4 v4.12.1-0.20210724153913-640aa07df17c
 	github.com/jinzhu/copier v0.3.5

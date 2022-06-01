@@ -13,7 +13,7 @@ import (
 // @Tags         系统字典数据
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.DictDataResponse}
+// @Success      200       {object}  response.RestRes{data=response.DictDataResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /dictData/list [get]
 func DictDataListAll(ctx *gin.Context) {
@@ -32,7 +32,7 @@ func DictDataListAll(ctx *gin.Context) {
 // @Tags         系统字典数据
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.DictDataResponse}
+// @Success      200       {object}  response.RestRes{data=response.DictDataResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /dictData/list [get]
 func DictDataListTree(ctx *gin.Context) {
@@ -51,7 +51,7 @@ func DictDataListTree(ctx *gin.Context) {
 // @Tags         系统字典数据
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.DictDataResponse}
+// @Success      200       {object}  response.RestRes{data=response.DictDataResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /dictData/p [post]
 func DictDataPage(ctx *gin.Context) {
@@ -151,7 +151,7 @@ func DictDataDelete(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "标识"
-// @Success      200       {object}  response.RestRes{data=model.DictDataResponse}
+// @Success      200       {object}  response.RestRes{data=response.DictDataResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /dictData/:id [get]
 func DictDataDetail(ctx *gin.Context) {

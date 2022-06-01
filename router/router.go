@@ -1,21 +1,27 @@
 package router
 
 import (
+	"embed"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"io/fs"
+	"net/http"
 	"study.com/demo-sqlx-pgx/api"
 	"study.com/demo-sqlx-pgx/pkg/middleware"
 	_ "study.com/demo-sqlx-pgx/resources/docs"
 	"study.com/demo-sqlx-pgx/router/system"
 )
 
-func InitRouter() *gin.Engine {
+func InitRouter(staticFs embed.FS) *gin.Engine {
 	r := gin.Default()
 
 	//静态资源
-	r.Static("/favicon.ico", "./resources/public/favicon.ico")
-	r.Static("/static", "./resources/public/assets") // dist
+	//r.Static("/favicon.ico", "./resources/public/favicon.ico")
+	//r.Static("/static", "./resources/public/assets") // dist
+
+	fe, _ := fs.Sub(staticFs, "resources/public")
+	r.StaticFS("/static", http.FS(fe))
 
 	root := r.Group("/")
 	root.Use(middleware.Cors())

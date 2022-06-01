@@ -13,7 +13,7 @@ import (
 // @Tags         系统操作日志
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.SessionResponse}
+// @Success      200       {object}  response.RestRes{data=response.SessionResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /post/p [post]
 func SessionPage(ctx *gin.Context) {

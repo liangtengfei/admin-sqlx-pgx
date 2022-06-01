@@ -1,9 +1,13 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"study.com/demo-sqlx-pgx/bootstrap"
 )
+
+//go:embed resources/public/*
+var static embed.FS
 
 // @title                       Admin GOGOGO
 // @version                     0.0.1
@@ -15,5 +19,5 @@ import (
 func main() {
 	fmt.Println("HI! GO + SQLX + PGX")
 
-	bootstrap.RunServer()
+	bootstrap.RunServer(static)
 }

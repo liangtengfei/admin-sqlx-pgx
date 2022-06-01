@@ -14,7 +14,7 @@ import (
 // @Tags         系统参数配置
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.SysConfigResponse}
+// @Success      200       {object}  response.RestRes{data=response.SysConfigResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /config/list [get]
 func SysConfigListAll(ctx *gin.Context) {
@@ -33,7 +33,7 @@ func SysConfigListAll(ctx *gin.Context) {
 // @Tags         系统参数配置
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.SysConfigResponse}
+// @Success      200       {object}  response.RestRes{data=response.SysConfigResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /config/p [post]
 func SysConfigPage(ctx *gin.Context) {
@@ -133,7 +133,7 @@ func SysConfigDelete(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "标识"
-// @Success      200       {object}  response.RestRes{data=model.SysConfigResponse}
+// @Success      200       {object}  response.RestRes{data=response.SysConfigResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /config/:id [get]
 func SysConfigDetail(ctx *gin.Context) {

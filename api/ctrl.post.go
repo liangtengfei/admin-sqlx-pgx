@@ -13,7 +13,7 @@ import (
 // @Tags         系统岗位
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.PostResponse}
+// @Success      200       {object}  response.RestRes{data=response.PostResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /post/list [get]
 func PostListAll(ctx *gin.Context) {
@@ -32,7 +32,7 @@ func PostListAll(ctx *gin.Context) {
 // @Tags         系统岗位
 // @Accept       json
 // @Produce      json
-// @Success      200       {object}  response.RestRes{data=model.PostResponse}
+// @Success      200       {object}  response.RestRes{data=response.PostResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /post/p [post]
 func PostPage(ctx *gin.Context) {
@@ -132,7 +132,7 @@ func PostDelete(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param        id   path      int  true  "标识"
-// @Success      200       {object}  response.RestRes{data=model.PostResponse}
+// @Success      200       {object}  response.RestRes{data=response.PostResponse}
 // @Failure      500       {object}  response.RestRes
 // @Router       /post/:id [get]
 func PostDetail(ctx *gin.Context) {

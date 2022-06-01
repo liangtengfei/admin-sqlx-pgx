@@ -44,9 +44,3722 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/article": {
+            "put": {
+                "description": "文章文稿更新信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "文章文稿"
+                ],
+                "summary": "文章文稿更新",
+                "parameters": [
+                    {
+                        "description": "更新文章文稿信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ArticleUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "文章文稿新增信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "文章文稿"
+                ],
+                "summary": "文章文稿新增",
+                "parameters": [
+                    {
+                        "description": "新增文章文稿信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ArticleCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/article/:id": {
+            "get": {
+                "description": "文章文稿详情信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "文章文稿"
+                ],
+                "summary": "文章文稿详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.ArticleResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "文章文稿信息伪删除",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "文章文稿"
+                ],
+                "summary": "文章文稿伪删除",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/article/p": {
+            "post": {
+                "description": "分页获取所有文章文稿信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "文章文稿"
+                ],
+                "summary": "文章文稿分页查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.ArticleResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/config": {
+            "put": {
+                "description": "更新参数配置信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统参数配置"
+                ],
+                "summary": "参数配置更新",
+                "parameters": [
+                    {
+                        "description": "更新参数配置信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.SysConfigUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "新增参数配置信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统参数配置"
+                ],
+                "summary": "参数配置新增",
+                "parameters": [
+                    {
+                        "description": "新增参数配置信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.SysConfigCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/config/:id": {
+            "get": {
+                "description": "详情参数配置信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统参数配置"
+                ],
+                "summary": "参数配置详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.SysConfigResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "伪删除参数配置信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统参数配置"
+                ],
+                "summary": "参数配置伪删除",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/config/list": {
+            "get": {
+                "description": "获取所有参数配置信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统参数配置"
+                ],
+                "summary": "参数配置列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.SysConfigResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/config/p": {
+            "post": {
+                "description": "获取所有参数配置信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统参数配置"
+                ],
+                "summary": "参数配置列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.SysConfigResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/dept": {
+            "put": {
+                "description": "更新部门信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统部门"
+                ],
+                "summary": "部门更新",
+                "parameters": [
+                    {
+                        "description": "更新部门信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DeptUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "新增部门信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统部门"
+                ],
+                "summary": "部门新增",
+                "parameters": [
+                    {
+                        "description": "新增部门信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DeptCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/dept/:id": {
+            "get": {
+                "description": "详情部门信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统部门"
+                ],
+                "summary": "部门详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.DeptResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "伪删除部门信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统部门"
+                ],
+                "summary": "部门伪删除",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/dept/list": {
+            "get": {
+                "description": "获取所有部门信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统部门"
+                ],
+                "summary": "部门列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.DeptResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/dept/p": {
+            "post": {
+                "description": "获取所有部门信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统部门"
+                ],
+                "summary": "部门列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.DeptResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/dept/tree": {
+            "get": {
+                "description": "获取所有部门信息(树形）",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统部门"
+                ],
+                "summary": "部门列表查询(树形）",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.DeptResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictData": {
+            "put": {
+                "description": "更新字典数据信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统字典数据"
+                ],
+                "summary": "字典数据更新",
+                "parameters": [
+                    {
+                        "description": "更新字典数据信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DictDataUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "新增字典数据信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统字典数据"
+                ],
+                "summary": "字典数据新增",
+                "parameters": [
+                    {
+                        "description": "新增字典数据信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DictDataCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictData/:id": {
+            "get": {
+                "description": "详情字典数据信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统字典数据"
+                ],
+                "summary": "字典数据详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.DictDataResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "伪删除字典数据信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统字典数据"
+                ],
+                "summary": "字典数据伪删除",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictData/list": {
+            "get": {
+                "description": "获取所有字典数据信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统字典数据"
+                ],
+                "summary": "字典数据列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.DictDataResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictData/p": {
+            "post": {
+                "description": "获取所有字典数据信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统字典数据"
+                ],
+                "summary": "字典数据列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.DictDataResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictType": {
+            "put": {
+                "description": "更新字典类型信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统字典类型"
+                ],
+                "summary": "字典类型更新",
+                "parameters": [
+                    {
+                        "description": "更新字典类型信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DictTypeUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "新增字典类型信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统字典类型"
+                ],
+                "summary": "字典类型新增",
+                "parameters": [
+                    {
+                        "description": "新增字典类型信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.DictTypeCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictType/:id": {
+            "get": {
+                "description": "详情字典类型信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统字典类型"
+                ],
+                "summary": "字典类型详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.DictTypeResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "伪删除字典类型信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统字典类型"
+                ],
+                "summary": "字典类型伪删除",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictType/list": {
+            "get": {
+                "description": "获取所有字典类型信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统字典类型"
+                ],
+                "summary": "字典类型列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.DictTypeResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/dictType/p": {
+            "post": {
+                "description": "获取所有字典类型信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统字典类型"
+                ],
+                "summary": "字典类型列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.DictTypeResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/file/:id": {
+            "get": {
+                "description": "文件上传详情信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "文件上传"
+                ],
+                "summary": "文件上传详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.FileResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "文件上传信息删除",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "文件上传"
+                ],
+                "summary": "文件上传删除",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/file/p": {
+            "post": {
+                "description": "分页获取所有文件上传信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "文件上传"
+                ],
+                "summary": "文件上传分页查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.FileResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/file/upload/common": {
+            "post": {
+                "description": "文件上传信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "文件上传"
+                ],
+                "summary": "文件上传",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.FileResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/menu": {
+            "put": {
+                "description": "更新岗位信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统菜单"
+                ],
+                "summary": "岗位更新",
+                "parameters": [
+                    {
+                        "description": "更新岗位信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.MenuUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "新增岗位信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统菜单"
+                ],
+                "summary": "岗位新增",
+                "parameters": [
+                    {
+                        "description": "新增岗位信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.MenuCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/:id": {
+            "get": {
+                "description": "详情岗位信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统菜单"
+                ],
+                "summary": "岗位详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.MenuResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "伪删除岗位信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统菜单"
+                ],
+                "summary": "岗位伪删除",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/list": {
+            "get": {
+                "description": "获取所有岗位信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统菜单"
+                ],
+                "summary": "岗位列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.MenuResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/p": {
+            "post": {
+                "description": "获取所有岗位信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统菜单"
+                ],
+                "summary": "岗位列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.MenuResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/menu/tree": {
+            "get": {
+                "description": "获取所有菜单信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统菜单"
+                ],
+                "summary": "菜单列表树",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.MenuResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/post": {
+            "put": {
+                "description": "更新岗位信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统岗位"
+                ],
+                "summary": "岗位更新",
+                "parameters": [
+                    {
+                        "description": "更新岗位信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.PostUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "新增岗位信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统岗位"
+                ],
+                "summary": "岗位新增",
+                "parameters": [
+                    {
+                        "description": "新增岗位信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.PostCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/post/:id": {
+            "get": {
+                "description": "详情岗位信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统岗位"
+                ],
+                "summary": "岗位详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.PostResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "伪删除岗位信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统岗位"
+                ],
+                "summary": "岗位伪删除",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/post/list": {
+            "get": {
+                "description": "获取所有岗位信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统岗位"
+                ],
+                "summary": "岗位列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.PostResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/post/p": {
+            "post": {
+                "description": "获取所有操作日志信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统操作日志"
+                ],
+                "summary": "操作日志列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.SessionResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/role": {
+            "put": {
+                "description": "更新角色信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统角色"
+                ],
+                "summary": "角色更新",
+                "parameters": [
+                    {
+                        "description": "更新角色信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.RoleUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "新增角色信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统角色"
+                ],
+                "summary": "角色新增",
+                "parameters": [
+                    {
+                        "description": "新增角色信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.RoleCreateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/role/:id": {
+            "get": {
+                "description": "详情角色信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统角色"
+                ],
+                "summary": "角色详情",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.RoleResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "伪删除角色信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统角色"
+                ],
+                "summary": "角色伪删除",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/role/list": {
+            "get": {
+                "description": "获取所有角色信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统角色"
+                ],
+                "summary": "角色列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.RoleResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/role/p": {
+            "post": {
+                "description": "获取所有角色信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统角色"
+                ],
+                "summary": "角色列表查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.RoleResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/user": {
+            "put": {
+                "description": "更新用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统用户"
+                ],
+                "summary": "更新用户",
+                "parameters": [
+                    {
+                        "description": "更新用户信息",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.UserUpdateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "新增用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统用户"
+                ],
+                "summary": "创建用户",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/:id": {
+            "get": {
+                "description": "用户信息详情（关联部门、角色、岗位）",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统用户"
+                ],
+                "summary": "用户详情（关联部门、角色、岗位）",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "删除用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统用户"
+                ],
+                "summary": "删除用户",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "标识",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/online/userInfo": {
+            "get": {
+                "description": "登录用户菜单信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "登录用户"
+                ],
+                "summary": "用户菜单",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/p": {
+            "get": {
+                "description": "分页获取所有用户信息",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "系统用户"
+                ],
+                "summary": "用户分页查询",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.RestRes"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.UserResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.RestRes"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
+        "request.ArticleCreateRequest": {
+            "type": "object",
+            "required": [
+                "articleContent",
+                "articleTag",
+                "articleTitle",
+                "summary"
+            ],
+            "properties": {
+                "articleContent": {
+                    "type": "string"
+                },
+                "articleTag": {
+                    "type": "string"
+                },
+                "articleTitle": {
+                    "type": "string"
+                },
+                "remark": {
+                    "type": "string"
+                },
+                "summary": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.ArticleUpdateRequest": {
+            "type": "object",
+            "required": [
+                "articleContent",
+                "articleTag",
+                "articleTitle",
+                "id",
+                "status",
+                "summary"
+            ],
+            "properties": {
+                "articleContent": {
+                    "type": "string"
+                },
+                "articleTag": {
+                    "type": "string"
+                },
+                "articleTitle": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "remark": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "summary": {
+                    "type": "string"
+                }
+            }
+        },
+        "request.DeptCreateRequest": {
+            "type": "object",
+            "required": [
+                "deptCode",
+                "deptName"
+            ],
+            "properties": {
+                "ancestors": {
+                    "description": "祖籍",
+                    "type": "string"
+                },
+                "deptCode": {
+                    "description": "部门编码",
+                    "type": "string"
+                },
+                "deptName": {
+                    "description": "部门名称",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "邮箱",
+                    "type": "string"
+                },
+                "leader": {
+                    "description": "负责人",
+                    "type": "string"
+                },
+                "orderNum": {
+                    "description": "显示顺序",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "parentID": {
+                    "description": "父部门id",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "phone": {
+                    "description": "联系电话",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                }
+            }
+        },
+        "request.DeptUpdateRequest": {
+            "type": "object",
+            "required": [
+                "deptCode",
+                "deptName",
+                "id",
+                "status"
+            ],
+            "properties": {
+                "ancestors": {
+                    "description": "祖籍",
+                    "type": "string"
+                },
+                "deptCode": {
+                    "description": "部门编码",
+                    "type": "string"
+                },
+                "deptName": {
+                    "description": "部门名称",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "邮箱",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "部门id",
+                    "type": "integer"
+                },
+                "leader": {
+                    "description": "负责人",
+                    "type": "string"
+                },
+                "orderNum": {
+                    "description": "显示顺序",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "parentID": {
+                    "description": "父部门id",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "phone": {
+                    "description": "联系电话",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                }
+            }
+        },
+        "request.DictDataCreateRequest": {
+            "type": "object",
+            "required": [
+                "dictLabel",
+                "dictType",
+                "dictValue"
+            ],
+            "properties": {
+                "cssClass": {
+                    "description": "样式属性（其他样式扩展）",
+                    "type": "string"
+                },
+                "dictLabel": {
+                    "description": "字典标签",
+                    "type": "string"
+                },
+                "dictType": {
+                    "description": "字典类型编码",
+                    "type": "string"
+                },
+                "dictValue": {
+                    "description": "字典键值",
+                    "type": "string"
+                },
+                "listClass": {
+                    "description": "表格回显样式",
+                    "type": "string"
+                },
+                "orderNum": {
+                    "description": "字典排序",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                }
+            }
+        },
+        "request.DictDataUpdateRequest": {
+            "type": "object",
+            "required": [
+                "dictLabel",
+                "dictValue",
+                "id"
+            ],
+            "properties": {
+                "cssClass": {
+                    "description": "样式属性（其他样式扩展）",
+                    "type": "string"
+                },
+                "dictLabel": {
+                    "description": "字典标签",
+                    "type": "string"
+                },
+                "dictValue": {
+                    "description": "字典键值",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "字典编码",
+                    "type": "integer"
+                },
+                "listClass": {
+                    "description": "表格回显样式",
+                    "type": "string"
+                },
+                "orderNum": {
+                    "description": "字典排序",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                }
+            }
+        },
+        "request.DictTypeCreateRequest": {
+            "type": "object",
+            "required": [
+                "dictName",
+                "dictType"
+            ],
+            "properties": {
+                "dictName": {
+                    "description": "字典类型名称",
+                    "type": "string"
+                },
+                "dictType": {
+                    "description": "字典类型编码",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                }
+            }
+        },
+        "request.DictTypeUpdateRequest": {
+            "type": "object",
+            "required": [
+                "dictName",
+                "dictType",
+                "id"
+            ],
+            "properties": {
+                "dictName": {
+                    "description": "字典类型名称",
+                    "type": "string"
+                },
+                "dictType": {
+                    "description": "字典类型编码",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "字典主键",
+                    "type": "integer"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                }
+            }
+        },
+        "request.MenuCreateRequest": {
+            "type": "object",
+            "required": [
+                "menuKey",
+                "menuName",
+                "path",
+                "requestMethod"
+            ],
+            "properties": {
+                "component": {
+                    "description": "组件路径",
+                    "type": "string"
+                },
+                "icon": {
+                    "description": "菜单图标",
+                    "type": "string"
+                },
+                "isCache": {
+                    "description": "是否缓存（0缓存 1不缓存）",
+                    "type": "string"
+                },
+                "isFrame": {
+                    "description": "是否为外链（0是 1否）",
+                    "type": "string"
+                },
+                "menuKey": {
+                    "description": "菜单标识",
+                    "type": "string"
+                },
+                "menuName": {
+                    "description": "菜单名称",
+                    "type": "string"
+                },
+                "menuType": {
+                    "description": "菜单类型（D目录 M菜单 A按钮）",
+                    "type": "string",
+                    "enum": [
+                        "D",
+                        "M",
+                        "A"
+                    ]
+                },
+                "orderNum": {
+                    "description": "显示顺序",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "parentID": {
+                    "description": "父菜单ID",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "path": {
+                    "description": "路由地址",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "requestMethod": {
+                    "description": "请求方法",
+                    "type": "string",
+                    "enum": [
+                        "GET",
+                        "POST",
+                        "DELETE",
+                        "PUT"
+                    ]
+                },
+                "visible": {
+                    "description": "菜单状态（0显示 1隐藏）",
+                    "type": "string"
+                }
+            }
+        },
+        "request.MenuUpdateRequest": {
+            "type": "object",
+            "required": [
+                "id",
+                "menuKey",
+                "menuName",
+                "path",
+                "requestMethod"
+            ],
+            "properties": {
+                "component": {
+                    "description": "组件路径",
+                    "type": "string"
+                },
+                "icon": {
+                    "description": "菜单图标",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "菜单ID",
+                    "type": "integer"
+                },
+                "isCache": {
+                    "description": "是否缓存（0缓存 1不缓存）",
+                    "type": "string"
+                },
+                "isFrame": {
+                    "description": "是否为外链（0是 1否）",
+                    "type": "string"
+                },
+                "menuKey": {
+                    "description": "菜单标识",
+                    "type": "string"
+                },
+                "menuName": {
+                    "description": "菜单名称",
+                    "type": "string"
+                },
+                "menuType": {
+                    "description": "菜单类型（D目录 M菜单 A按钮）",
+                    "type": "string",
+                    "enum": [
+                        "D",
+                        "M",
+                        "A"
+                    ]
+                },
+                "orderNum": {
+                    "description": "显示顺序",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "parentID": {
+                    "description": "父菜单ID",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "path": {
+                    "description": "路由地址",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "requestMethod": {
+                    "description": "请求方法",
+                    "type": "string",
+                    "enum": [
+                        "GET",
+                        "POST",
+                        "DELETE",
+                        "PUT"
+                    ]
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                },
+                "visible": {
+                    "description": "菜单状态（0显示 1隐藏）",
+                    "type": "string"
+                }
+            }
+        },
+        "request.NoticeCreateRequest": {
+            "type": "object",
+            "required": [
+                "noticeContent",
+                "noticeTitle",
+                "noticeType"
+            ],
+            "properties": {
+                "noticeContent": {
+                    "description": "公告内容",
+                    "type": "string"
+                },
+                "noticeTitle": {
+                    "description": "公告标题",
+                    "type": "string"
+                },
+                "noticeType": {
+                    "description": "公告类型（1通知）",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                }
+            }
+        },
+        "request.NoticeUpdateRequest": {
+            "type": "object",
+            "required": [
+                "id",
+                "noticeContent",
+                "noticeTitle",
+                "noticeType"
+            ],
+            "properties": {
+                "id": {
+                    "description": "公告ID",
+                    "type": "integer"
+                },
+                "noticeContent": {
+                    "description": "公告内容",
+                    "type": "string"
+                },
+                "noticeTitle": {
+                    "description": "公告标题",
+                    "type": "string"
+                },
+                "noticeType": {
+                    "description": "公告类型（1通知）",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                }
+            }
+        },
+        "request.PostCreateRequest": {
+            "type": "object",
+            "required": [
+                "postName"
+            ],
+            "properties": {
+                "orderNum": {
+                    "description": "显示顺序",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "postName": {
+                    "description": "岗位名称",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                }
+            }
+        },
+        "request.PostUpdateRequest": {
+            "type": "object",
+            "required": [
+                "id",
+                "postName"
+            ],
+            "properties": {
+                "id": {
+                    "description": "岗位ID",
+                    "type": "integer"
+                },
+                "orderNum": {
+                    "description": "显示顺序",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "postName": {
+                    "description": "岗位名称",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                }
+            }
+        },
+        "request.RoleCreateRequest": {
+            "type": "object",
+            "required": [
+                "dataScope",
+                "roleKey",
+                "roleName"
+            ],
+            "properties": {
+                "dataScope": {
+                    "description": "数据范围",
+                    "type": "string"
+                },
+                "deptIds": {
+                    "description": "部门编号数组",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "menuIds": {
+                    "description": "菜单编号数据",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "orderNum": {
+                    "description": "显示顺序",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "roleKey": {
+                    "description": "角色权限字符串",
+                    "type": "string"
+                },
+                "roleName": {
+                    "description": "角色名称",
+                    "type": "string"
+                }
+            }
+        },
+        "request.RoleUpdateRequest": {
+            "type": "object",
+            "required": [
+                "dataScope",
+                "id",
+                "roleKey",
+                "roleName"
+            ],
+            "properties": {
+                "dataScope": {
+                    "description": "数据范围",
+                    "type": "string"
+                },
+                "deptIds": {
+                    "description": "部门编号数组",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "id": {
+                    "description": "角色ID",
+                    "type": "integer"
+                },
+                "menuIds": {
+                    "description": "菜单编号数据",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "orderNum": {
+                    "description": "显示顺序",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "roleKey": {
+                    "description": "角色权限字符串",
+                    "type": "string"
+                },
+                "roleName": {
+                    "description": "角色名称",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                }
+            }
+        },
+        "request.SysConfigCreateRequest": {
+            "type": "object",
+            "required": [
+                "configKey",
+                "configName",
+                "configValue"
+            ],
+            "properties": {
+                "configKey": {
+                    "description": "参数键名",
+                    "type": "string"
+                },
+                "configName": {
+                    "description": "参数名称",
+                    "type": "string"
+                },
+                "configValue": {
+                    "description": "参数键值",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                }
+            }
+        },
+        "request.SysConfigUpdateRequest": {
+            "type": "object",
+            "required": [
+                "configName",
+                "configValue",
+                "id"
+            ],
+            "properties": {
+                "configName": {
+                    "description": "参数名称",
+                    "type": "string"
+                },
+                "configValue": {
+                    "description": "参数键值",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "参数主键",
+                    "type": "integer"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                }
+            }
+        },
+        "request.UserUpdateRequest": {
+            "type": "object",
+            "required": [
+                "avatar",
+                "deptID",
+                "email",
+                "id",
+                "mobile",
+                "realName",
+                "remark",
+                "sex"
+            ],
+            "properties": {
+                "PostIds": {
+                    "description": "岗位编号数组",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "example": [
+                        1,
+                        2,
+                        3
+                    ]
+                },
+                "avatar": {
+                    "description": "头像地址",
+                    "type": "string"
+                },
+                "deptID": {
+                    "description": "部门ID",
+                    "type": "integer"
+                },
+                "email": {
+                    "description": "用户邮箱",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "用户ID",
+                    "type": "integer"
+                },
+                "mobile": {
+                    "description": "手机号码",
+                    "type": "string"
+                },
+                "realName": {
+                    "description": "用户昵称",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "roleIds": {
+                    "description": "角色编号数组",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "example": [
+                        1,
+                        2,
+                        3
+                    ]
+                },
+                "sex": {
+                    "description": "用户性别（0男 1女 2未知）",
+                    "type": "string",
+                    "enum": [
+                        "0",
+                        " 1",
+                        " 2"
+                    ]
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                }
+            }
+        },
+        "response.ArticleResponse": {
+            "type": "object",
+            "properties": {
+                "articleContent": {
+                    "type": "string"
+                },
+                "articleTag": {
+                    "type": "string"
+                },
+                "articleTitle": {
+                    "type": "string"
+                },
+                "createBy": {
+                    "type": "string"
+                },
+                "createTime": {
+                    "type": "string"
+                },
+                "delFlag": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "remark": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "summary": {
+                    "type": "string"
+                },
+                "updateBy": {
+                    "type": "string"
+                },
+                "updateTime": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.DeptResponse": {
+            "type": "object",
+            "properties": {
+                "ancestors": {
+                    "description": "祖级列表",
+                    "type": "string"
+                },
+                "children": {
+                    "description": "字部门列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.DeptResponse"
+                    }
+                },
+                "childrenSize": {
+                    "description": "子部门数量",
+                    "type": "integer"
+                },
+                "createBy": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "createTime": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "delFlag": {
+                    "description": "删除标志（0代表存在 2代表删除）",
+                    "type": "string"
+                },
+                "deptCode": {
+                    "description": "部门编码",
+                    "type": "string"
+                },
+                "deptName": {
+                    "description": "部门名称",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "部门id",
+                    "type": "integer"
+                },
+                "orderNum": {
+                    "description": "显示顺序",
+                    "type": "integer"
+                },
+                "parentID": {
+                    "description": "父部门id",
+                    "type": "integer"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                },
+                "updateBy": {
+                    "description": "更新者",
+                    "type": "string"
+                },
+                "updateTime": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "response.DictDataResponse": {
+            "type": "object",
+            "properties": {
+                "createBy": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "createTime": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "cssClass": {
+                    "description": "样式属性（其他样式扩展）",
+                    "type": "string"
+                },
+                "delFlag": {
+                    "description": "删除标志（0代表存在 2代表删除）",
+                    "type": "string"
+                },
+                "dictLabel": {
+                    "description": "字典标签",
+                    "type": "string"
+                },
+                "dictType": {
+                    "description": "字典类型编码",
+                    "type": "string"
+                },
+                "dictValue": {
+                    "description": "字典键值",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "字典编码",
+                    "type": "integer"
+                },
+                "listClass": {
+                    "description": "表格回显样式",
+                    "type": "string"
+                },
+                "orderNum": {
+                    "description": "字典排序",
+                    "type": "integer"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                },
+                "updateBy": {
+                    "description": "更新者",
+                    "type": "string"
+                },
+                "updateTime": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "response.DictTypeResponse": {
+            "type": "object",
+            "properties": {
+                "createBy": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "createTime": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "dataList": {
+                    "description": "字典数据列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.DictDataResponse"
+                    }
+                },
+                "delFlag": {
+                    "description": "删除标志（0代表存在 2代表删除）",
+                    "type": "string"
+                },
+                "dictName": {
+                    "description": "字典类型名称",
+                    "type": "string"
+                },
+                "dictType": {
+                    "description": "字典类型编码",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "字典主键",
+                    "type": "integer"
+                },
+                "remark": {
+                    "description": "备注,",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                },
+                "updateBy": {
+                    "description": "更新者",
+                    "type": "string"
+                },
+                "updateTime": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "response.FileResponse": {
+            "type": "object",
+            "properties": {
+                "createBy": {
+                    "type": "string"
+                },
+                "createTime": {
+                    "type": "string"
+                },
+                "fileName": {
+                    "type": "string"
+                },
+                "filePath": {
+                    "type": "string"
+                },
+                "fileSize": {
+                    "type": "integer"
+                },
+                "fileUrl": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "mimeType": {
+                    "type": "string"
+                },
+                "remark": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "response.MenuResponse": {
+            "type": "object",
+            "properties": {
+                "children": {
+                    "description": "子菜单",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.MenuResponse"
+                    }
+                },
+                "component": {
+                    "description": "组件路径",
+                    "type": "string"
+                },
+                "createBy": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "createTime": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "delFlag": {
+                    "description": "删除标志（0代表存在 2代表删除）",
+                    "type": "string"
+                },
+                "icon": {
+                    "description": "菜单图标",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "菜单ID",
+                    "type": "integer"
+                },
+                "isCache": {
+                    "description": "是否缓存（0缓存 1不缓存）",
+                    "type": "integer"
+                },
+                "isFrame": {
+                    "description": "是否为外链（0是 1否）",
+                    "type": "integer"
+                },
+                "menuKey": {
+                    "description": "菜单标识",
+                    "type": "string"
+                },
+                "menuName": {
+                    "description": "菜单名称",
+                    "type": "string"
+                },
+                "menuType": {
+                    "description": "菜单类型（D目录 M菜单 A按钮）",
+                    "type": "string"
+                },
+                "orderNum": {
+                    "description": "显示顺序",
+                    "type": "integer"
+                },
+                "parentID": {
+                    "description": "父菜单ID",
+                    "type": "integer"
+                },
+                "path": {
+                    "description": "路由地址",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "requestMethod": {
+                    "description": "请求方法",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                },
+                "updateBy": {
+                    "description": "更新者",
+                    "type": "string"
+                },
+                "updateTime": {
+                    "description": "更新时间",
+                    "type": "string"
+                },
+                "visible": {
+                    "description": "菜单状态（0显示 1隐藏）",
+                    "type": "string"
+                }
+            }
+        },
+        "response.NoticeResponse": {
+            "type": "object",
+            "properties": {
+                "createBy": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "createTime": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "delFlag": {
+                    "description": "删除标志（0代表存在 2代表删除）",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "公告ID",
+                    "type": "integer"
+                },
+                "noticeContent": {
+                    "description": "公告内容",
+                    "type": "string"
+                },
+                "noticeTitle": {
+                    "description": "公告标题",
+                    "type": "string"
+                },
+                "noticeType": {
+                    "description": "公告类型（1通知）",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                },
+                "updateBy": {
+                    "description": "更新者",
+                    "type": "string"
+                },
+                "updateTime": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "response.OperationLogResponse": {
+            "type": "object",
+            "properties": {
+                "businessTitle": {
+                    "description": "业务内容",
+                    "type": "string"
+                },
+                "businessType": {
+                    "description": "业务类型",
+                    "type": "string"
+                },
+                "clientIp": {
+                    "description": "主机地址",
+                    "type": "string"
+                },
+                "clientLocation": {
+                    "description": "操作地点",
+                    "type": "string"
+                },
+                "clientParam": {
+                    "description": "请求参数",
+                    "type": "string"
+                },
+                "clientType": {
+                    "description": "操作类别（0其它 1后台用户 2手机端用户）",
+                    "type": "integer"
+                },
+                "createBy": {
+                    "description": "创建人员",
+                    "type": "string"
+                },
+                "createTime": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "deptName": {
+                    "description": "部门名称",
+                    "type": "string"
+                },
+                "errorMsg": {
+                    "description": "错误消息",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "日志主键",
+                    "type": "integer"
+                },
+                "method": {
+                    "description": "方法名称",
+                    "type": "string"
+                },
+                "operationResult": {
+                    "description": "返回参数",
+                    "type": "string"
+                },
+                "operationType": {
+                    "description": "操作类型（0其它 1新增 2修改 3删除）",
+                    "type": "integer"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "requestMethod": {
+                    "description": "请求方式",
+                    "type": "string"
+                },
+                "requestUrl": {
+                    "description": "请求URL",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1异常）",
+                    "type": "string"
+                }
+            }
+        },
+        "response.PostResponse": {
+            "type": "object",
+            "properties": {
+                "createBy": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "createTime": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "delFlag": {
+                    "description": "删除标志（0代表存在 2代表删除）",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "岗位ID",
+                    "type": "integer"
+                },
+                "orderNum": {
+                    "description": "显示顺序",
+                    "type": "integer"
+                },
+                "postName": {
+                    "description": "岗位名称",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                },
+                "updateBy": {
+                    "description": "更新者",
+                    "type": "string"
+                },
+                "updateTime": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
         "response.RestRes": {
             "type": "object",
             "properties": {
@@ -58,6 +3771,272 @@ const docTemplate = `{
                 "message": {
                     "type": "string",
                     "example": "status ok"
+                }
+            }
+        },
+        "response.RoleResponse": {
+            "type": "object",
+            "properties": {
+                "createBy": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "createTime": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "dataScope": {
+                    "description": "数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）",
+                    "type": "string"
+                },
+                "delFlag": {
+                    "description": "删除标志（0代表存在 2代表删除）",
+                    "type": "string"
+                },
+                "deptList": {
+                    "description": "部门列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.DeptResponse"
+                    }
+                },
+                "id": {
+                    "description": "角色ID",
+                    "type": "integer"
+                },
+                "menuList": {
+                    "description": "菜单列表",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.MenuResponse"
+                    }
+                },
+                "orderNum": {
+                    "description": "显示顺序",
+                    "type": "integer"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "roleKey": {
+                    "description": "角色权限字符串",
+                    "type": "string"
+                },
+                "roleName": {
+                    "description": "角色名称",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "帐号状态（0正常 1停用）",
+                    "type": "string"
+                },
+                "updateBy": {
+                    "description": "更新者",
+                    "type": "string"
+                },
+                "updateTime": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "response.SessionResponse": {
+            "type": "object",
+            "properties": {
+                "clientIp": {
+                    "description": "请求地址",
+                    "type": "string"
+                },
+                "createAt": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "expiresAt": {
+                    "description": "是否阻止",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "唯一标识",
+                    "type": "string"
+                },
+                "isBlocked": {
+                    "description": "是否阻止",
+                    "type": "boolean"
+                },
+                "realName": {
+                    "description": "真实姓名",
+                    "type": "string"
+                },
+                "refreshToken": {
+                    "description": "刷新秘钥",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "userAgent": {
+                    "description": "请求信息",
+                    "type": "string"
+                },
+                "userName": {
+                    "description": "用户名",
+                    "type": "string"
+                }
+            }
+        },
+        "response.SysConfigResponse": {
+            "type": "object",
+            "properties": {
+                "configKey": {
+                    "description": "参数键名",
+                    "type": "string"
+                },
+                "configName": {
+                    "description": "参数名称",
+                    "type": "string"
+                },
+                "configValue": {
+                    "description": "参数键值",
+                    "type": "string"
+                },
+                "createBy": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "createTime": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "delFlag": {
+                    "description": "删除标志（0代表存在 2代表删除）",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "参数主键",
+                    "type": "integer"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "状态（0正常 1停用）",
+                    "type": "string"
+                },
+                "updateBy": {
+                    "description": "更新者",
+                    "type": "string"
+                },
+                "updateTime": {
+                    "description": "更新时间",
+                    "type": "string"
+                }
+            }
+        },
+        "response.UserResponse": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "description": "头像地址",
+                    "type": "string"
+                },
+                "createBy": {
+                    "description": "创建者",
+                    "type": "string"
+                },
+                "createTime": {
+                    "description": "创建时间",
+                    "type": "string"
+                },
+                "delFlag": {
+                    "description": "删除标志（0代表存在 2代表删除）",
+                    "type": "string"
+                },
+                "dept": {
+                    "description": "部门信息",
+                    "$ref": "#/definitions/response.DeptResponse"
+                },
+                "deptID": {
+                    "description": "部门ID",
+                    "type": "integer"
+                },
+                "deptName": {
+                    "description": "部门名称",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "用户邮箱",
+                    "type": "string"
+                },
+                "id": {
+                    "description": "用户ID",
+                    "type": "integer"
+                },
+                "menuList": {
+                    "description": "菜单信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.MenuResponse"
+                    }
+                },
+                "mobile": {
+                    "description": "手机号码",
+                    "type": "string"
+                },
+                "postList": {
+                    "description": "岗位信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.PostResponse"
+                    }
+                },
+                "posts": {
+                    "description": "岗位编号数组",
+                    "type": "string"
+                },
+                "realName": {
+                    "description": "用户昵称",
+                    "type": "string"
+                },
+                "remark": {
+                    "description": "备注",
+                    "type": "string"
+                },
+                "roleList": {
+                    "description": "角色信息",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.RoleResponse"
+                    }
+                },
+                "roles": {
+                    "description": "角色信息",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "sex": {
+                    "description": "用户性别（0男 1女 2未知）",
+                    "type": "string"
+                },
+                "status": {
+                    "description": "帐号状态（0正常 1停用）",
+                    "type": "string"
+                },
+                "updateBy": {
+                    "description": "更新者",
+                    "type": "string"
+                },
+                "updateTime": {
+                    "description": "更新时间",
+                    "type": "string"
+                },
+                "userName": {
+                    "description": "用户账号",
+                    "type": "string"
                 }
             }
         }

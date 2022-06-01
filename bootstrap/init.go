@@ -3,6 +3,7 @@ package bootstrap
 import (
 	"context"
 	"database/sql"
+	"embed"
 	"fmt"
 	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
@@ -69,7 +70,7 @@ func attachDbConn(cfg config.Config) *sqlx.DB {
 	return sqlx.NewDb(conn, cfg.Server.DBDriver)
 }
 
-func RunServer() {
+func RunServer(staticFs embed.FS) {
 	//运行模式 默认：dev
 	mode := "DEBUG"
 	if *config.ServerMode == "prod" {
@@ -98,7 +99,7 @@ func RunServer() {
 	service.InitService(sqlxDB)
 
 	//加载gin引擎
-	engine := router.InitRouter()
+	engine := router.InitRouter(staticFs)
 	srv := &http.Server{
 		Addr:    cfg.Server.Port,
 		Handler: engine,
