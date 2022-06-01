@@ -13,6 +13,7 @@ import (
 	"os/signal"
 	"study.com/demo-sqlx-pgx/config"
 	"study.com/demo-sqlx-pgx/global"
+	"study.com/demo-sqlx-pgx/pkg/redis"
 	"study.com/demo-sqlx-pgx/pkg/token"
 	"study.com/demo-sqlx-pgx/pkg/zaplog"
 	"study.com/demo-sqlx-pgx/router"
@@ -94,9 +95,18 @@ func RunServer(staticFs embed.FS) {
 	defer logger.Sync()
 	global.Log = logger
 
+	// 加载缓存
+	redis.InitRedis(cfg)
+
 	//数据库连接
 	sqlxDB := attachDbConn(cfg)
+
+	// 注入数据库
 	service.InitService(sqlxDB)
+	err := service.CacheConfigInRedis()
+	if err != nil {
+		log.Fatal("缓存参数配置错误", err)
+	}
 
 	//加载gin引擎
 	engine := router.InitRouter(staticFs)
@@ -106,7 +116,7 @@ func RunServer(staticFs embed.FS) {
 	}
 
 	// 注入验证翻译
-	err := valid.RegisterTranslate()
+	err = valid.RegisterTranslate()
 	if err != nil {
 		log.Fatal("注入验证翻译错误", err)
 	}

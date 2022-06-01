@@ -3,3 +3,4 @@ db/sqlc
 temps
 
 *.log
+dist/

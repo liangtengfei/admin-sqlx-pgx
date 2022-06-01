@@ -164,3 +164,18 @@ func SysConfigBatchInsert(ctx *gin.Context) {
 	}
 	response.SuccessData(ctx, res)
 }
+
+func SysConfigByKey(ctx *gin.Context) {
+	key := ctx.Query("configKey")
+	if key == "" {
+		response.ErrorMsg(ctx, "参数不能为空")
+		return
+	}
+
+	value, err := service.CacheConfigByKey(key)
+	if err != nil {
+		response.ErrorMsg(ctx, err.Error())
+		return
+	}
+	response.SuccessData(ctx, value)
+}

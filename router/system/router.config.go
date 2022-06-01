@@ -18,5 +18,6 @@ func SysConfigRouter(r *gin.RouterGroup) {
 		group.PUT("", api.SysConfigUpdate)
 		group.DELETE(":id", api.SysConfigDelete)
 		group.GET(":id", api.SysConfigDetail)
+		group.GET("getByKey", api.SysConfigByKey)
 	}
 }
