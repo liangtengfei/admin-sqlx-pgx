@@ -4,6 +4,7 @@ import (
 	"github.com/casbin/casbin/v2"
 	"go.uber.org/zap"
 	"study.com/demo-sqlx-pgx/config"
+	"study.com/demo-sqlx-pgx/pkg/cache"
 	"study.com/demo-sqlx-pgx/pkg/token"
 )
 
@@ -12,4 +13,5 @@ var (
 	Log        *zap.Logger
 	TokenMaker token.Maker
 	Enforcer   *casbin.Enforcer
+	CacheStore cache.Store
 )

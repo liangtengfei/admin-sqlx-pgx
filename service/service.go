@@ -2,12 +2,14 @@ package service
 
 import (
 	"errors"
+	"github.com/go-redis/redis/v8"
 	"github.com/jmoiron/sqlx"
 	db "study.com/demo-sqlx-pgx/db/sqlx"
 )
 
 var (
 	store db.Store
+	cache *redis.Client
 )
 
 const (
@@ -49,14 +51,6 @@ func InitService(conn *sqlx.DB) {
 	store = db.NewStore(conn)
 }
 
-func attachPageParams(pageNum, pageSize int32) (int32, int32) {
-	if pageNum <= 0 {
-		pageNum = 1
-	}
-	if pageSize > 10000 {
-		pageSize = 10000
-	}
-
-	offset := (pageNum - 1) * pageSize
-	return offset, pageSize
+func InitServiceCache(conn *redis.Client) {
+	cache = conn
 }

@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"embed"
 	"fmt"
+	_ "github.com/jackc/pgx/v4/stdlib"
 	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -13,14 +14,11 @@ import (
 	"os/signal"
 	"study.com/demo-sqlx-pgx/config"
 	"study.com/demo-sqlx-pgx/global"
-	"study.com/demo-sqlx-pgx/pkg/redis"
+	"study.com/demo-sqlx-pgx/pkg/cache"
 	"study.com/demo-sqlx-pgx/pkg/token"
 	"study.com/demo-sqlx-pgx/pkg/zaplog"
 	"study.com/demo-sqlx-pgx/router"
 	"study.com/demo-sqlx-pgx/service"
-	"study.com/demo-sqlx-pgx/utils/valid"
-
-	_ "github.com/jackc/pgx/v4/stdlib"
 	"syscall"
 	"time"
 )
@@ -95,30 +93,26 @@ func RunServer(staticFs embed.FS) {
 	defer logger.Sync()
 	global.Log = logger
 
-	// 加载缓存
-	redis.InitRedis(cfg)
+	// 加载缓存配置
+	cacheStore := cache.NewRedisCache(cfg)
+	global.CacheStore = cacheStore
 
-	//数据库连接
+	// 数据库连接
 	sqlxDB := attachDbConn(cfg)
-
 	// 注入数据库
 	service.InitService(sqlxDB)
-	err := service.CacheConfigInRedis()
+
+	// 缓存参数配置信息
+	err := service.ConfigCacheAll()
 	if err != nil {
-		log.Fatal("缓存参数配置错误", err)
+		log.Fatal("缓存参数配置错误：", err)
 	}
 
-	//加载gin引擎
+	// 加载gin引擎
 	engine := router.InitRouter(staticFs)
 	srv := &http.Server{
 		Addr:    cfg.Server.Port,
 		Handler: engine,
-	}
-
-	// 注入验证翻译
-	err = valid.RegisterTranslate()
-	if err != nil {
-		log.Fatal("注入验证翻译错误", err)
 	}
 
 	log.Println(fmt.Sprintf("服务启动成功：http://%s", "127.0.0.1"+cfg.Server.Port))

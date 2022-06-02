@@ -1,6 +1,7 @@
 package service
 
 import (
+	"context"
 	"database/sql"
 	"errors"
 	"github.com/gin-gonic/gin"
@@ -129,4 +130,25 @@ func configKeyExist(ctx *gin.Context, key string, id int64) bool {
 		return total > 1
 	}
 	return total > 0
+}
+
+const ConfigCacheKey = "config"
+
+func ConfigCacheAll() error {
+	ctx := context.Background()
+	res, err := store.ConfigList(ctx)
+	if err != nil {
+		return err
+	}
+
+	values := make(map[string]interface{}, 0)
+	for _, cfg := range res {
+		values[cfg.ConfigKey] = cfg.ConfigValue
+	}
+
+	return global.CacheStore.HMSet(ctx, ConfigCacheKey, values)
+}
+
+func ConfigGetFromCache(ctx *gin.Context, key string) (interface{}, error) {
+	return global.CacheStore.HGet(ctx, ConfigCacheKey, key)
 }

@@ -172,7 +172,7 @@ func SysConfigByKey(ctx *gin.Context) {
 		return
 	}
 
-	value, err := service.CacheConfigByKey(key)
+	value, err := service.ConfigGetFromCache(ctx, key)
 	if err != nil {
 		response.ErrorMsg(ctx, err.Error())
 		return
